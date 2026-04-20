@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tijitoon — Mentions légales</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#13111a;--paper:#fff6e3;--hot:#ff3d7f;
+    --lime:#c6ff3a;--sky:#3ac7ff;--orange:#ff8a1f;--cream:#ffe4a8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Space Mono',monospace;min-height:100vh;overflow-x:hidden;}
+  body{
+    background-image:radial-gradient(circle at 15% 0%,rgba(255,61,127,.1),transparent 35%),radial-gradient(circle at 85% 80%,rgba(58,199,255,.09),transparent 40%);
+    background-attachment:fixed;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:radial-gradient(circle,rgba(19,17,26,.12) 1px,transparent 1px);
+    background-size:18px 18px;
+  }
+  .topbar{
+    background:var(--ink);color:var(--paper);
+    padding:.7rem 5vw;border-bottom:4px solid var(--lime);
+    display:flex;align-items:center;gap:1.5rem;
+    font-family:'VT323',monospace;font-size:1.3rem;position:relative;z-index:10;
+  }
+  .back-btn{color:var(--lime);text-decoration:none;padding:.2rem .6rem;border:2px solid transparent;transition:background .15s,color .15s;}
+  .back-btn:hover{background:var(--lime);color:var(--ink);}
+
+  .content{max-width:720px;margin:0 auto;padding:5rem 5vw 6rem;position:relative;z-index:1;width:100%;}
+
+  .eyebrow{
+    font-family:'VT323',monospace;font-size:clamp(.9rem,2vw,1.3rem);
+    background:var(--lime);display:inline-block;padding:.1rem .8rem;
+    border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);
+    transform:rotate(-2deg);margin-bottom:2rem;white-space:nowrap;
+  }
+
+  h1{
+    font-family:'Bungee',sans-serif;font-size:clamp(1.8rem,5vw,4rem);
+    line-height:1;letter-spacing:-.02em;
+    text-shadow:3px 3px 0 var(--hot),6px 6px 0 var(--sky);
+    margin-bottom:3rem;
+  }
+
+  .block{
+    border-left:4px solid var(--hot);padding-left:1.2rem;
+    margin-bottom:2.5rem;
+  }
+  .block h2{
+    font-family:'Bungee',sans-serif;font-size:clamp(.9rem,2vw,1.1rem);
+    margin-bottom:.8rem;
+  }
+  .block p{font-size:clamp(.75rem,1.5vw,.9rem);line-height:1.7;text-wrap:pretty;}
+  .block p + p{margin-top:.8rem;}
+  .block a{color:var(--hot);text-decoration:underline;}
+  .block a:hover{color:var(--sky);}
+
+  .block.sky{border-left-color:var(--sky);}
+  .block.lime{border-left-color:var(--lime);}
+  .block.orange{border-left-color:var(--orange);}
+
+  .note{
+    font-family:'VT323',monospace;font-size:clamp(1rem,2vw,1.15rem);
+    background:var(--ink);color:var(--paper);
+    padding:1rem 1.5rem;margin-top:3rem;
+    border:3px solid var(--ink);
+    line-height:1.5;
+  }
+  .note a{color:var(--lime);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-btn" id="back-btn" href="index.html">← CATALOGUE</a>
+</div>
+<script>
+  const b = document.getElementById('back-btn');
+  if (document.referrer && new URL(document.referrer).origin === location.origin)
+    b.addEventListener('click', e => { e.preventDefault(); history.back(); });
+</script>
+
+<div class="content">
+  <span class="eyebrow">&gt;&gt; MENTIONS LÉGALES_</span>
+  <h1>DISCLAIMER</h1>
+
+  <div class="block">
+    <h2>Pas de contenu hébergé</h2>
+    <p>Tijitoon n'héberge, ne stocke et ne diffuse aucune vidéo, image ou fichier audio. Ce site est uniquement un catalogue de référence listant les séries animées diffusées sur Télétoon et Tiji entre 2000 et 2015.</p>
+  </div>
+
+  <div class="block sky">
+    <h2>Propriété intellectuelle</h2>
+    <p>Tous les titres, personnages et œuvres mentionnés sur ce site sont la propriété de leurs ayants droit respectifs (studios d'animation, chaînes de télévision, distributeurs). Leur mention ici n'implique aucune affiliation, partenariat ou autorisation de la part de ces détenteurs de droits.</p>
+  </div>
+
+  <div class="block lime">
+    <h2>Liens vers des tiers</h2>
+    <p>Certaines pages peuvent contenir des liens vers des ressources externes (Internet Archive, YouTube, etc.). Tijitoon n'est pas responsable du contenu de ces sites tiers ni de leur disponibilité. Les liens sont fournis à titre informatif uniquement.</p>
+  </div>
+
+  <div class="block orange">
+    <h2>Projet fan, sans but commercial</h2>
+    <p>Ce site est un projet personnel et non-commercial, réalisé par des fans dans un esprit de préservation de la mémoire télévisuelle. Aucune publicité, aucun abonnement, aucune monétisation.</p>
+    <p>Si vous êtes titulaire de droits et souhaitez nous contacter, vous pouvez le faire via les coordonnées ci-dessous.</p>
+  </div>
+
+  <div class="note">
+    &gt;&gt; Ce site n'est affilié à aucune chaîne, studio ou distributeur.<br>
+    Tijitoon — Projet fan. 2026_
+  </div>
+</div>
+
+</body>
+</html>

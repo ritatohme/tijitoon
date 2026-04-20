@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tijitoon — Les dessins animés des années 2000 (2000–2015)</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik+Mono+One&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#13111a;
+    --paper:#fff6e3;
+    --hot:#ff3d7f;
+    --lime:#c6ff3a;
+    --sky:#3ac7ff;
+    --orange:#ff8a1f;
+    --purple:#9b5cff;
+    --cream:#ffe4a8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Space Mono',monospace;overflow-x:hidden}
+  body{
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(255,61,127,.1), transparent 35%),
+      radial-gradient(circle at 85% 20%, rgba(58,199,255,.09), transparent 40%),
+      radial-gradient(circle at 50% 95%, rgba(198,255,58,.1), transparent 45%);
+    background-attachment:fixed;
+  }
+  /* halftone dot texture */
+  body::before{
+    content:"";
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image: radial-gradient(circle, rgba(19,17,26,.12) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+  /* ---------- HERO ---------- */
+  header{
+    padding:6rem 5vw 4rem;position:relative;overflow:hidden;
+    border-bottom:4px solid var(--ink);
+  }
+  .eyebrow{
+    font-family:'VT323',monospace;font-size:1.1rem;color:var(--ink);
+    background:var(--lime);display:inline-block;padding:.1rem .8rem;
+    border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);
+    transform:rotate(-2deg);margin-bottom:2rem;
+    white-space:nowrap !important;
+  }
+  h1{
+    font-family:'Bungee',sans-serif;
+    font-size:clamp(3rem,9vw,8rem);
+    line-height:.9;letter-spacing:-.02em;
+    text-shadow:
+      4px 4px 0 var(--hot),
+      8px 8px 0 var(--sky);
+  }
+  h1 .amp{color:var(--orange);font-style:italic;display:inline-block;transform:rotate(-6deg)}
+  .sub{
+    max-width:720px;margin-top:2.5rem;font-size:clamp(.85rem,1.5vw,1.1rem);line-height:1.6;
+    border-left:4px solid var(--hot);padding-left:1.2rem;
+  }
+  .meta{
+    margin-top:2rem;font-family:'VT323',monospace;font-size:clamp(1rem,2vw,1.3rem);
+    display:flex;gap:1.5rem;flex-wrap:wrap;
+  }
+  .meta span{background:var(--ink);color:var(--paper);padding:.2rem .8rem}
+  .sticker{
+    position:absolute;font-family:'Bungee',sans-serif;
+    background:var(--hot);color:var(--paper);
+    padding:.8rem 1.2rem;border:3px solid var(--ink);
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .sticker.one{top:4rem;right:5vw;transform:rotate(8deg);font-size:clamp(.7rem,1.2vw,1rem)}
+  .sticker.two{bottom:3rem;right:12vw;transform:rotate(-4deg);background:var(--sky);font-size:clamp(.65rem,1.1vw,.9rem)}
+
+  /* ---------- NAV ---------- */
+  nav.jumper{
+    position:sticky;top:0;z-index:50;background:var(--ink);color:var(--paper);
+    padding:.7rem 5vw;border-bottom:4px solid var(--lime);
+    font-family:'VT323',monospace;font-size:clamp(1rem,1.8vw,1.3rem);
+  }
+  nav.jumper a{
+    color:var(--paper);text-decoration:none;padding:.2rem .8rem;
+    border:2px solid transparent;transition:all .15s;
+  }
+  nav.jumper a:hover{background:var(--lime);color:var(--ink);border-color:var(--paper)}
+  .nav-search-wrap {
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    border:2px solid rgba(255,246,227,.3);
+    background:rgba(255,246,227,.08);
+    overflow:hidden;
+  }
+  .nav-search-prefix {
+    font-size:1.2rem;
+    padding:0 .5rem 0 .7rem;
+    color:var(--lime);
+    flex-shrink:0;
+  }
+  .nav-search-input {
+    border:none;outline:none;background:transparent;
+    font-family:'Space Mono',monospace;font-size:.8rem;
+    color:var(--paper);padding:.4rem .4rem;
+    width:220px;
+  }
+  .nav-search-input::placeholder{color:rgba(255,246,227,.4);}
+  .nav-search-clear {
+    border:none;border-left:2px solid rgba(255,246,227,.3);
+    background:transparent;color:var(--lime);
+    font-family:'VT323',monospace;font-size:1.2rem;
+    padding:0 .7rem;cursor:pointer;align-self:stretch;
+    display:none;
+  }
+  .nav-search-clear:hover{background:var(--hot);color:var(--paper);}
+  .nav-search-clear.visible{display:block;}
+  .nav-search-status{
+    font-family:'VT323',monospace;font-size:1rem;
+    color:rgba(255,246,227,.5);
+    white-space:nowrap;
+  }
+  nav.jumper .dot{color:var(--hot)}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:5rem 5vw;position:relative}
+  .channel-title{
+    font-family:'Bungee',sans-serif;
+    font-size:clamp(2rem,6vw,6rem);
+    display:inline-block;padding:.5rem 1.5rem;
+    margin-bottom:1rem;
+    border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);
+  }
+  #teletoon .channel-title{background:var(--hot);color:var(--paper)}
+  #tiji .channel-title{background:var(--sky);color:var(--ink)}
+  .intro{max-width:720px;font-size:clamp(.8rem,1.4vw,1.05rem);line-height:1.7;margin:1.5rem 0 3rem;padding:1.2rem;background:rgba(255,255,255,.6);border:2px dashed var(--ink)}
+  .intro strong{background:var(--cream);padding:0 .3rem}
+
+  /* ---------- CARTOON GRID ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:.8rem;
+    margin-top:2rem;
+  }
+  .card{
+    background:var(--paper);
+    border:3px solid var(--ink);
+    padding:.9rem 1rem;
+    position:relative;
+    transition:transform .15s ease,box-shadow .15s ease;
+    cursor:default;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink);z-index:2}
+  .card .title{
+    font-family:'Rubik Mono One',sans-serif;
+    font-size:clamp(.75rem,1.2vw,.95rem);line-height:1.2;
+    margin-bottom:.4rem;
+  }
+  .card .tag{
+    position:absolute;top:-10px;right:-10px;
+    font-family:'VT323',monospace;font-size:.85rem;
+    background:var(--lime);padding:.1rem .5rem;
+    border:2px solid var(--ink);transform:rotate(6deg);
+  }
+  .card.anime .tag{background:var(--hot);color:var(--paper)}
+  .card.fr .tag{background:var(--orange)}
+  .card.tod .tag{background:var(--sky)}
+
+  /* alphabet letter headers */
+  .letter{
+    grid-column:1/-1;
+    font-family:'Bungee',sans-serif;font-size:clamp(1.5rem,4vw,3rem);
+    margin:2rem 0 .5rem;color:var(--ink);
+    border-bottom:4px solid var(--ink);padding-bottom:.3rem;
+  }
+  #teletoon .letter{color:var(--hot)}
+  #tiji .letter{color:var(--sky)}
+
+  /* legend */
+  .legend{
+    display:flex;gap:.8rem;flex-wrap:wrap;
+    margin:1.5rem 0 2rem;font-family:'VT323',monospace;font-size:clamp(.9rem,1.8vw,1.15rem);
+  }
+  .legend span{
+    padding:.1rem .6rem;border:2px solid var(--ink);
+  }
+  .legend .l-anime{background:var(--hot);color:var(--paper)}
+  .legend .l-fr{background:var(--orange)}
+  .legend .l-tod{background:var(--sky)}
+  .legend .l-std{background:var(--lime)}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:3rem 5vw;text-align:center;background:var(--paper);
+    font-family:'VT323',monospace;font-size:clamp(1rem,2vw,1.3rem);
+    border-top:4px solid var(--ink);
+  }
+  footer .blink{animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* ---------- CHANNEL PILLS ---------- */
+  .channel-pills {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1.2rem 0 0;
+  }
+  .ch-pill {
+    font-family: 'Bungee', sans-serif;
+    font-size: 1.1rem; letter-spacing: .02em;
+    padding: .4rem 1.2rem;
+    border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .teletoon-pill { background: var(--hot); color: var(--paper); }
+  .tiji-pill { background: var(--sky); color: var(--ink); }
+  .ch-pill-sep {
+    font-family: 'Bungee', sans-serif;
+    font-size: 1.4rem; color: var(--ink);
+  }
+
+  /* ---------- SEARCH ---------- */
+  .search-zone { margin-top: 2.5rem; }
+  .search-wrap {
+    display: flex; align-items: center;
+    border: 3px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    background: var(--paper);
+    max-width: 640px; overflow: hidden;
+  }
+  .search-prefix {
+    font-family: 'VT323', monospace; font-size: 1.4rem;
+    padding: 0 .6rem 0 1rem; color: var(--hot);
+    user-select: none; flex-shrink: 0;
+  }
+  .search-input {
+    flex: 1; border: none; outline: none; background: transparent;
+    font-family: 'Space Mono', monospace; font-size: 1rem;
+    color: var(--ink); padding: .75rem .5rem;
+  }
+  .search-input::placeholder { color: rgba(19,17,26,.35); }
+  .search-clear {
+    border: none; border-left: 3px solid var(--ink);
+    background: var(--lime); color: var(--ink);
+    font-family: 'VT323', monospace; font-size: 1.3rem;
+    padding: 0 1rem; cursor: pointer; align-self: stretch; display: none;
+  }
+  .search-clear:hover { background: var(--hot); color: var(--paper); }
+  .search-clear.visible { display: block; }
+  .search-status {
+    font-family: 'VT323', monospace; font-size: 1.2rem;
+    margin-top: .6rem; color: var(--ink); opacity: .6; min-height: 1.4rem;
+  }
+  /* ---------- FILTER CHIPS ---------- */
+  .filter-bar {
+    display:flex;gap:.5rem;flex-wrap:wrap;margin:0 0 2rem;
+  }
+  .filter-chip {
+    font-family:'VT323',monospace;font-size:1.1rem;
+    padding:.2rem .9rem;border:2px solid var(--ink);
+    cursor:pointer;background:transparent;color:var(--ink);
+    transition:background .1s,color .1s,box-shadow .1s;
+    user-select:none;
+  }
+  .filter-chip:hover { box-shadow:3px 3px 0 var(--ink); }
+  .filter-chip.active { box-shadow:3px 3px 0 var(--ink); }
+  .filter-chip[data-filter="all"].active { background:var(--ink); color:var(--paper); }
+  .filter-chip[data-filter="TOON"].active { background:var(--lime); }
+  .filter-chip[data-filter="ANIME"].active { background:var(--hot); color:var(--paper); }
+  .filter-chip[data-filter="FR"].active { background:var(--orange); }
+  .filter-chip[data-filter="KIDS"].active { background:var(--sky); }
+  .filter-chip[data-filter="★"].active { background:var(--sky); }
+
+  /* ---------- CARD clickable prep ---------- */
+  .card { cursor:pointer; }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink);z-index:2}
+
+  /* ---------- BACK TO TOP ---------- */
+  #back-top {
+    position:fixed;bottom:2rem;right:2rem;z-index:200;
+    font-family:'VT323',monospace;font-size:1.1rem;
+    background:var(--ink);color:var(--lime);
+    border:3px solid var(--lime);padding:.4rem 1rem;
+    cursor:pointer;box-shadow:4px 4px 0 var(--lime);
+    opacity:0;pointer-events:none;
+    transition:opacity .2s;
+  }
+  #back-top.visible{opacity:1;pointer-events:auto;}
+  #back-top:hover{background:var(--lime);color:var(--ink);}
+
+  /* ---------- COLLAPSIBLE LETTERS ---------- */
+  .letter {
+    cursor: pointer; user-select: none; position: relative;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .letter::after {
+    content: '›';
+    font-size: 2rem; line-height: 1;
+    transition: transform .2s;
+    opacity: .5;
+  }
+  .letter.open::after { transform: rotate(90deg); opacity: 1; }
+  .card.folded { display: none; }
+
+  /* ---------- UNIFIED SEARCH RESULTS ---------- */
+  #search-results {
+    display: none;
+    padding: 3rem 5vw 5rem;
+  }
+  #search-results .inner {
+    padding: 0;
+  }
+  #search-results.active { display: block; }
+  .search-results-header {
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--ink);
+    opacity: .6;
+  }
+  /* channel chip on cards in search results */
+  .card .ch-chip {
+    position: absolute; bottom: -10px; left: -10px;
+    font-family: 'VT323', monospace; font-size: .85rem;
+    padding: .1rem .5rem; border: 2px solid var(--ink);
+    transform: rotate(-4deg);
+  }
+  .card .ch-chip.teletoon { background: var(--hot); color: var(--paper); }
+  .card .ch-chip.tiji { background: var(--sky); color: var(--ink); }
+
+  .card.hidden { display: none; }
+  .letter.hidden { display: none; }
+
+  /* ---------- CENTERED CONTENT WRAPPER ---------- */
+  .inner{
+    max-width:1400px;
+    margin:0 auto;
+    width:100%;
+  }
+
+  @media(max-width:600px){
+    header{padding:4rem 5vw 3rem}
+    .sticker{display:none}
+    .grid{grid-template-columns:1fr 1fr;gap:.6rem}
+    .card{padding:.7rem}
+    .card .title{font-size:.8rem}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="sticker one">✦ 100% toon ✦</div>
+  <div class="inner">
+    <span class="eyebrow">&gt;&gt; NOSTALGIE MODE ON_</span>
+    <h1>TIJITOON</h1>
+    <div class="channel-pills">
+      <span class="ch-pill teletoon-pill">TÉLÉTOON</span>
+      <span class="ch-pill-sep">+</span>
+      <span class="ch-pill tiji-pill">TIJI</span>
+    </div>
+    <div class="sub">
+      La liste la plus complète qu'on a pu rassembler des <strong>dessins animés diffusés sur Télétoon (TPS Jeunesse / Canal+) et Tiji en France entre 2000 et 2015</strong>. Séries d'animation uniquement — animes japonais, cartoons américains, productions françaises et européennes. Dates = fenêtre de diffusion connue sur la chaîne.
+    </div>
+    <div class="meta">
+      <span>&gt; 2000 — 2015</span>
+      <span>&gt; ~300 séries</span>
+      <span>&gt; 2 chaînes</span>
+    </div>
+
+    <!-- SEARCH -->
+    <div style="max-width:640px;width:100%;position:relative;">
+      <div class="search-wrap">
+        <span class="search-prefix">&gt;&gt;</span>
+        <input
+          id="search-input"
+          class="search-input"
+          type="text"
+          placeholder="Rechercher une série... (ex : Code Lyoko)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="search-clear" id="search-clear" aria-label="Effacer">✕</button>
+      </div>
+      <div class="search-status" id="search-status"></div>
+      <div class="sticker two" style="position:absolute;bottom:-12px;right:-10px;margin:0;transform:rotate(-3deg);z-index:10;">★ souvenirs garantis ★</div>
+    </div>
+  </div>
+</header>
+
+<nav class="jumper">
+  <div class="inner" style="display:flex;gap:.5rem 1rem;flex-wrap:wrap;align-items:center;width:100%;">
+    <span class="dot">▸</span>
+    <a href="#teletoon">Télétoon (6–12 ans)</a>
+    <a href="#tiji">Tiji (3–7 ans)</a>
+  </div>
+</nav>
+
+<section id="teletoon">
+<div class="inner">
+  <div class="channel-title">TÉLÉTOON</div>
+  <div class="intro">
+    Chaîne jeunesse lancée en <strong>1996</strong> sur TPS, puis devenue <strong>Télétoon+</strong> sur Canal+ en 2011. Ciblait les 6–12 ans avec un mélange d'animation française, américaine et japonaise. Cette liste couvre les séries diffusées entre 2000 et 2015.
+  </div>
+  <div class="legend">
+    <span class="l-std">TOON — US/EU cartoon</span>
+    <span class="l-anime">ANIME — Japon</span>
+    <span class="l-fr">PROD. FR</span>
+  </div>
+  <div class="filter-bar" data-section="teletoon">
+    <button class="filter-chip active" data-filter="all">Tout</button>
+    <button class="filter-chip" data-filter="TOON">TOON</button>
+    <button class="filter-chip" data-filter="ANIME">ANIME</button>
+    <button class="filter-chip" data-filter="FR">PROD. FR</button>
+  </div>
+
+  <div class="grid" id="grid-teletoon">
+  </div>
+</div><!-- /.inner -->
+</section>
+
+<section id="tiji">
+<div class="inner">
+  <div class="channel-title">TIJI</div>
+  <div class="intro">
+    Chaîne lancée en <strong>décembre 2000</strong>, filiale jeunesse du groupe Lagardère (Canal J / Gulli), destinée aux <strong>3–7 ans</strong>. Grille centrée sur la maternelle : grandes séries préscolaires, adaptations d'albums jeunesse, micro-formats pédagogiques.
+  </div>
+  <div class="legend">
+    <span class="l-std">KIDS — préscolaire</span>
+    <span class="l-tod">★ ICÔNE des tout-petits</span>
+    <span class="l-fr">PROD. FR</span>
+  </div>
+  <div class="filter-bar" data-section="tiji">
+    <button class="filter-chip active" data-filter="all">Tout</button>
+    <button class="filter-chip" data-filter="KIDS">KIDS</button>
+    <button class="filter-chip" data-filter="★">★ Icônes</button>
+    <button class="filter-chip" data-filter="FR">PROD. FR</button>
+  </div>
+
+  <div class="grid" id="grid-tiji">
+  </div>
+</div><!-- /.inner -->
+</section>
+
+<div id="search-results">
+  <div class="inner">
+    <div class="search-results-header" id="search-results-header"></div>
+    <div class="grid" id="search-results-grid"></div>
+  </div>
+</div>
+
+
+<footer>
+  <div class="inner">
+    &lt; FIN DE TRANSMISSION &gt; <span class="blink">_</span>
+    <br><br>
+    <a href="disclaimer.html" style="font-family:'VT323',monospace;font-size:1rem;color:var(--ink);opacity:.4;text-decoration:none;border-bottom:1px dashed var(--ink);">mentions légales &amp; disclaimer</a>
+  </div>
+</footer>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+
+<script>
+  const input         = document.getElementById('search-input');
+  const clearBtn      = document.getElementById('search-clear');
+  const status        = document.getElementById('search-status');
+  const resultsDiv    = document.getElementById('search-results');
+  const resultsGrid   = document.getElementById('search-results-grid');
+  const resultsHeader = document.getElementById('search-results-header');
+  const teletoonSec   = document.getElementById('teletoon');
+  const tijiSec       = document.getElementById('tiji');
+  const backTop       = document.getElementById('back-top');
+
+  window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 400));
+
+  function normalize(str) {
+    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  // ---------- BUILD CARD ELEMENT ----------
+  function makeCard(id, show) {
+    const card = document.createElement('div');
+    const tagClass = show.tag === 'ANIME' ? 'anime' : show.tag === 'FR' ? 'fr' : show.tag === '★' ? 'tod' : '';
+    card.className = 'card' + (tagClass ? ' ' + tagClass : '');
+    card.dataset.id = id;
+    card.innerHTML = `<div class="title">${show.title}</div>`;
+    if (show.tag) {
+      const t = document.createElement('div');
+      t.className = 'tag';
+      t.textContent = show.tag;
+      card.appendChild(t);
+    }
+    return card;
+  }
+
+  // ---------- BUILD GRIDS ----------
+  function buildGrids(data) {
+    const teletoonGrid = document.getElementById('grid-teletoon');
+    const tijiGrid     = document.getElementById('grid-tiji');
+    teletoonGrid.innerHTML = '';
+    tijiGrid.innerHTML = '';
+
+    const teletoon = [];
+    const tiji     = [];
+    for (const [id, show] of Object.entries(data)) {
+      (show.channel === 'tiji' ? tiji : teletoon).push([id, show]);
+    }
+
+    teletoon.sort((a, b) => normalize(a[1].title).localeCompare(normalize(b[1].title)));
+    tiji.sort((a, b) => normalize(a[1].title).localeCompare(normalize(b[1].title)));
+
+    function insertIntoGrid(grid, entries) {
+      let currentLetter = null;
+      for (const [id, show] of entries) {
+        const first = normalize(show.title)[0].toUpperCase();
+        const letter = /[A-Z]/.test(first) ? first : '0–9';
+        if (letter !== currentLetter) {
+          currentLetter = letter;
+          const lDiv = document.createElement('div');
+          lDiv.className = 'letter';
+          lDiv.textContent = letter;
+          grid.appendChild(lDiv);
+        }
+        const card = makeCard(id, show);
+        card.classList.add('folded');
+        grid.appendChild(card);
+      }
+    }
+
+    insertIntoGrid(teletoonGrid, teletoon);
+    insertIntoGrid(tijiGrid, tiji);
+
+    initCollapse();
+    initFilters();
+    wireCards([...document.querySelectorAll('#teletoon .card, #tiji .card')]);
+  }
+
+  // ---------- COLLAPSE ----------
+  function cardsForLetter(letter) {
+    const cards = [];
+    let sib = letter.nextElementSibling;
+    while (sib && !sib.classList.contains('letter')) {
+      if (sib.classList.contains('card')) cards.push(sib);
+      sib = sib.nextElementSibling;
+    }
+    return cards;
+  }
+
+  function initCollapse() {
+    document.querySelectorAll('.letter').forEach(letter => {
+      letter.addEventListener('click', () => {
+        const isOpen = letter.classList.toggle('open');
+        cardsForLetter(letter).forEach(c => c.classList.toggle('folded', !isOpen));
+      });
+    });
+  }
+
+  // ---------- FILTERS ----------
+  function initFilters() {
+    document.querySelectorAll('.filter-bar').forEach(bar => {
+      bar.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          bar.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          applyFilter(bar);
+        });
+      });
+    });
+  }
+
+  function applyFilter(bar) {
+    const filter  = bar.querySelector('.filter-chip.active')?.dataset.filter || 'all';
+    const section = bar.dataset.section;
+    document.querySelectorAll(`#${section} .card`).forEach(card => {
+      const tag   = card.querySelector('.tag')?.textContent?.trim() || '';
+      const match = filter === 'all' || tag === filter;
+      card.classList.toggle('hidden', !match);
+    });
+    document.querySelectorAll(`#${section} .letter`).forEach(letter => {
+      const visible = cardsForLetter(letter).some(c => !c.classList.contains('hidden'));
+      letter.classList.toggle('hidden', !visible);
+    });
+  }
+
+  // ---------- SEARCH ----------
+  function doSearch() {
+    const q = normalize(input.value.trim());
+    clearBtn.classList.toggle('visible', q.length > 0);
+
+    if (!q) {
+      resultsDiv.classList.remove('active');
+      teletoonSec.style.display = '';
+      tijiSec.style.display = '';
+      status.textContent = '';
+      resultsGrid.innerHTML = '';
+      return;
+    }
+
+    teletoonSec.style.display = 'none';
+    tijiSec.style.display = 'none';
+    resultsDiv.classList.add('active');
+    resultsGrid.innerHTML = '';
+
+    let count = 0;
+    [...document.querySelectorAll('#teletoon .card, #tiji .card')].forEach(card => {
+      if (!normalize(card.querySelector('.title')?.textContent || '').includes(q)) return;
+      const clone = card.cloneNode(true);
+      clone.classList.remove('folded', 'hidden');
+      clone.querySelectorAll('.ch-chip').forEach(el => el.remove());
+      const isTiji = card.closest('#tiji');
+      const chip = document.createElement('div');
+      chip.className = 'ch-chip ' + (isTiji ? 'tiji' : 'teletoon');
+      chip.textContent = isTiji ? 'Tiji' : 'Télétoon';
+      clone.appendChild(chip);
+      resultsGrid.appendChild(clone);
+      count++;
+    });
+
+    resultsHeader.textContent = count === 0
+      ? '// aucun résultat_'
+      : `// ${count} série${count > 1 ? 's' : ''} trouvée${count > 1 ? 's' : ''} pour « ${input.value.trim()} »_`;
+    status.textContent = '';
+  }
+
+  input.addEventListener('input', doSearch);
+  clearBtn.addEventListener('click', () => { input.value = ''; doSearch(); input.focus(); });
+
+  // ---------- CARD CLICKS ----------
+  function wireCards(cards) {
+    cards.forEach(card => {
+      if (card.dataset.wired) return;
+      card.dataset.wired = '1';
+      card.addEventListener('click', () => {
+        window.location.href = `show.html?id=${encodeURIComponent(card.dataset.id)}`;
+      });
+    });
+  }
+
+  resultsGrid.addEventListener('click', e => {
+    const card = e.target.closest('.card');
+    if (!card || !card.dataset.id) return;
+    window.location.href = `show.html?id=${encodeURIComponent(card.dataset.id)}`;
+  });
+
+  // ---------- FETCH & INIT ----------
+  fetch('data.json')
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => buildGrids(data))
+    .catch(() => {
+      document.getElementById('grid-teletoon').innerHTML = '<div style="padding:2rem;font-family:monospace">Erreur de chargement.</div>';
+    });
+</script>
+
+</body>
+</html>

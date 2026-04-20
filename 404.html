@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tijitoon — 404</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#13111a;
+    --paper:#fff6e3;
+    --hot:#ff3d7f;
+    --lime:#c6ff3a;
+    --sky:#3ac7ff;
+    --orange:#ff8a1f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Space Mono',monospace;
+    min-height:100vh;overflow-x:hidden;
+  }
+  body{
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(255,61,127,.1), transparent 35%),
+      radial-gradient(circle at 85% 80%, rgba(58,199,255,.09), transparent 40%);
+    background-attachment:fixed;
+    display:flex;flex-direction:column;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:radial-gradient(circle,rgba(19,17,26,.12) 1px,transparent 1px);
+    background-size:18px 18px;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar{
+    background:var(--ink);color:var(--paper);
+    padding:.7rem 5vw;border-bottom:4px solid var(--lime);
+    display:flex;align-items:center;gap:1.5rem;
+    font-family:'VT323',monospace;font-size:1.3rem;
+    position:relative;z-index:10;
+  }
+  .back-btn{
+    color:var(--lime);text-decoration:none;
+    padding:.2rem .6rem;border:2px solid transparent;
+    transition:background .15s,color .15s;
+  }
+  .back-btn:hover{background:var(--lime);color:var(--ink);}
+
+  /* ── MAIN ── */
+  .center{
+    flex:1;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    padding:5vw;text-align:center;position:relative;z-index:1;
+  }
+
+  .error-code{
+    font-family:'Bungee',sans-serif;
+    font-size:clamp(6rem,20vw,14rem);
+    line-height:1;
+    color:var(--ink);
+    text-shadow:
+      4px 4px 0 var(--hot),
+      8px 8px 0 var(--sky);
+    margin-bottom:1rem;
+  }
+
+  .eyebrow{
+    font-family:'VT323',monospace;font-size:clamp(1rem,2vw,1.3rem);
+    background:var(--hot);color:var(--paper);
+    display:inline-block;padding:.2rem 1rem;
+    border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);
+    transform:rotate(-2deg);margin-bottom:2rem;
+    white-space:nowrap;
+  }
+
+  .message{
+    font-family:'VT323',monospace;font-size:clamp(1.1rem,2.5vw,1.5rem);
+    max-width:480px;line-height:1.5;
+    border-left:4px solid var(--hot);padding-left:1.2rem;
+    text-align:left;margin-bottom:3rem;
+  }
+
+  .actions{
+    display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;
+  }
+  .btn{
+    font-family:'VT323',monospace;font-size:1.3rem;
+    padding:.5rem 1.5rem;
+    border:3px solid var(--ink);
+    text-decoration:none;color:var(--ink);
+    box-shadow:5px 5px 0 var(--ink);
+    transition:transform .1s,box-shadow .1s;
+    cursor:pointer;background:var(--lime);
+  }
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink);}
+  .btn.secondary{background:var(--paper);}
+
+  /* ── TV ILLUSTRATION ── */
+  .tv-wrap{margin-bottom:2rem;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-btn" href="index.html">← CATALOGUE</a>
+</div>
+
+<div class="center">
+  <span class="eyebrow">&gt;&gt; SIGNAL PERDU_</span>
+
+  <!-- Inline TV illustration -->
+  <div class="tv-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100" width="180" height="150">
+      <!-- Shadow -->
+      <rect x="14" y="22" width="88" height="58" rx="6" fill="#13111a"/>
+      <!-- Body -->
+      <rect x="10" y="18" width="88" height="58" rx="6" fill="#fff6e3" stroke="#13111a" stroke-width="3"/>
+      <!-- Screen -->
+      <rect x="18" y="24" width="62" height="46" rx="3" fill="#13111a"/>
+      <!-- Static noise lines -->
+      <line x1="18" y1="30" x2="80" y2="30" stroke="#fff6e3" stroke-width="1.5" opacity=".15"/>
+      <line x1="18" y1="36" x2="80" y2="36" stroke="#fff6e3" stroke-width="1" opacity=".1"/>
+      <line x1="18" y1="42" x2="80" y2="42" stroke="#fff6e3" stroke-width="2" opacity=".12"/>
+      <line x1="18" y1="48" x2="80" y2="48" stroke="#fff6e3" stroke-width="1" opacity=".08"/>
+      <line x1="18" y1="54" x2="80" y2="54" stroke="#fff6e3" stroke-width="1.5" opacity=".15"/>
+      <line x1="18" y1="60" x2="80" y2="60" stroke="#fff6e3" stroke-width="1" opacity=".1"/>
+      <!-- 404 on screen -->
+      <text x="49" y="52" font-family="Arial Black,sans-serif" font-size="18" font-weight="900" fill="#3ac7ff" text-anchor="middle" opacity=".6">404</text>
+      <text x="51" y="54" font-family="Arial Black,sans-serif" font-size="18" font-weight="900" fill="#ff3d7f" text-anchor="middle" opacity=".6">404</text>
+      <text x="50" y="53" font-family="Arial Black,sans-serif" font-size="18" font-weight="900" fill="#c6ff3a" text-anchor="middle">404</text>
+      <!-- Side buttons -->
+      <circle cx="96" cy="36" r="5" fill="#ff8a1f" stroke="#13111a" stroke-width="2"/>
+      <circle cx="96" cy="52" r="5" fill="#3ac7ff" stroke="#13111a" stroke-width="2"/>
+      <!-- Legs -->
+      <rect x="32" y="76" width="8" height="14" rx="3" fill="#13111a"/>
+      <rect x="68" y="76" width="8" height="14" rx="3" fill="#13111a"/>
+      <!-- Antenna left -->
+      <line x1="38" y1="18" x2="24" y2="4" stroke="#13111a" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="24" cy="4" r="3.5" fill="#ff3d7f"/>
+      <!-- Antenna right -->
+      <line x1="70" y1="18" x2="84" y2="4" stroke="#13111a" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="84" cy="4" r="3.5" fill="#c6ff3a"/>
+    </svg>
+  </div>
+
+  <div class="error-code">404</div>
+
+  <div class="message">
+    Cette page n'existe pas — ou la chaîne ne diffuse plus. Retourne au catalogue pour retrouver tes séries.
+  </div>
+
+  <div class="actions">
+    <a class="btn" href="index.html">→ Retour au catalogue</a>
+    <a class="btn secondary" onclick="history.back();return false;" href="#">← Page précédente</a>
+  </div>
+
+</div>
+
+</body>
+</html>

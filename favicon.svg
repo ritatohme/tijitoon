@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  
+  <rect width="64" height="64" fill="#fff6e3"></rect>
+  
+  <rect x="8" y="15" width="48" height="34" rx="4" fill="#13111a"></rect>
+  
+  <rect x="5" y="12" width="48" height="34" rx="4" fill="#fff6e3" stroke="#13111a" stroke-width="3"></rect>
+  
+  <rect x="10" y="16" width="33" height="26" rx="2" fill="#13111a"></rect>
+  
+  <text x="26" y="35" font-family="Arial Black,sans-serif" font-size="17" font-weight="900" fill="#3ac7ff" text-anchor="middle">TJ</text>
+  
+  <text x="28" y="37" font-family="Arial Black,sans-serif" font-size="17" font-weight="900" fill="#ff3d7f" text-anchor="middle">TJ</text>
+  
+  <text x="27" y="36" font-family="Arial Black,sans-serif" font-size="17" font-weight="900" fill="#c6ff3a" text-anchor="middle">TJ</text>
+  
+  <circle cx="49" cy="24" r="3.5" fill="#ff8a1f" stroke="#13111a" stroke-width="2"></circle>
+  
+  <circle cx="49" cy="35" r="3.5" fill="#3ac7ff" stroke="#13111a" stroke-width="2"></circle>
+  
+  <rect x="18" y="46" width="5" height="9" rx="2" fill="#13111a"></rect>
+  <rect x="35" y="46" width="5" height="9" rx="2" fill="#13111a"></rect>
+  
+  <line x1="20" y1="12" x2="12" y2="3" stroke="#13111a" stroke-width="2.5" stroke-linecap="round"></line>
+  <circle cx="12" cy="3" r="2" fill="#ff3d7f"></circle>
+  
+  <line x1="38" y1="12" x2="46" y2="3" stroke="#13111a" stroke-width="2.5" stroke-linecap="round"></line>
+  <circle cx="46" cy="3" r="2" fill="#c6ff3a"></circle>
+</svg>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tijitoon — Série</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik+Mono+One&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#13111a;
+    --paper:#fff6e3;
+    --hot:#ff3d7f;
+    --lime:#c6ff3a;
+    --sky:#3ac7ff;
+    --orange:#ff8a1f;
+    --purple:#9b5cff;
+    --cream:#ffe4a8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Space Mono',monospace;min-height:100vh;overflow-x:hidden}
+  body{
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(255,61,127,.1), transparent 35%),
+      radial-gradient(circle at 85% 20%, rgba(58,199,255,.09), transparent 40%);
+    background-attachment:fixed;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:radial-gradient(circle,rgba(19,17,26,.12) 1px,transparent 1px);
+    background-size:18px 18px;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:var(--ink);color:var(--paper);
+    padding:.7rem 5vw;border-bottom:4px solid var(--lime);
+    display:flex;align-items:center;gap:1.5rem;
+    font-family:'VT323',monospace;font-size:1.3rem;
+  }
+  .back-btn{
+    color:var(--lime);text-decoration:none;
+    display:flex;align-items:center;gap:.4rem;
+    border:2px solid transparent;padding:.2rem .6rem;
+    transition:background .15s,color .15s;
+  }
+  .back-btn:hover{background:var(--lime);color:var(--ink);}
+  .topbar-title{opacity:.4;font-size:clamp(.8rem,1.5vw,1.1rem);}
+
+  /* ── HERO ── */
+  .show-hero{
+    border-bottom:4px solid var(--ink);
+  }
+  .show-hero-inner{
+    padding:4rem 5vw 3rem;
+    position:relative;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .show-eyebrow{
+    font-family:'VT323',monospace;font-size:clamp(1rem,2vw,1.3rem);
+    display:flex;align-items:center;gap:1rem;
+    margin-bottom:1.2rem;flex-wrap:wrap;
+  }
+  .show-tag{
+    font-family:'VT323',monospace;font-size:clamp(.85rem,1.5vw,1rem);
+    padding:.2rem .8rem;border:2px solid var(--ink);
+  }
+  .tag-ANIME{background:var(--hot);color:var(--paper);}
+  .tag-FR{background:var(--orange);}
+  .tag-TOON{background:var(--lime);}
+  .tag-KIDS{background:var(--sky);}
+  .tag-default{background:var(--lime);}
+  .show-years{
+    font-family:'VT323',monospace;font-size:1.3rem;
+    opacity:.6;
+  }
+  .ch-badge{
+    font-family:'Bungee',sans-serif;font-size:.8rem;
+    padding:.3rem .9rem;border:2px solid var(--ink);
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  .ch-badge.teletoon{background:var(--hot);color:var(--paper);}
+  .ch-badge.tiji{background:var(--sky);color:var(--ink);}
+
+  h1.show-title{
+    font-family:'Bungee',sans-serif;
+    font-size:clamp(2rem,7vw,5.5rem);
+    line-height:.95;letter-spacing:-.02em;
+    text-shadow:3px 3px 0 var(--hot), 6px 6px 0 var(--sky);
+    max-width:800px;
+    margin-bottom:.5rem;
+    word-break:break-word;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .show-body{
+    padding:3rem 5vw 5rem;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) min(340px, 35%);
+    gap:2.5rem;
+    align-items:start;
+    max-width:1200px;
+    margin:0 auto;
+  }
+
+  /* ── VIDEO PLAYER ── */
+  .player-wrap{
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    background:#111;
+    aspect-ratio:16/9;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .player-placeholder{
+    display:flex;flex-direction:column;align-items:center;gap:1rem;
+    color:rgba(255,246,227,.3);
+    font-family:'VT323',monospace;font-size:1.3rem;
+    text-align:center;padding:2rem;
+  }
+  .player-placeholder .play-icon{
+    width:64px;height:64px;border-radius:50%;
+    border:3px solid rgba(255,246,227,.2);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.8rem;
+  }
+  .player-source{
+    font-family:'VT323',monospace;font-size:1rem;
+    margin-top:1rem;opacity:.5;
+  }
+  #player-iframe{
+    width:100%;height:100%;border:none;display:none;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar{}
+  .sidebar-header{
+    font-family:'Bungee',sans-serif;font-size:clamp(.9rem,1.8vw,1.2rem);
+    background:var(--ink);color:var(--paper);
+    padding:.6rem 1rem;
+    border:3px solid var(--ink);
+    display:flex;align-items:center;justify-content:space-between;
+    white-space:nowrap;gap:.5rem;
+  }
+  .sidebar-header span{font-family:'VT323',monospace;font-size:1.1rem;opacity:.5;font-weight:400;white-space:nowrap;}
+
+  /* Season picker */
+  .season-list{
+    border:3px solid var(--ink);border-top:none;
+  }
+  .season-item{
+    padding:.9rem 1rem;border-bottom:2px solid var(--ink);
+    cursor:pointer;font-family:'Space Mono',monospace;font-size:.85rem;
+    transition:background .1s;display:flex;align-items:center;justify-content:space-between;
+    gap:.5rem;
+  }
+  .season-item:last-child{border-bottom:none;}
+  .season-item:hover{background:var(--cream);}
+  .season-item.active{background:var(--lime);}
+  .season-item .s-label{font-weight:700;}
+  .season-item .s-count{font-family:'VT323',monospace;font-size:1rem;opacity:.5;white-space:nowrap;flex-shrink:0;}
+
+  /* Episode list */
+  .ep-list{
+    border:3px solid var(--ink);border-top:none;
+    max-height:420px;overflow-y:auto;
+  }
+  .ep-item{
+    padding:.7rem 1rem;border-bottom:1px solid rgba(19,17,26,.12);
+    cursor:pointer;font-family:'Space Mono',monospace;font-size:clamp(.7rem,1.2vw,.8rem);
+    display:flex;align-items:center;gap:.8rem;
+    transition:background .1s;
+  }
+  .ep-item:last-child{border-bottom:none;}
+  .ep-item:hover{background:var(--cream);}
+  .ep-item.playing{background:var(--lime);}
+  .ep-item .ep-num{
+    font-family:'VT323',monospace;font-size:1.1rem;
+    color:var(--ink);opacity:.4;flex-shrink:0;width:2.5rem;
+  }
+  .ep-item.playing .ep-num{opacity:1;color:var(--hot);}
+  .ep-item .ep-title{flex:1;line-height:1.3;}
+  .ep-item .ep-play{
+    flex-shrink:0;font-size:.7rem;opacity:0;
+    transition:opacity .1s;
+  }
+  .ep-item:hover .ep-play{opacity:.5;}
+  .ep-item.playing .ep-play{opacity:1;color:var(--hot);}
+
+  /* Scrollbar */
+  .ep-list::-webkit-scrollbar{width:6px;}
+  .ep-list::-webkit-scrollbar-track{background:var(--paper);}
+  .ep-list::-webkit-scrollbar-thumb{background:var(--ink);border-radius:0;}
+
+  @media(max-width:900px){
+    .show-body{grid-template-columns:1fr;}
+    .sidebar{order:-1;}
+    .ep-list{max-height:280px;}
+    .season-item .s-count{white-space:nowrap;flex-shrink:0;}
+    .sidebar-header span{white-space:nowrap;}
+    .sidebar-header{flex-wrap:nowrap;}
+    /* collapsible sidebar on mobile */
+    .sidebar-header { cursor:pointer; }
+    .sidebar-header::after { content:'›'; margin-left:auto; padding-left:.5rem; transition:transform .2s; }
+    .sidebar.collapsed .sidebar-header::after { transform:rotate(90deg); }
+    .sidebar.collapsed .season-list,
+    .sidebar.collapsed .ep-list { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-btn" id="back-btn" href="index.html">← CATALOGUE</a>
+  <span class="topbar-title" id="topbar-title"></span>
+</div>
+
+<div class="show-hero">
+  <div class="show-hero-inner">
+    <div class="show-eyebrow">
+      <span class="show-tag" id="show-tag">TOON</span>
+      <span class="show-years" id="show-years">2000–2015</span>
+      <span class="ch-badge" id="show-channel">Télétoon</span>
+    </div>
+    <h1 class="show-title" id="show-title">SÉRIE</h1>
+  </div>
+</div>
+
+<div class="show-body">
+
+  <!-- Player -->
+  <div>
+    <div class="player-wrap" id="player-wrap">
+      <iframe id="player-iframe" allowfullscreen allow="autoplay"></iframe>
+      <div class="player-placeholder" id="player-placeholder">
+        <div class="play-icon">▶</div>
+        <div>Sélectionne un épisode<br>pour lancer la lecture</div>
+      </div>
+    </div>
+    <div class="player-source" id="player-source"></div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <!-- filled by JS -->
+  </div>
+
+</div>
+
+<script>
+  const params  = new URLSearchParams(location.search);
+  const showId  = params.get('id');
+  if (!showId) window.location.replace('404.html');
+
+  // dynamic back button
+  const backBtn = document.getElementById('back-btn');
+  if (document.referrer && new URL(document.referrer).origin === location.origin) {
+    backBtn.addEventListener('click', e => { e.preventDefault(); history.back(); });
+  }
+
+  const sidebar     = document.getElementById('sidebar');
+  const iframe      = document.getElementById('player-iframe');
+  const placeholder = document.getElementById('player-placeholder');
+  const playerSource = document.getElementById('player-source');
+
+  let show         = null;
+  let currentSeason = 0;
+  let currentEp    = -1;
+
+  fetch('data.json')
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      show = data[showId];
+      if (!show) return window.location.replace('404.html');
+      populateHero();
+      buildSidebar();
+    })
+    .catch(() => window.location.replace('404.html'));
+
+  function populateHero() {
+    document.title = `Tijitoon — ${show.title}`;
+    document.getElementById('show-title').textContent = show.title.toUpperCase();
+    document.getElementById('show-years').textContent = show.years || '';
+    document.getElementById('topbar-title').textContent = show.title.toUpperCase();
+
+    const tagEl = document.getElementById('show-tag');
+    tagEl.textContent = show.tag;
+    tagEl.className = 'show-tag tag-' + (show.tag || 'default');
+
+    const chEl = document.getElementById('show-channel');
+    if (show.channel === 'tiji') {
+      chEl.textContent = 'Tiji';
+      chEl.classList.add('tiji');
+    } else {
+      chEl.textContent = 'Télétoon';
+      chEl.classList.add('teletoon');
+    }
+  }
+
+  function buildSidebar() {
+    sidebar.innerHTML = '';
+    const seasons    = show.seasons;
+    const multiSeason = seasons.length > 1;
+
+    if (multiSeason) {
+      const sh = document.createElement('div');
+      sh.className = 'sidebar-header';
+      sh.innerHTML = `SAISONS <span>${seasons.length} saisons</span>`;
+      sidebar.appendChild(sh);
+
+      const sl = document.createElement('div');
+      sl.className = 'season-list';
+      seasons.forEach((s, i) => {
+        const item = document.createElement('div');
+        item.className = 'season-item' + (i === currentSeason ? ' active' : '');
+        item.innerHTML = `<span class="s-label">${s.name}</span><span class="s-count">${s.episodes.length} ép.</span>`;
+        item.addEventListener('click', () => { currentSeason = i; currentEp = -1; buildSidebar(); });
+        sl.appendChild(item);
+      });
+      sidebar.appendChild(sl);
+    }
+
+    const season = seasons[currentSeason];
+    const eh = document.createElement('div');
+    eh.className = 'sidebar-header';
+    eh.innerHTML = `ÉPISODES <span>${season.episodes.length} ép.</span>`;
+    sidebar.appendChild(eh);
+
+    const el = document.createElement('div');
+    el.className = 'ep-list';
+    season.episodes.forEach((ep, i) => {
+      const item = document.createElement('div');
+      item.className = 'ep-item' + (i === currentEp ? ' playing' : '');
+      item.innerHTML = `
+        <span class="ep-num">E${String(ep.num).padStart(2,'0')}</span>
+        <span class="ep-title">${ep.title}</span>
+        <span class="ep-play">▶</span>
+      `;
+      item.addEventListener('click', () => { currentEp = i; buildSidebar(); loadEpisode(ep); });
+      el.appendChild(item);
+    });
+    sidebar.appendChild(el);
+
+    if (window.innerWidth <= 900) {
+      if (!sidebar.classList.contains('collapsed')) sidebar.classList.add('collapsed');
+      sidebar.querySelectorAll('.sidebar-header').forEach(h => {
+        h.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
+      });
+    }
+  }
+
+  function loadEpisode(ep) {
+    if (ep.url) {
+      iframe.src = ep.url;
+      iframe.style.display = 'block';
+      placeholder.style.display = 'none';
+      playerSource.textContent = new URL(ep.url).hostname;
+    } else {
+      iframe.style.display = 'none';
+      iframe.src = '';
+      placeholder.innerHTML = `
+        <div class="play-icon">▶</div>
+        <div>E${String(ep.num).padStart(2,'0')} — ${ep.title}</div>
+        <div style="font-size:1rem;opacity:.3">Vidéo non disponible pour l'instant</div>
+      `;
+      placeholder.style.display = 'flex';
+      playerSource.textContent = '';
+    }
+  }
+</script>
+
+</body>
+</html>
