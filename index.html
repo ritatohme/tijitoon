@@ -641,6 +641,13 @@
     window.location.href = `show.html?id=${encodeURIComponent(card.dataset.id)}`;
   });
 
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) {
+      input.value = '';
+      doSearch();
+    }
+  });
+
   // ---------- FETCH & INIT ----------
   fetch('data.json')
     .then(r => r.ok ? r.json() : Promise.reject())

@@ -258,10 +258,6 @@
   if (!showId) window.location.replace('404.html');
 
   // dynamic back button
-  const backBtn = document.getElementById('back-btn');
-  if (document.referrer && new URL(document.referrer).origin === location.origin) {
-    backBtn.addEventListener('click', e => { e.preventDefault(); history.back(); });
-  }
 
   const sidebar     = document.getElementById('sidebar');
   const iframe      = document.getElementById('player-iframe');
