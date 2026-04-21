@@ -239,7 +239,6 @@
       <iframe id="player-iframe" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="autoplay; fullscreen; picture-in-picture; web-share"></iframe>
       <video id="player-video" controls controlslist="nodownload" style="display:none;width:100%;height:100%;"></video>
       <div class="player-placeholder" id="player-placeholder">
-        <div class="play-icon">▶</div>
         <div>Sélectionne un épisode<br>pour lancer la lecture</div>
       </div>
     </div>
@@ -326,7 +325,7 @@
     const season = seasons[currentSeason];
     const eh = document.createElement('div');
     eh.className = 'sidebar-header';
-    eh.innerHTML = `ÉPISODES <span>${season.episodes.length} ép.</span>`;
+    eh.innerHTML = `ÉPISODES <span>${currentEp >= 0 ? `S${currentSeason + 1} E${String(season.episodes[currentEp].num).padStart(2,'0')}` : `${season.episodes.length} ép.`}</span>`;
     sidebar.appendChild(eh);
 
     const el = document.createElement('div');
@@ -355,11 +354,27 @@
   function loadEpisode(ep) {
     if (ep.url) {
       const isMp4 = ep.url.endsWith('.mp4') && !ep.url.includes('archive.org');
-      if (isMp4) {
+      const isRedirect = ep.url.includes('ojamajo.moe/videos/watch');
+      if (isRedirect) {
+        iframe.style.display = 'none';
+        iframe.src = '';
+        video.style.display = 'none';
+        video.src = '';
+        placeholder.innerHTML = `
+          <div>Saison ${currentSeason + 1} — Épisode ${ep.num}</div>
+          <a href="${ep.url}" target="_blank" style="margin-top:.5rem;padding:.5rem 1.5rem;background:rgba(255,246,227,.15);border:1px solid rgba(255,246,227,.3);color:rgba(255,246,227,.8);font-family:'VT323',monospace;font-size:1.2rem;text-decoration:none;border-radius:4px;">
+            ▶ Regarder sur ojamajo.moe
+          </a>
+        `;
+        placeholder.style.display = 'flex';
+        playerSource.textContent = 'ojamajo.moe';
+      } else if (isMp4) {
         iframe.style.display = 'none';
         iframe.src = '';
         video.src = ep.url;
         video.style.display = 'block';
+        placeholder.style.display = 'none';
+        playerSource.textContent = new URL(ep.url).hostname;
       } else {
         video.style.display = 'none';
         video.src = '';
@@ -370,17 +385,16 @@
         }
         iframe.src = ep.url;
         iframe.style.display = 'block';
+        placeholder.style.display = 'none';
+        playerSource.textContent = new URL(ep.url).hostname;
       }
-      placeholder.style.display = 'none';
-      playerSource.textContent = new URL(ep.url).hostname;
     } else {
       iframe.style.display = 'none';
       iframe.src = '';
       video.style.display = 'none';
       video.src = '';
       placeholder.innerHTML = `
-        <div class="play-icon">▶</div>
-        <div>E${String(ep.num).padStart(2,'0')} — ${ep.title}</div>
+        <div>Saison ${currentSeason + 1} — Épisode ${ep.num}</div>
         <div style="font-size:1rem;opacity:.3">Vidéo non disponible pour l'instant</div>
       `;
       placeholder.style.display = 'flex';
