@@ -8,30 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root{
-    --ink:#13111a;--paper:#fff6e3;--hot:#ff3d7f;
-    --lime:#c6ff3a;--sky:#3ac7ff;--orange:#ff8a1f;--cream:#ffe4a8;
+  body {
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(255,61,127,.1), transparent 35%),
+      radial-gradient(circle at 85% 80%, rgba(58,199,255,.09), transparent 40%);
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:var(--paper);color:var(--ink);font-family:'Space Mono',monospace;min-height:100vh;overflow-x:hidden;}
-  body{
-    background-image:radial-gradient(circle at 15% 0%,rgba(255,61,127,.1),transparent 35%),radial-gradient(circle at 85% 80%,rgba(58,199,255,.09),transparent 40%);
-    background-attachment:fixed;
-  }
-  body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-    background-image:radial-gradient(circle,rgba(19,17,26,.12) 1px,transparent 1px);
-    background-size:18px 18px;
-  }
-  .topbar{
-    background:var(--ink);color:var(--paper);
-    padding:.7rem 5vw;border-bottom:4px solid var(--lime);
-    display:flex;align-items:center;gap:1.5rem;
-    font-family:'VT323',monospace;font-size:1.3rem;position:relative;z-index:10;
-  }
-  .back-btn{color:var(--lime);text-decoration:none;padding:.2rem .6rem;border:2px solid transparent;transition:background .15s,color .15s;}
-  .back-btn:hover{background:var(--lime);color:var(--ink);}
 
   .content{max-width:720px;margin:0 auto;padding:5rem 5vw 6rem;position:relative;z-index:1;width:100%;}
 

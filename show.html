@@ -8,207 +8,155 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik+Mono+One&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root{
-    --ink:#13111a;
-    --paper:#fff6e3;
-    --hot:#ff3d7f;
-    --lime:#c6ff3a;
-    --sky:#3ac7ff;
-    --orange:#ff8a1f;
-    --purple:#9b5cff;
-    --cream:#ffe4a8;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:var(--paper);color:var(--ink);font-family:'Space Mono',monospace;min-height:100vh;overflow-x:hidden}
-  body{
-    background-image:
-      radial-gradient(circle at 15% 0%, rgba(255,61,127,.1), transparent 35%),
-      radial-gradient(circle at 85% 20%, rgba(58,199,255,.09), transparent 40%);
-    background-attachment:fixed;
-  }
-  body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-    background-image:radial-gradient(circle,rgba(19,17,26,.12) 1px,transparent 1px);
-    background-size:18px 18px;
-  }
-
-  /* ── TOP BAR ── */
-  .topbar{
-    position:sticky;top:0;z-index:50;
-    background:var(--ink);color:var(--paper);
-    padding:.7rem 5vw;border-bottom:4px solid var(--lime);
-    display:flex;align-items:center;gap:1.5rem;
-    font-family:'VT323',monospace;font-size:1.3rem;
-  }
-  .back-btn{
-    color:var(--lime);text-decoration:none;
-    display:flex;align-items:center;gap:.4rem;
-    border:2px solid transparent;padding:.2rem .6rem;
-    transition:background .15s,color .15s;
-  }
-  .back-btn:hover{background:var(--lime);color:var(--ink);}
-  .topbar-title{opacity:.4;font-size:clamp(.8rem,1.5vw,1.1rem);}
+  .topbar { position: sticky; top: 0; }
+  .topbar-title { opacity: .4; font-size: clamp(.8rem,1.5vw,1.1rem); }
 
   /* ── HERO ── */
-  .show-hero{
-    border-bottom:4px solid var(--ink);
+  .show-hero { border-bottom: 4px solid var(--ink); }
+  .show-hero-inner {
+    padding: 4rem 5vw 3rem;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  .show-hero-inner{
-    padding:4rem 5vw 3rem;
-    position:relative;
-    max-width:1200px;
-    margin:0 auto;
+  .show-eyebrow {
+    font-family: 'VT323', monospace; font-size: clamp(1rem,2vw,1.3rem);
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.2rem; flex-wrap: wrap;
   }
-  .show-eyebrow{
-    font-family:'VT323',monospace;font-size:clamp(1rem,2vw,1.3rem);
-    display:flex;align-items:center;gap:1rem;
-    margin-bottom:1.2rem;flex-wrap:wrap;
+  .show-tag {
+    font-family: 'VT323', monospace; font-size: clamp(.85rem,1.5vw,1rem);
+    padding: .2rem .8rem; border: 2px solid var(--ink);
   }
-  .show-tag{
-    font-family:'VT323',monospace;font-size:clamp(.85rem,1.5vw,1rem);
-    padding:.2rem .8rem;border:2px solid var(--ink);
+  .tag-ANIME { background: var(--hot); color: var(--paper); }
+  .tag-FR    { background: var(--orange); }
+  .tag-TOON  { background: var(--lime); }
+  .tag-KIDS  { background: var(--sky); }
+  .tag-default { background: var(--lime); }
+  .show-years { font-family: 'VT323', monospace; font-size: 1.3rem; opacity: .6; }
+  .ch-badge {
+    font-family: 'Bungee', sans-serif; font-size: .8rem;
+    padding: .3rem .9rem; border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
   }
-  .tag-ANIME{background:var(--hot);color:var(--paper);}
-  .tag-FR{background:var(--orange);}
-  .tag-TOON{background:var(--lime);}
-  .tag-KIDS{background:var(--sky);}
-  .tag-default{background:var(--lime);}
-  .show-years{
-    font-family:'VT323',monospace;font-size:1.3rem;
-    opacity:.6;
-  }
-  .ch-badge{
-    font-family:'Bungee',sans-serif;font-size:.8rem;
-    padding:.3rem .9rem;border:2px solid var(--ink);
-    box-shadow:3px 3px 0 var(--ink);
-  }
-  .ch-badge.teletoon{background:var(--hot);color:var(--paper);}
-  .ch-badge.tiji{background:var(--sky);color:var(--ink);}
+  .ch-badge.teletoon { background: var(--hot); color: var(--paper); }
+  .ch-badge.tiji     { background: var(--sky); color: var(--ink); }
 
-  h1.show-title{
-    font-family:'Bungee',sans-serif;
-    font-size:clamp(2rem,7vw,5.5rem);
-    line-height:.95;letter-spacing:-.02em;
-    text-shadow:3px 3px 0 var(--hot), 6px 6px 0 var(--sky);
-    max-width:800px;
-    margin-bottom:.5rem;
-    word-break:break-word;
+  h1.show-title {
+    font-family: 'Bungee', sans-serif;
+    font-size: clamp(2rem,7vw,5.5rem);
+    line-height: .95; letter-spacing: -.02em;
+    text-shadow: 3px 3px 0 var(--hot), 6px 6px 0 var(--sky);
+    max-width: 800px;
+    margin-bottom: .5rem;
+    word-break: break-word;
   }
 
   /* ── MAIN LAYOUT ── */
-  .show-body{
-    padding:3rem 5vw 5rem;
-    display:grid;
-    grid-template-columns:minmax(0,1fr) min(340px, 35%);
-    gap:2.5rem;
-    align-items:start;
-    max-width:1200px;
-    margin:0 auto;
+  .show-body {
+    padding: 3rem 5vw 5rem;
+    display: grid;
+    grid-template-columns: minmax(0,1fr) min(340px, 35%);
+    gap: 2.5rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   /* ── VIDEO PLAYER ── */
-  .player-wrap{
-    border:3px solid var(--ink);
-    box-shadow:8px 8px 0 var(--ink);
-    background:#111;
-    aspect-ratio:16/9;
-    display:flex;align-items:center;justify-content:center;
-    position:relative;
-    overflow:hidden;
+  .player-wrap {
+    border: 3px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink);
+    background: #111;
+    aspect-ratio: 16/9;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
   }
-  .player-placeholder{
-    display:flex;flex-direction:column;align-items:center;gap:1rem;
-    color:rgba(255,246,227,.3);
-    font-family:'VT323',monospace;font-size:1.3rem;
-    text-align:center;padding:2rem;
+  .player-placeholder {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    color: rgba(255,246,227,.3);
+    font-family: 'VT323', monospace; font-size: 1.3rem;
+    text-align: center; padding: 2rem;
   }
-  .player-placeholder .play-icon{
-    width:64px;height:64px;border-radius:50%;
-    border:3px solid rgba(255,246,227,.2);
-    display:flex;align-items:center;justify-content:center;
-    font-size:1.8rem;
+  .player-source {
+    font-family: 'VT323', monospace; font-size: 1rem;
+    margin-top: 1rem; opacity: .5;
   }
-  .player-source{
-    font-family:'VT323',monospace;font-size:1rem;
-    margin-top:1rem;opacity:.5;
+  .player-external-link {
+    margin-top: .5rem; padding: .5rem 1.5rem;
+    background: rgba(255,246,227,.15);
+    border: 1px solid rgba(255,246,227,.3);
+    color: rgba(255,246,227,.8);
+    font-family: 'VT323', monospace; font-size: 1.2rem;
+    text-decoration: none; border-radius: 4px;
   }
-  #player-iframe{
-    width:100%;height:100%;border:none;display:none;
-  }
+  .player-external-link:hover { background: rgba(255,246,227,.25); }
+  #player-iframe { width: 100%; height: 100%; border: none; display: none; }
 
   /* ── SIDEBAR ── */
-  .sidebar{}
-
-  /* Season picker */
-  .season-list{
-    border:3px solid var(--ink);border-top:none;
+  .season-list { border: 3px solid var(--ink); border-top: none; }
+  .season-item {
+    padding: .9rem 1rem; border-bottom: 2px solid var(--ink);
+    cursor: pointer; font-family: 'Space Mono', monospace; font-size: .85rem;
+    transition: background .1s; display: flex; align-items: center; justify-content: space-between;
+    gap: .5rem;
   }
-  .season-item{
-    padding:.9rem 1rem;border-bottom:2px solid var(--ink);
-    cursor:pointer;font-family:'Space Mono',monospace;font-size:.85rem;
-    transition:background .1s;display:flex;align-items:center;justify-content:space-between;
-    gap:.5rem;
-  }
-  .season-item:last-child{border-bottom:none;}
-  .season-item:hover{background:var(--cream);}
-  .season-item.active{background:var(--lime);}
-  .season-item .s-label{font-weight:700;}
-  .season-item .s-count{font-family:'VT323',monospace;font-size:1rem;opacity:.5;white-space:nowrap;flex-shrink:0;}
+  .season-item:last-child { border-bottom: none; }
+  .season-item:hover  { background: var(--cream); }
+  .season-item.active { background: var(--lime); }
+  .season-item .s-label { font-weight: 700; }
+  .season-item .s-count { font-family: 'VT323', monospace; font-size: 1rem; opacity: .5; white-space: nowrap; flex-shrink: 0; }
 
   /* Episode list */
-  .ep-list{
-    border:3px solid var(--ink);border-top:none;
-    max-height:420px;overflow-y:auto;
+  .ep-list {
+    border: 3px solid var(--ink); border-top: none;
+    max-height: 420px; overflow-y: auto;
   }
-  .ep-item{
-    padding:.7rem 1rem;border-bottom:1px solid rgba(19,17,26,.12);
-    cursor:pointer;font-family:'Space Mono',monospace;font-size:clamp(.7rem,1.2vw,.8rem);
-    display:flex;align-items:center;gap:.8rem;
-    transition:background .1s;
+  .ep-item {
+    padding: .7rem 1rem; border-bottom: 1px solid rgba(19,17,26,.12);
+    cursor: pointer; font-family: 'Space Mono', monospace; font-size: clamp(.7rem,1.2vw,.8rem);
+    display: flex; align-items: center; gap: .8rem;
+    transition: background .1s;
   }
-  .ep-item:last-child{border-bottom:none;}
-  .ep-item:hover{background:var(--cream);}
-  .ep-item.playing{background:var(--lime);}
-  .ep-item .ep-num{
-    font-family:'VT323',monospace;font-size:1.1rem;
-    color:var(--ink);opacity:.4;flex-shrink:0;width:2.5rem;
+  .ep-item:last-child { border-bottom: none; }
+  .ep-item:hover   { background: var(--cream); }
+  .ep-item.playing { background: var(--lime); }
+  .ep-item .ep-num {
+    font-family: 'VT323', monospace; font-size: 1.1rem;
+    color: var(--ink); opacity: .4; flex-shrink: 0; width: 2.5rem;
   }
-  .ep-item.playing .ep-num{opacity:1;color:var(--hot);}
-  .ep-item .ep-title{flex:1;line-height:1.3;}
-  .ep-item .ep-play{
-    flex-shrink:0;font-size:.7rem;opacity:0;
-    transition:opacity .1s;
-  }
-  .ep-item:hover .ep-play{opacity:.5;}
-  .ep-item.playing .ep-play{opacity:1;color:var(--hot);}
+  .ep-item.playing .ep-num { opacity: 1; color: var(--hot); }
+  .ep-item .ep-title { flex: 1; line-height: 1.3; }
+  .ep-item .ep-play { flex-shrink: 0; font-size: .7rem; opacity: 0; transition: opacity .1s; }
+  .ep-item:hover .ep-play   { opacity: .5; }
+  .ep-item.playing .ep-play { opacity: 1; color: var(--hot); }
 
-  /* Scrollbar */
-  .ep-list::-webkit-scrollbar{width:6px;}
-  .ep-list::-webkit-scrollbar-track{background:var(--paper);}
-  .ep-list::-webkit-scrollbar-thumb{background:var(--ink);border-radius:0;}
+  .ep-list::-webkit-scrollbar       { width: 6px; }
+  .ep-list::-webkit-scrollbar-track { background: var(--paper); }
+  .ep-list::-webkit-scrollbar-thumb { background: var(--ink); border-radius: 0; }
 
   /* details/summary collapse */
-  details.sidebar-section { border:3px solid var(--ink); border-top:none; }
-  details.sidebar-section + details.sidebar-section { border-top:none; }
+  details.sidebar-section { border: 3px solid var(--ink); border-top: none; }
   details.sidebar-section summary {
-    font-family:'Bungee',sans-serif;font-size:clamp(.9rem,1.8vw,1.2rem);
-    background:var(--ink);color:var(--paper);
-    padding:.6rem 1rem;
-    display:flex;align-items:center;justify-content:space-between;
-    gap:.5rem;list-style:none;cursor:pointer;
-    white-space:nowrap;
+    font-family: 'Bungee', sans-serif; font-size: clamp(.9rem,1.8vw,1.2rem);
+    background: var(--ink); color: var(--paper);
+    padding: .6rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: .5rem; list-style: none; cursor: pointer;
+    white-space: nowrap;
   }
-  details.sidebar-section summary::-webkit-details-marker { display:none; }
-  details.sidebar-section summary .s-label { font-family:'VT323',monospace;font-size:1.1rem;opacity:.5;font-weight:400; }
-  details.sidebar-section summary::after { content:'›'; padding-left:.5rem; transition:transform .2s; display:inline-block; }
-  details.sidebar-section[open] summary::after { transform:rotate(90deg); }
+  details.sidebar-section summary::-webkit-details-marker { display: none; }
+  details.sidebar-section summary .s-label { font-family: 'VT323', monospace; font-size: 1.1rem; opacity: .5; font-weight: 400; }
+  details.sidebar-section summary::after { content: '›'; padding-left: .5rem; transition: transform .2s; display: inline-block; }
+  details.sidebar-section[open] summary::after { transform: rotate(90deg); }
 
-  @media(max-width:900px){
-    .show-body{grid-template-columns:1fr;}
-    .sidebar{order:-1;}
-    .ep-list{max-height:280px;}
-    .season-item .s-count{white-space:nowrap;flex-shrink:0;}
+  @media (max-width: 900px) {
+    .show-body { grid-template-columns: 1fr; }
+    .sidebar   { order: -1; }
+    .ep-list   { max-height: 280px; }
   }
 </style>
 </head>
@@ -245,27 +193,44 @@
   </div>
 
   <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <!-- filled by JS -->
-  </div>
+  <div class="sidebar" id="sidebar"></div>
 
 </div>
 
 <script>
-  const params  = new URLSearchParams(location.search);
-  const showId  = params.get('id');
-  if (!showId) window.location.replace('404.html');
+  const params = new URLSearchParams(location.search);
+  const showId = params.get('id');
+  if (!showId || !/^[\w-]+$/.test(showId)) window.location.replace('404.html');
 
-  const sidebar     = document.getElementById('sidebar');
-  const iframe      = document.getElementById('player-iframe');
-  const video       = document.getElementById('player-video');
-  const placeholder = document.getElementById('player-placeholder');
+  const sidebar      = document.getElementById('sidebar');
+  const iframe       = document.getElementById('player-iframe');
+  const video        = document.getElementById('player-video');
+  const placeholder  = document.getElementById('player-placeholder');
   const playerSource = document.getElementById('player-source');
+
+  const MOBILE_QUERY = window.matchMedia('(max-width: 900px)');
+
+  // Sandbox permissions per hostname — everything is sandboxed, unknown hosts get minimal perms
+  const SANDBOX_PERMISSIONS = {
+    'ojamajo.moe': 'allow-same-origin allow-scripts allow-popups allow-forms',
+  };
+
+  // Per-episode type detection — falls back to URL sniffing if no explicit type field
+  function getEpType(ep) {
+    if (ep.type) return ep.type;
+    if (ep.url?.includes('ojamajo.moe/videos/watch')) return 'redirect';
+    if (ep.url?.endsWith('.mp4') && !ep.url.includes('archive.org')) return 'mp4';
+    return 'embed';
+  }
 
   let show         = null;
   let currentSeason = 0;
   let currentEp    = -1;
 
+  // State refs for in-place updates (set during buildSidebar, used by selectSeason/selectEp)
+  let seasonItems = [];
+  let epLists     = [];
+  let epSummaries = [];
 
   fetch('data.json')
     .then(r => r.ok ? r.json() : Promise.reject())
@@ -297,11 +262,16 @@
     }
   }
 
+  // Built once — season clicks/episode clicks only toggle classes and swap visibility
   function buildSidebar() {
     sidebar.innerHTML = '';
+    seasonItems = [];
+    epLists     = [];
+    epSummaries = [];
+
     const seasons     = show.seasons;
     const multiSeason = seasons.length > 1;
-    const isMobile    = window.innerWidth <= 900;
+    const isMobile    = MOBILE_QUERY.matches;
 
     if (multiSeason) {
       const det = document.createElement('details');
@@ -309,7 +279,10 @@
       if (!isMobile) det.open = true;
 
       const sum = document.createElement('summary');
-      sum.innerHTML = `SAISONS <span class="s-label">${seasons.length} saisons</span>`;
+      const label = document.createElement('span');
+      label.className = 's-label';
+      label.textContent = `${seasons.length} saisons`;
+      sum.append('SAISONS ', label);
       det.appendChild(sum);
 
       const sl = document.createElement('div');
@@ -317,58 +290,115 @@
       seasons.forEach((s, i) => {
         const item = document.createElement('div');
         item.className = 'season-item' + (i === currentSeason ? ' active' : '');
-        item.innerHTML = `<span class="s-label">${s.name}</span><span class="s-count">${s.episodes.length} ép.</span>`;
-        item.addEventListener('click', () => {
-          currentSeason = i;
-          currentEp = -1;
-          clearPlayer();
-          buildSidebar();
-          sidebar.querySelector('details.sidebar-section').open = false;
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+
+        const sLabel = document.createElement('span');
+        sLabel.className = 's-label';
+        sLabel.textContent = s.name;
+        const sCount = document.createElement('span');
+        sCount.className = 's-count';
+        sCount.textContent = `${s.episodes.length} ép.`;
+        item.append(sLabel, sCount);
+
+        item.addEventListener('click', () => selectSeason(i));
+        item.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectSeason(i); }
         });
         sl.appendChild(item);
+        seasonItems.push(item);
       });
       det.appendChild(sl);
       sidebar.appendChild(det);
     }
 
-    const season = seasons[currentSeason];
-    const epDet = document.createElement('details');
-    epDet.className = 'sidebar-section';
-    if (!isMobile) epDet.open = true;
+    seasons.forEach((season, si) => {
+      const epDet = document.createElement('details');
+      epDet.className = 'sidebar-section';
+      epDet.style.display = si === currentSeason ? '' : 'none';
+      if (!isMobile) epDet.open = true;
 
-    const epSum = document.createElement('summary');
-    epSum.innerHTML = `ÉPISODES <span class="s-label">${currentEp >= 0 ? `S${currentSeason + 1} E${String(season.episodes[currentEp].num).padStart(2,'0')}` : `${season.episodes.length} ép.`}</span>`;
-    epDet.appendChild(epSum);
+      const epSum = document.createElement('summary');
+      const epLabel = document.createElement('span');
+      epLabel.className = 's-label';
+      epLabel.textContent = `${season.episodes.length} ép.`;
+      epSum.append('ÉPISODES ', epLabel);
+      epDet.appendChild(epSum);
+      epSummaries.push({ el: epSum, label: epLabel });
 
-    const el = document.createElement('div');
-    el.className = 'ep-list';
-    season.episodes.forEach((ep, i) => {
-      const item = document.createElement('div');
-      item.className = 'ep-item' + (i === currentEp ? ' playing' : '');
-      item.innerHTML = `
-        <span class="ep-num">E${String(ep.num).padStart(2,'0')}</span>
-        <span class="ep-title">${ep.title}</span>
-        <span class="ep-play">▶</span>
-      `;
-      item.addEventListener('click', () => {
-        currentEp = i;
-        updateEpList(el, epSum, season);
-        loadEpisode(ep);
-        epDet.open = false;
-        const seasonsDet = sidebar.querySelector('details.sidebar-section');
-        if (seasonsDet && seasonsDet !== epDet) seasonsDet.open = false;
+      const el = document.createElement('div');
+      el.className = 'ep-list';
+      season.episodes.forEach((ep, i) => {
+        const item = document.createElement('div');
+        item.className = 'ep-item' + (si === currentSeason && i === currentEp ? ' playing' : '');
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+
+        const num = document.createElement('span');
+        num.className = 'ep-num';
+        num.textContent = `E${String(ep.num).padStart(2, '0')}`;
+        const title = document.createElement('span');
+        title.className = 'ep-title';
+        title.textContent = ep.title;
+        const play = document.createElement('span');
+        play.className = 'ep-play';
+        play.textContent = '▶';
+        item.append(num, title, play);
+
+        item.addEventListener('click', () => selectEp(si, i, ep, epDet));
+        item.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectEp(si, i, ep, epDet); }
+        });
+        el.appendChild(item);
       });
-      el.appendChild(item);
+      epDet.appendChild(el);
+      sidebar.appendChild(epDet);
+      epLists.push({ det: epDet, el });
     });
-    epDet.appendChild(el);
-    sidebar.appendChild(epDet);
+
+    // Resize: re-open/close details when crossing the breakpoint
+    MOBILE_QUERY.addEventListener('change', e => {
+      sidebar.querySelectorAll('details.sidebar-section').forEach(det => {
+        det.open = !e.matches;
+      });
+    });
   }
 
-  function updateEpList(el, epSum, season) {
-    el.querySelectorAll('.ep-item').forEach((item, i) => {
-      item.classList.toggle('playing', i === currentEp);
-    });
-    epSum.innerHTML = `ÉPISODES <span class="s-label">S${currentSeason + 1} E${String(season.episodes[currentEp].num).padStart(2,'0')}</span>`;
+  function selectSeason(i) {
+    if (i === currentSeason) {
+      const seasonsDet = sidebar.querySelector('details.sidebar-section');
+      if (seasonsDet) seasonsDet.open = false;
+      return;
+    }
+    currentSeason = i;
+    currentEp = -1;
+    clearPlayer();
+
+    seasonItems.forEach((item, j) => item.classList.toggle('active', j === i));
+    epLists.forEach(({ det }, j) => { det.style.display = j === i ? '' : 'none'; });
+
+    // Collapse season picker, open episode list
+    const seasonsDet = sidebar.querySelector('details.sidebar-section');
+    if (seasonsDet) seasonsDet.open = false;
+    epLists[i].det.open = true;
+  }
+
+  function selectEp(seasonIdx, epIdx, ep, epDet) {
+    if (seasonIdx !== currentSeason) selectSeason(seasonIdx);
+    currentEp = epIdx;
+
+    const { el, det } = epLists[seasonIdx];
+    el.querySelectorAll('.ep-item').forEach((item, j) =>
+      item.classList.toggle('playing', j === epIdx)
+    );
+
+    const { label } = epSummaries[seasonIdx];
+    label.textContent = `S${seasonIdx + 1} E${String(ep.num).padStart(2, '0')}`;
+
+    loadEpisode(ep);
+    det.open = false;
+    const seasonsDet = sidebar.querySelector('details.sidebar-section');
+    if (seasonsDet && seasonsDet !== epDet) seasonsDet.open = false;
   }
 
   function clearPlayer() {
@@ -376,60 +406,69 @@
     iframe.src = '';
     video.style.display = 'none';
     video.src = '';
-    placeholder.innerHTML = '<div>Sélectionne un épisode<br>pour lancer la lecture</div>';
+    placeholder.textContent = '';
+    const msg = document.createElement('div');
+    msg.textContent = 'Sélectionne un épisode pour lancer la lecture';
+    placeholder.appendChild(msg);
     placeholder.style.display = 'flex';
     playerSource.textContent = '';
   }
 
   function loadEpisode(ep) {
-    if (ep.url) {
-      const isMp4 = ep.url.endsWith('.mp4') && !ep.url.includes('archive.org');
-      const isRedirect = ep.url.includes('ojamajo.moe/videos/watch');
-      if (isRedirect) {
-        iframe.style.display = 'none';
-        iframe.src = '';
-        video.style.display = 'none';
-        video.src = '';
-        placeholder.innerHTML = `
-          <div>Saison ${currentSeason + 1} — Épisode ${ep.num}</div>
-          <a href="${ep.url}" target="_blank" style="margin-top:.5rem;padding:.5rem 1.5rem;background:rgba(255,246,227,.15);border:1px solid rgba(255,246,227,.3);color:rgba(255,246,227,.8);font-family:'VT323',monospace;font-size:1.2rem;text-decoration:none;border-radius:4px;">
-            ▶ Regarder sur ojamajo.moe
-          </a>
-        `;
-        placeholder.style.display = 'flex';
-        playerSource.textContent = 'ojamajo.moe';
-      } else if (isMp4) {
-        iframe.style.display = 'none';
-        iframe.src = '';
-        video.src = ep.url;
-        video.style.display = 'block';
-        placeholder.style.display = 'none';
-        playerSource.textContent = new URL(ep.url).hostname;
-      } else {
-        video.style.display = 'none';
-        video.src = '';
-        if (ep.url.includes('ojamajo.moe')) {
-          iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms');
-        } else {
-          iframe.removeAttribute('sandbox');
-        }
-        iframe.src = ep.url;
-        iframe.style.display = 'block';
-        placeholder.style.display = 'none';
-        playerSource.textContent = new URL(ep.url).hostname;
-      }
-    } else {
-      iframe.style.display = 'none';
-      iframe.src = '';
-      video.style.display = 'none';
-      video.src = '';
-      placeholder.innerHTML = `
-        <div>Saison ${currentSeason + 1} — Épisode ${ep.num}</div>
-        <div style="font-size:1rem;opacity:.3">Vidéo non disponible pour l'instant</div>
-      `;
-      placeholder.style.display = 'flex';
-      playerSource.textContent = '';
+    if (!ep.url) {
+      showNoVideo(ep);
+      return;
     }
+
+    const type = getEpType(ep);
+
+    iframe.style.display = 'none';
+    iframe.src = '';
+    video.style.display = 'none';
+    video.src = '';
+    placeholder.style.display = 'none';
+    placeholder.textContent = '';
+
+    if (type === 'redirect') {
+      const epLabel = document.createElement('div');
+      epLabel.textContent = `Saison ${currentSeason + 1} — Épisode ${ep.num}`;
+      const link = document.createElement('a');
+      link.className = 'player-external-link';
+      link.href = ep.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = '▶ Regarder sur ojamajo.moe';
+      placeholder.append(epLabel, link);
+      placeholder.style.display = 'flex';
+      playerSource.textContent = 'ojamajo.moe';
+    } else if (type === 'mp4') {
+      video.src = ep.url;
+      video.style.display = 'block';
+      playerSource.textContent = new URL(ep.url).hostname;
+    } else {
+      const host = new URL(ep.url).hostname;
+      const perms = SANDBOX_PERMISSIONS[host] ?? 'allow-scripts allow-same-origin';
+      iframe.setAttribute('sandbox', perms);
+      iframe.src = ep.url;
+      iframe.style.display = 'block';
+      playerSource.textContent = host;
+    }
+  }
+
+  function showNoVideo(ep) {
+    iframe.style.display = 'none';
+    iframe.src = '';
+    video.style.display = 'none';
+    video.src = '';
+    placeholder.textContent = '';
+    const epLabel = document.createElement('div');
+    epLabel.textContent = `Saison ${currentSeason + 1} — Épisode ${ep.num}`;
+    const unavail = document.createElement('div');
+    unavail.style.cssText = 'font-size:1rem;opacity:.3';
+    unavail.textContent = 'Vidéo non disponible pour l\'instant';
+    placeholder.append(epLabel, unavail);
+    placeholder.style.display = 'flex';
+    playerSource.textContent = '';
   }
 </script>
 
