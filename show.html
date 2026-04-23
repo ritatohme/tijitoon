@@ -262,8 +262,6 @@
   const placeholder = document.getElementById('player-placeholder');
   const playerSource = document.getElementById('player-source');
 
-  document.getElementById('back-btn').href = 'index.html';
-
   let show         = null;
   let currentSeason = 0;
   let currentEp    = -1;
@@ -357,6 +355,8 @@
         updateEpList(el, epSum, season);
         loadEpisode(ep);
         epDet.open = false;
+        const seasonsDet = sidebar.querySelector('details.sidebar-section');
+        if (seasonsDet && seasonsDet !== epDet) seasonsDet.open = false;
       });
       el.appendChild(item);
     });
