@@ -210,9 +210,6 @@
     .ep-list{max-height:280px;}
     .season-item .s-count{white-space:nowrap;flex-shrink:0;}
   }
-  @media(min-width:901px){
-    details.sidebar-section summary::after { display:none; }
-  }
 </style>
 </head>
 <body>
@@ -328,6 +325,7 @@
           currentEp = -1;
           clearPlayer();
           buildSidebar();
+          sidebar.querySelector('details.sidebar-section').open = false;
         });
         sl.appendChild(item);
       });
@@ -358,7 +356,7 @@
         currentEp = i;
         updateEpList(el, epSum, season);
         loadEpisode(ep);
-        if (window.innerWidth <= 900) epDet.open = false;
+        epDet.open = false;
       });
       el.appendChild(item);
     });
