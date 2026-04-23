@@ -139,15 +139,6 @@
 
   /* ── SIDEBAR ── */
   .sidebar{}
-  .sidebar-header{
-    font-family:'Bungee',sans-serif;font-size:clamp(.9rem,1.8vw,1.2rem);
-    background:var(--ink);color:var(--paper);
-    padding:.6rem 1rem;
-    border:3px solid var(--ink);
-    display:flex;align-items:center;justify-content:space-between;
-    white-space:nowrap;gap:.5rem;
-  }
-  .sidebar-header span{font-family:'VT323',monospace;font-size:1.1rem;opacity:.5;font-weight:400;white-space:nowrap;}
 
   /* Season picker */
   .season-list{
@@ -197,19 +188,30 @@
   .ep-list::-webkit-scrollbar-track{background:var(--paper);}
   .ep-list::-webkit-scrollbar-thumb{background:var(--ink);border-radius:0;}
 
+  /* details/summary collapse */
+  details.sidebar-section { border:3px solid var(--ink); border-top:none; }
+  details.sidebar-section + details.sidebar-section { border-top:none; }
+  details.sidebar-section summary {
+    font-family:'Bungee',sans-serif;font-size:clamp(.9rem,1.8vw,1.2rem);
+    background:var(--ink);color:var(--paper);
+    padding:.6rem 1rem;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:.5rem;list-style:none;cursor:pointer;
+    white-space:nowrap;
+  }
+  details.sidebar-section summary::-webkit-details-marker { display:none; }
+  details.sidebar-section summary .s-label { font-family:'VT323',monospace;font-size:1.1rem;opacity:.5;font-weight:400; }
+  details.sidebar-section summary::after { content:'›'; padding-left:.5rem; transition:transform .2s; display:inline-block; }
+  details.sidebar-section[open] summary::after { transform:rotate(90deg); }
+
   @media(max-width:900px){
     .show-body{grid-template-columns:1fr;}
     .sidebar{order:-1;}
     .ep-list{max-height:280px;}
     .season-item .s-count{white-space:nowrap;flex-shrink:0;}
-    .sidebar-header span{white-space:nowrap;}
-    .sidebar-header{flex-wrap:nowrap;}
-    /* collapsible sidebar on mobile */
-    .sidebar-header { cursor:pointer; }
-    .sidebar-header::after { content:'›'; margin-left:auto; padding-left:.5rem; transition:transform .2s; }
-    .sidebar.collapsed .sidebar-header::after { transform:rotate(90deg); }
-    .sidebar.collapsed .season-list,
-    .sidebar.collapsed .ep-list { display:none; }
+  }
+  @media(min-width:901px){
+    details.sidebar-section summary::after { display:none; }
   }
 </style>
 </head>
@@ -257,17 +259,18 @@
   const showId  = params.get('id');
   if (!showId) window.location.replace('404.html');
 
-  // dynamic back button
-
   const sidebar     = document.getElementById('sidebar');
   const iframe      = document.getElementById('player-iframe');
   const video       = document.getElementById('player-video');
   const placeholder = document.getElementById('player-placeholder');
   const playerSource = document.getElementById('player-source');
 
+  document.getElementById('back-btn').href = 'index.html';
+
   let show         = null;
   let currentSeason = 0;
   let currentEp    = -1;
+
 
   fetch('data.json')
     .then(r => r.ok ? r.json() : Promise.reject())
@@ -301,14 +304,18 @@
 
   function buildSidebar() {
     sidebar.innerHTML = '';
-    const seasons    = show.seasons;
+    const seasons     = show.seasons;
     const multiSeason = seasons.length > 1;
+    const isMobile    = window.innerWidth <= 900;
 
     if (multiSeason) {
-      const sh = document.createElement('div');
-      sh.className = 'sidebar-header';
-      sh.innerHTML = `SAISONS <span>${seasons.length} saisons</span>`;
-      sidebar.appendChild(sh);
+      const det = document.createElement('details');
+      det.className = 'sidebar-section';
+      if (!isMobile) det.open = true;
+
+      const sum = document.createElement('summary');
+      sum.innerHTML = `SAISONS <span class="s-label">${seasons.length} saisons</span>`;
+      det.appendChild(sum);
 
       const sl = document.createElement('div');
       sl.className = 'season-list';
@@ -316,17 +323,26 @@
         const item = document.createElement('div');
         item.className = 'season-item' + (i === currentSeason ? ' active' : '');
         item.innerHTML = `<span class="s-label">${s.name}</span><span class="s-count">${s.episodes.length} ép.</span>`;
-        item.addEventListener('click', () => { currentSeason = i; currentEp = -1; buildSidebar(); });
+        item.addEventListener('click', () => {
+          currentSeason = i;
+          currentEp = -1;
+          clearPlayer();
+          buildSidebar();
+        });
         sl.appendChild(item);
       });
-      sidebar.appendChild(sl);
+      det.appendChild(sl);
+      sidebar.appendChild(det);
     }
 
     const season = seasons[currentSeason];
-    const eh = document.createElement('div');
-    eh.className = 'sidebar-header';
-    eh.innerHTML = `ÉPISODES <span>${currentEp >= 0 ? `S${currentSeason + 1} E${String(season.episodes[currentEp].num).padStart(2,'0')}` : `${season.episodes.length} ép.`}</span>`;
-    sidebar.appendChild(eh);
+    const epDet = document.createElement('details');
+    epDet.className = 'sidebar-section';
+    if (!isMobile) epDet.open = true;
+
+    const epSum = document.createElement('summary');
+    epSum.innerHTML = `ÉPISODES <span class="s-label">${currentEp >= 0 ? `S${currentSeason + 1} E${String(season.episodes[currentEp].num).padStart(2,'0')}` : `${season.episodes.length} ép.`}</span>`;
+    epDet.appendChild(epSum);
 
     const el = document.createElement('div');
     el.className = 'ep-list';
@@ -338,17 +354,33 @@
         <span class="ep-title">${ep.title}</span>
         <span class="ep-play">▶</span>
       `;
-      item.addEventListener('click', () => { currentEp = i; buildSidebar(); loadEpisode(ep); });
+      item.addEventListener('click', () => {
+        currentEp = i;
+        updateEpList(el, epSum, season);
+        loadEpisode(ep);
+        if (window.innerWidth <= 900) epDet.open = false;
+      });
       el.appendChild(item);
     });
-    sidebar.appendChild(el);
+    epDet.appendChild(el);
+    sidebar.appendChild(epDet);
+  }
 
-    if (window.innerWidth <= 900) {
-      if (!sidebar.classList.contains('collapsed')) sidebar.classList.add('collapsed');
-      sidebar.querySelectorAll('.sidebar-header').forEach(h => {
-        h.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
-      });
-    }
+  function updateEpList(el, epSum, season) {
+    el.querySelectorAll('.ep-item').forEach((item, i) => {
+      item.classList.toggle('playing', i === currentEp);
+    });
+    epSum.innerHTML = `ÉPISODES <span class="s-label">S${currentSeason + 1} E${String(season.episodes[currentEp].num).padStart(2,'0')}</span>`;
+  }
+
+  function clearPlayer() {
+    iframe.style.display = 'none';
+    iframe.src = '';
+    video.style.display = 'none';
+    video.src = '';
+    placeholder.innerHTML = '<div>Sélectionne un épisode<br>pour lancer la lecture</div>';
+    placeholder.style.display = 'flex';
+    playerSource.textContent = '';
   }
 
   function loadEpisode(ep) {
