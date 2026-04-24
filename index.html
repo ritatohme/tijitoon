@@ -19,29 +19,29 @@
 
   /* ---------- HERO ---------- */
   header {
-    padding: 6rem 5vw 4rem; position: relative; overflow: hidden;
+    padding: 3rem 5vw 2rem; position: relative; overflow: hidden;
     border-bottom: 4px solid var(--ink);
   }
   .eyebrow {
     font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--ink);
     background: var(--lime); display: inline-block; padding: .1rem .8rem;
     border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
-    transform: rotate(-2deg); margin-bottom: 2rem;
+    transform: rotate(-2deg); margin-bottom: .8rem;
     white-space: nowrap !important;
   }
   h1 {
     font-family: 'Bungee', sans-serif;
-    font-size: clamp(3rem,9vw,8rem);
+    font-size: clamp(2.5rem,6vw,4.5rem);
     line-height: .9; letter-spacing: -.02em;
     text-shadow: 4px 4px 0 var(--hot), 8px 8px 0 var(--sky);
   }
   h1 .amp { color: var(--orange); font-style: italic; display: inline-block; transform: rotate(-6deg); }
   .sub {
-    max-width: 720px; margin-top: 2.5rem; font-size: clamp(.85rem,1.5vw,1.1rem); line-height: 1.6;
+    max-width: 720px; margin-top: 1rem; font-size: clamp(.85rem,1.5vw,1.1rem); line-height: 1.6;
     border-left: 4px solid var(--hot); padding-left: 1.2rem;
   }
   .meta {
-    margin-top: 2rem; font-family: 'VT323', monospace; font-size: clamp(1rem,2vw,1.3rem);
+    margin-top: .8rem; font-family: 'VT323', monospace; font-size: clamp(1rem,2vw,1.3rem);
     display: flex; gap: 1.5rem; flex-wrap: wrap;
   }
   .meta span { background: var(--ink); color: var(--paper); padding: .2rem .8rem; }
@@ -100,7 +100,7 @@
   section { padding: 5rem 5vw; position: relative; }
   .channel-title {
     font-family: 'Bungee', sans-serif;
-    font-size: clamp(2rem,6vw,6rem);
+    font-size: clamp(1.5rem,4vw,3rem);
     display: inline-block; padding: .5rem 1.5rem;
     margin-bottom: 1rem;
     border: 4px solid var(--ink); box-shadow: 10px 10px 0 var(--ink);
@@ -251,7 +251,8 @@
     transition: opacity .2s;
   }
   #back-top.visible { opacity: 1; pointer-events: auto; }
-  #back-top:hover   { background: var(--lime); color: var(--ink); }
+  @media (hover: hover) { #back-top:hover { background: var(--lime); color: var(--ink); } }
+  #back-top:focus   { outline: none; }
 
   .card.folded  { display: none; }
   .card.hidden  { display: none; }
@@ -284,7 +285,7 @@
   .inner { max-width: 1400px; margin: 0 auto; width: 100%; }
 
   @media (max-width: 600px) {
-    header { padding: 4rem 5vw 3rem; }
+    header { padding: 2.5rem 5vw 2rem; }
     .sticker { display: none; }
     .grid { grid-template-columns: 1fr 1fr; gap: .6rem; }
     .card { padding: .7rem; }

@@ -46,7 +46,7 @@
 
   h1.show-title {
     font-family: 'Bungee', sans-serif;
-    font-size: clamp(2rem,7vw,5.5rem);
+    font-size: clamp(1.5rem,4vw,3rem);
     line-height: .95; letter-spacing: -.02em;
     text-shadow: 3px 3px 0 var(--hot), 6px 6px 0 var(--sky);
     max-width: 800px;
@@ -390,7 +390,13 @@
         }
       };
       updateEpLabel();
-      epDet.addEventListener('toggle', updateEpLabel);
+      epDet.addEventListener('toggle', () => {
+        updateEpLabel();
+        if (epDet.open) {
+          const playing = epDet.querySelector('.ep-item.playing');
+          if (playing) setTimeout(() => playing.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
+        }
+      });
       epSummaries.push({ el: epSum, label: epLabel, update: updateEpLabel });
 
       const el = document.createElement('div');
@@ -462,9 +468,12 @@
     currentPos = flatEps.findIndex(e => e.seasonIdx === seasonIdx && e.epIdx === epIdx);
 
     const { el, det } = epLists[seasonIdx];
-    el.querySelectorAll('.ep-item').forEach((item, j) =>
-      item.classList.toggle('playing', j === epIdx)
-    );
+    let activeItem = null;
+    el.querySelectorAll('.ep-item').forEach((item, j) => {
+      item.classList.toggle('playing', j === epIdx);
+      if (j === epIdx) activeItem = item;
+    });
+    if (activeItem) activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     epSummaries[seasonIdx].update();
 
     loadEpisode(ep);
