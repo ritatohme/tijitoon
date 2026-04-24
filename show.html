@@ -54,6 +54,34 @@
     word-break: break-word;
   }
 
+  /* ── EPISODE NAV ── */
+  .ep-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 1.2rem;
+  }
+  .ep-nav-btn {
+    font-family: 'Bungee', sans-serif; font-size: clamp(.7rem,1.5vw,.85rem);
+    padding: .6rem 1.2rem;
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+    cursor: pointer;
+    white-space: nowrap; letter-spacing: .03em;
+    transition: background .1s, color .1s;
+  }
+  #btn-prev:not(:disabled) { background: var(--lime); }
+  #btn-next:not(:disabled) { background: var(--hot); color: var(--paper); }
+  .ep-nav-btn:hover:not(:disabled) { filter: brightness(1.1); }
+  .ep-nav-btn:disabled {
+    background: var(--paper); color: rgba(19,17,26,.25);
+    box-shadow: none; cursor: default;
+  }
+  .ep-nav-counter {
+    font-family: 'VT323', monospace; font-size: 1.2rem;
+    opacity: .5; text-align: center;
+    white-space: nowrap;
+  }
+
   /* ── MAIN LAYOUT ── */
   .show-body {
     padding: 3rem 5vw 5rem;
@@ -189,6 +217,11 @@
         <div>Sélectionne un épisode<br>pour lancer la lecture</div>
       </div>
     </div>
+    <div class="ep-nav" id="ep-nav">
+      <button class="ep-nav-btn" id="btn-prev" disabled onclick="navigateEp(-1)">← ÉP. PRÉC.</button>
+      <span class="ep-nav-counter" id="ep-nav-counter">— / —</span>
+      <button class="ep-nav-btn" id="btn-next" disabled onclick="navigateEp(1)">ÉP. SUIV. →</button>
+    </div>
     <div class="player-source" id="player-source"></div>
   </div>
 
@@ -223,22 +256,34 @@
     return 'embed';
   }
 
-  let show         = null;
+  const btnPrev      = document.getElementById('btn-prev');
+  const btnNext      = document.getElementById('btn-next');
+  const epNavCounter = document.getElementById('ep-nav-counter');
+
+  let show          = null;
   let currentSeason = 0;
-  let currentEp    = -1;
+  let currentEp     = -1;
+  let currentPos    = -1;
 
   // State refs for in-place updates (set during buildSidebar, used by selectSeason/selectEp)
-  let seasonItems = [];
-  let epLists     = [];
-  let epSummaries = [];
+  let seasonItems       = [];
+  let epLists           = [];
+  let epSummaries       = [];
+  let seasonsDet        = null;
+  let flatEps           = [];
+  let updateSeasonsLabel = () => {};
 
   fetch('data.json')
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(data => {
       show = data[showId];
       if (!show) return window.location.replace('404.html');
+      flatEps = show.seasons.flatMap((s, si) =>
+        s.episodes.map((ep, ei) => ({ seasonIdx: si, epIdx: ei, ep }))
+      );
       populateHero();
       buildSidebar();
+      selectEp(0, 0, show.seasons[0].episodes[0], epLists[0].det);
     })
     .catch(() => window.location.replace('404.html'));
 
@@ -265,9 +310,10 @@
   // Built once — season clicks/episode clicks only toggle classes and swap visibility
   function buildSidebar() {
     sidebar.innerHTML = '';
-    seasonItems = [];
-    epLists     = [];
-    epSummaries = [];
+    seasonItems  = [];
+    epLists      = [];
+    epSummaries  = [];
+    seasonsDet   = null;
 
     const seasons     = show.seasons;
     const multiSeason = seasons.length > 1;
@@ -277,13 +323,24 @@
       const det = document.createElement('details');
       det.className = 'sidebar-section';
       if (!isMobile) det.open = true;
+      seasonsDet = det;
 
       const sum = document.createElement('summary');
       const label = document.createElement('span');
       label.className = 's-label';
-      label.textContent = `${seasons.length} saisons`;
       sum.append('SAISONS ', label);
       det.appendChild(sum);
+
+      updateSeasonsLabel = () => {
+        if (det.open) {
+          label.textContent = `${seasons.length} saisons`;
+        } else {
+          const s = seasons[currentSeason];
+          label.textContent = `S${String(currentSeason + 1).padStart(2,'0')} · ${s.name}`;
+        }
+      };
+      updateSeasonsLabel();
+      det.addEventListener('toggle', updateSeasonsLabel);
 
       const sl = document.createElement('div');
       sl.className = 'season-list';
@@ -321,10 +378,20 @@
       const epSum = document.createElement('summary');
       const epLabel = document.createElement('span');
       epLabel.className = 's-label';
-      epLabel.textContent = `${season.episodes.length} ép.`;
       epSum.append('ÉPISODES ', epLabel);
       epDet.appendChild(epSum);
-      epSummaries.push({ el: epSum, label: epLabel });
+
+      const updateEpLabel = () => {
+        if (epDet.open || currentEp === -1 || currentSeason !== si) {
+          epLabel.textContent = `${season.episodes.length} ép.`;
+        } else {
+          const ep = season.episodes[currentEp];
+          epLabel.textContent = `S${si + 1} E${String(ep.num).padStart(2, '0')}`;
+        }
+      };
+      updateEpLabel();
+      epDet.addEventListener('toggle', updateEpLabel);
+      epSummaries.push({ el: epSum, label: epLabel, update: updateEpLabel });
 
       const el = document.createElement('div');
       el.className = 'ep-list';
@@ -356,6 +423,8 @@
       epLists.push({ det: epDet, el });
     });
 
+    updateEpNav();
+
     // Resize: re-open/close details when crossing the breakpoint
     MOBILE_QUERY.addEventListener('change', e => {
       sidebar.querySelectorAll('details.sidebar-section').forEach(det => {
@@ -364,54 +433,60 @@
     });
   }
 
+  function switchSeason(i) {
+    currentSeason = i;
+    seasonItems.forEach((item, j) => item.classList.toggle('active', j === i));
+    epLists.forEach(({ det, el }, j) => {
+      det.style.display = j === i ? '' : 'none';
+      el.querySelectorAll('.ep-item').forEach(item => item.classList.remove('playing'));
+    });
+    updateSeasonsLabel();
+    epSummaries.forEach(({ update }) => update());
+  }
+
   function selectSeason(i) {
     if (i === currentSeason) {
-      const seasonsDet = sidebar.querySelector('details.sidebar-section');
       if (seasonsDet) seasonsDet.open = false;
       return;
     }
-    currentSeason = i;
     currentEp = -1;
-    clearPlayer();
-
-    seasonItems.forEach((item, j) => item.classList.toggle('active', j === i));
-    epLists.forEach(({ det }, j) => { det.style.display = j === i ? '' : 'none'; });
-
-    // Collapse season picker, open episode list
-    const seasonsDet = sidebar.querySelector('details.sidebar-section');
+    switchSeason(i);
     if (seasonsDet) seasonsDet.open = false;
-    epLists[i].det.open = true;
+    selectEp(i, 0, show.seasons[i].episodes[0], epLists[i].det);
+    if (!MOBILE_QUERY.matches) epLists[i].det.open = true;
   }
 
   function selectEp(seasonIdx, epIdx, ep, epDet) {
-    if (seasonIdx !== currentSeason) selectSeason(seasonIdx);
+    if (seasonIdx !== currentSeason) switchSeason(seasonIdx);
     currentEp = epIdx;
+    currentPos = flatEps.findIndex(e => e.seasonIdx === seasonIdx && e.epIdx === epIdx);
 
     const { el, det } = epLists[seasonIdx];
     el.querySelectorAll('.ep-item').forEach((item, j) =>
       item.classList.toggle('playing', j === epIdx)
     );
-
-    const { label } = epSummaries[seasonIdx];
-    label.textContent = `S${seasonIdx + 1} E${String(ep.num).padStart(2, '0')}`;
+    epSummaries[seasonIdx].update();
 
     loadEpisode(ep);
-    det.open = false;
-    const seasonsDet = sidebar.querySelector('details.sidebar-section');
+    updateEpNav();
+    if (MOBILE_QUERY.matches) det.open = false;
     if (seasonsDet && seasonsDet !== epDet) seasonsDet.open = false;
   }
 
-  function clearPlayer() {
-    iframe.style.display = 'none';
-    iframe.src = '';
-    video.style.display = 'none';
-    video.src = '';
-    placeholder.textContent = '';
-    const msg = document.createElement('div');
-    msg.textContent = 'Sélectionne un épisode pour lancer la lecture';
-    placeholder.appendChild(msg);
-    placeholder.style.display = 'flex';
-    playerSource.textContent = '';
+  function updateEpNav() {
+    const total = flatEps.length;
+    epNavCounter.textContent = currentPos === -1
+      ? `— / ${total}`
+      : `E${String(currentPos + 1).padStart(2,'0')} / ${total}`;
+    btnPrev.disabled = currentPos <= 0;
+    btnNext.disabled = currentPos === -1 || currentPos >= total - 1;
+  }
+
+  function navigateEp(dir) {
+    if (currentPos === -1) return;
+    const next = flatEps[currentPos + dir];
+    if (!next) return;
+    selectEp(next.seasonIdx, next.epIdx, next.ep, epLists[next.seasonIdx].det);
   }
 
   function loadEpisode(ep) {
