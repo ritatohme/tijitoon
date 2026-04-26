@@ -86,7 +86,7 @@
   .show-body {
     padding: 3rem 5vw 5rem;
     display: grid;
-    grid-template-columns: minmax(0,1fr) min(340px, 35%);
+    grid-template-columns: minmax(0,1fr) min(400px, 40%);
     gap: 2.5rem;
     align-items: start;
     max-width: 1200px;
@@ -135,7 +135,7 @@
   .season-item:last-child { border-bottom: none; }
   .season-item:hover  { background: var(--cream); }
   .season-item.active { background: var(--lime); }
-  .season-item .s-label { font-weight: 700; }
+  .season-item .s-label { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
   .season-item .s-count { font-family: 'VT323', monospace; font-size: 1rem; opacity: .5; white-space: nowrap; flex-shrink: 0; }
 
   /* Episode list */
@@ -174,16 +174,19 @@
     padding: .6rem 1rem;
     display: flex; align-items: center; justify-content: space-between;
     gap: .5rem; list-style: none; cursor: pointer;
-    white-space: nowrap;
+    min-width: 0; overflow: hidden;
+  }
+  details.sidebar-section summary .s-label {
+    font-family: 'VT323', monospace; font-size: 1.1rem; opacity: .5; font-weight: 400;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
   }
   details.sidebar-section summary::-webkit-details-marker { display: none; }
-  details.sidebar-section summary .s-label { font-family: 'VT323', monospace; font-size: 1.1rem; opacity: .5; font-weight: 400; }
   details.sidebar-section summary::after { content: '›'; padding-left: .5rem; transition: transform .2s; display: inline-block; }
   details.sidebar-section[open] summary::after { transform: rotate(90deg); }
 
   @media (max-width: 900px) {
     .show-body { grid-template-columns: 1fr; }
-    .sidebar   { order: -1; }
+    .sidebar   { order: -1; min-width: 0; overflow: hidden; }
     .ep-list   { max-height: 280px; }
   }
 </style>
@@ -334,9 +337,11 @@
       updateSeasonsLabel = () => {
         if (det.open) {
           label.textContent = `${seasons.length} saisons`;
+          sum.title = '';
         } else {
           const s = seasons[currentSeason];
-          label.textContent = `S${String(currentSeason + 1).padStart(2,'0')} · ${s.name}`;
+          label.textContent = `S${s.id ?? String(currentSeason + 1).padStart(2,'0')} · ${s.name}`;
+          sum.title = s.name;
         }
       };
       updateSeasonsLabel();
@@ -386,7 +391,7 @@
           epLabel.textContent = `${season.episodes.length} ép.`;
         } else {
           const ep = season.episodes[currentEp];
-          epLabel.textContent = `S${si + 1} E${String(ep.num).padStart(2, '0')}`;
+          epLabel.textContent = `S${season.id ?? (si + 1)} E${String(ep.num).padStart(2, '0')}`;
         }
       };
       updateEpLabel();
@@ -515,7 +520,7 @@
 
     if (type === 'redirect') {
       const epLabel = document.createElement('div');
-      epLabel.textContent = `Saison ${currentSeason + 1} — Épisode ${ep.num}`;
+      epLabel.textContent = `Saison ${show.seasons[currentSeason].id ?? (currentSeason + 1)} — Épisode ${ep.num}`;
       const link = document.createElement('a');
       link.className = 'player-external-link';
       link.href = ep.url;
