@@ -161,7 +161,8 @@
   .ep-item .ep-play { flex-shrink: 0; font-size: .7rem; opacity: 0; transition: opacity .1s; }
   .ep-item:hover .ep-play   { opacity: .5; }
   .ep-item.playing .ep-play { opacity: 1; color: var(--hot); }
-
+  .ep-item.saved { border-left: 3px solid var(--hot); }
+  .ep-item.saved .ep-num { opacity: 1; color: var(--hot); }
   .ep-list::-webkit-scrollbar       { width: 6px; }
   .ep-list::-webkit-scrollbar-track { background: var(--paper); }
   .ep-list::-webkit-scrollbar-thumb { background: var(--ink); border-radius: 0; }
@@ -235,7 +236,7 @@
 
 <script>
   const params = new URLSearchParams(location.search);
-  const showId = params.get('id');
+  const showId = params.get('series') || params.get('id');
   if (!showId || !/^[\w-]+$/.test(showId)) window.location.replace('404.html');
 
   const sidebar      = document.getElementById('sidebar');
@@ -243,15 +244,12 @@
   const video        = document.getElementById('player-video');
   const placeholder  = document.getElementById('player-placeholder');
   const playerSource = document.getElementById('player-source');
-
   const MOBILE_QUERY = window.matchMedia('(max-width: 900px)');
 
-  // Sandbox permissions per hostname — everything is sandboxed, unknown hosts get minimal perms
   const SANDBOX_PERMISSIONS = {
-    'ojamajo.moe': 'allow-same-origin allow-scripts allow-popups allow-forms',
+    'ojamajo.moe': 'allow-scripts allow-popups allow-forms',
   };
 
-  // Per-episode type detection — falls back to URL sniffing if no explicit type field
   function getEpType(ep) {
     if (ep.type) return ep.type;
     if (ep.url?.includes('ojamajo.moe/videos/watch')) return 'redirect';
@@ -267,15 +265,54 @@
   let currentSeason = 0;
   let currentEp     = -1;
   let currentPos    = -1;
+  let isRestoringFromHistory = false;
 
-  // State refs for in-place updates (set during buildSidebar, used by selectSeason/selectEp)
-  let seasonItems       = [];
-  let epLists           = [];
-  let epSummaries       = [];
-  let seasonsDet        = null;
-  let flatEps           = [];
+  let seasonItems        = [];
+  let epLists            = [];
+  let epSummaries        = [];
+  let seasonsDet         = null;
+  let flatEps            = [];
   let updateSeasonsLabel = () => {};
 
+  // ── localStorage ─────────────────────────────────────────────────────────
+  const LS_KEY = `tijitoon:progress:${showId}`;
+
+  function saveProgress(seasonIdx, epIdx) {
+    try { localStorage.setItem(LS_KEY, JSON.stringify({ season: seasonIdx, ep: epIdx })); } catch (_) {}
+  }
+
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return null;
+      const { season, ep } = JSON.parse(raw);
+      if (typeof season === 'number' && typeof ep === 'number') return { season, ep };
+    } catch (_) {}
+    return null;
+  }
+
+  // ── URL / history helpers ─────────────────────────────────────────────────
+  function buildUrl(seasonIdx, epIdx) {
+    const u = new URLSearchParams();
+    u.set('series', showId);
+    u.set('season', seasonIdx + 1);
+    u.set('ep', epIdx + 1);
+    return `${location.pathname}?${u}`;
+  }
+
+  function pushEpUrl(seasonIdx, epIdx) {
+    history.pushState({ series: showId, season: seasonIdx, ep: epIdx }, '', buildUrl(seasonIdx, epIdx));
+  }
+
+  // Read ?season=N&ep=M from URL (1-based, returns 0-based indices or null)
+  function readUrlEp() {
+    const s = parseInt(params.get('season'), 10);
+    const e = parseInt(params.get('ep'), 10);
+    if (!isNaN(s) && s >= 1 && !isNaN(e) && e >= 1) return { season: s - 1, ep: e - 1 };
+    return null;
+  }
+
+  // ── Data load ─────────────────────────────────────────────────────────────
   fetch('data.json')
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(data => {
@@ -286,10 +323,46 @@
       );
       populateHero();
       buildSidebar();
-      selectEp(0, 0, show.seasons[0].episodes[0], epLists[0].det);
+      refreshSavedMark();
+
+      const urlEp = readUrlEp();
+      if (urlEp) {
+        // Deep link — treat as explicit selection, save progress
+        const { season: si, ep: ei } = urlEp;
+        const s = show.seasons[si];
+        const ep = s?.episodes[ei];
+        if (s && ep) {
+          history.replaceState({ series: showId, season: si, ep: ei }, '', buildUrl(si, ei));
+          selectEp(si, ei, ep, epLists[si].det, false, true);
+        }
+      } else {
+        // No URL params — restore saved highlight without saving again
+        const saved = loadProgress();
+        if (saved) {
+          const s = show.seasons[saved.season];
+          const ep = s?.episodes[saved.ep];
+          if (s && ep) {
+            history.replaceState({ series: showId, season: saved.season, ep: saved.ep }, '', buildUrl(saved.season, saved.ep));
+            selectEp(saved.season, saved.ep, ep, epLists[saved.season].det, false, false);
+          }
+        }
+      }
     })
     .catch(() => window.location.replace('404.html'));
 
+  // Back / Forward navigation
+  window.addEventListener('popstate', e => {
+    if (!show || !e.state || e.state.series !== showId) return;
+    const { season: si, ep: ei } = e.state;
+    const s = show.seasons[si];
+    const ep = s?.episodes[ei];
+    if (!s || !ep) return;
+    isRestoringFromHistory = true;
+    selectEp(si, ei, ep, epLists[si].det, false, false);
+    isRestoringFromHistory = false;
+  });
+
+  // ── Hero ──────────────────────────────────────────────────────────────────
   function populateHero() {
     document.title = `Tijitoon — ${show.title}`;
     document.getElementById('show-title').textContent = show.title.toUpperCase();
@@ -310,7 +383,7 @@
     }
   }
 
-  // Built once — season clicks/episode clicks only toggle classes and swap visibility
+  // ── Sidebar ───────────────────────────────────────────────────────────────
   function buildSidebar() {
     sidebar.innerHTML = '';
     seasonItems  = [];
@@ -423,9 +496,9 @@
         play.textContent = '▶';
         item.append(num, title, play);
 
-        item.addEventListener('click', () => selectEp(si, i, ep, epDet));
+        item.addEventListener('click', () => selectEp(si, i, ep, epDet, true));
         item.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectEp(si, i, ep, epDet); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectEp(si, i, ep, epDet, true); }
         });
         el.appendChild(item);
       });
@@ -436,7 +509,6 @@
 
     updateEpNav();
 
-    // Resize: re-open/close details when crossing the breakpoint
     MOBILE_QUERY.addEventListener('change', e => {
       sidebar.querySelectorAll('details.sidebar-section').forEach(det => {
         det.open = !e.matches;
@@ -463,11 +535,11 @@
     currentEp = -1;
     switchSeason(i);
     if (seasonsDet) seasonsDet.open = false;
-    selectEp(i, 0, show.seasons[i].episodes[0], epLists[i].det);
+    selectEp(i, 0, show.seasons[i].episodes[0], epLists[i].det, true, false);
     if (!MOBILE_QUERY.matches) epLists[i].det.open = true;
   }
 
-  function selectEp(seasonIdx, epIdx, ep, epDet) {
+  function selectEp(seasonIdx, epIdx, ep, epDet, pushHistory, saveToStorage = true) {
     if (seasonIdx !== currentSeason) switchSeason(seasonIdx);
     currentEp = epIdx;
     currentPos = flatEps.findIndex(e => e.seasonIdx === seasonIdx && e.epIdx === epIdx);
@@ -485,7 +557,27 @@
     updateEpNav();
     if (MOBILE_QUERY.matches) det.open = false;
     if (seasonsDet && seasonsDet !== epDet) seasonsDet.open = false;
+
+    // URL + history
+    if (pushHistory && !isRestoringFromHistory) {
+      pushEpUrl(seasonIdx, epIdx);
+    }
+
+    if (saveToStorage) {
+      saveProgress(seasonIdx, epIdx);
+      refreshSavedMark();
+    }
   }
+
+  function refreshSavedMark() {
+    const saved = loadProgress();
+    epLists.forEach(({ el }, si) => {
+      el.querySelectorAll('.ep-item').forEach((item, ei) => {
+        item.classList.toggle('saved', !!saved && saved.season === si && saved.ep === ei);
+      });
+    });
+  }
+
 
   function updateEpNav() {
     const total = flatEps.length;
@@ -500,7 +592,7 @@
     if (currentPos === -1) return;
     const next = flatEps[currentPos + dir];
     if (!next) return;
-    selectEp(next.seasonIdx, next.epIdx, next.ep, epLists[next.seasonIdx].det);
+    selectEp(next.seasonIdx, next.epIdx, next.ep, epLists[next.seasonIdx].det, true);
   }
 
   function loadEpisode(ep) {
@@ -519,6 +611,7 @@
     placeholder.textContent = '';
 
     if (type === 'redirect') {
+      if (!/^https?:$/.test(new URL(ep.url).protocol)) { showNoVideo(ep); return; }
       const epLabel = document.createElement('div');
       epLabel.textContent = `Saison ${show.seasons[currentSeason].id ?? (currentSeason + 1)} — Épisode ${ep.num}`;
       const link = document.createElement('a');
@@ -531,10 +624,12 @@
       placeholder.style.display = 'flex';
       playerSource.textContent = 'ojamajo.moe';
     } else if (type === 'mp4') {
+      if (!/^https?:$/.test(new URL(ep.url).protocol)) { showNoVideo(ep); return; }
       video.src = ep.url;
       video.style.display = 'block';
       playerSource.textContent = new URL(ep.url).hostname;
     } else {
+      if (!/^https?:$/.test(new URL(ep.url).protocol)) { showNoVideo(ep); return; }
       const host = new URL(ep.url).hostname;
       const perms = SANDBOX_PERMISSIONS[host] ?? 'allow-scripts allow-same-origin';
       iframe.setAttribute('sandbox', perms);

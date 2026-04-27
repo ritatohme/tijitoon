@@ -240,6 +240,60 @@
   .filter-chip[data-filter="KIDS"].active  { background: var(--sky); }
   .filter-chip[data-filter="★"].active    { background: var(--sky); }
 
+  /* ---------- CONTINUER À REGARDER ---------- */
+  #continue-section {
+    display: none;
+    background: var(--ink);
+    border-bottom: 4px solid var(--lime);
+    padding: 1.2rem 5vw;
+  }
+  #continue-section.visible { display: block; }
+  .continue-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .continue-title {
+    font-family: 'Bungee', sans-serif; font-size: clamp(.9rem,2vw,1.1rem);
+    color: var(--lime); letter-spacing: .03em;
+  }
+  .continue-title::before { content: '▶ '; }
+  #continue-clear {
+    font-family: 'VT323', monospace; font-size: 1rem;
+    background: transparent; color: rgba(255,246,227,.5);
+    border: 1px solid rgba(255,246,227,.3);
+    padding: .2rem .7rem; cursor: pointer;
+    transition: color .1s, border-color .1s;
+  }
+  #continue-clear:hover { color: var(--paper); border-color: var(--paper); }
+  .continue-row {
+    display: flex; gap: .8rem; overflow-x: auto; padding-bottom: .4rem;
+  }
+  .continue-row::-webkit-scrollbar { height: 4px; }
+  .continue-row::-webkit-scrollbar-track { background: transparent; }
+  .continue-row::-webkit-scrollbar-thumb { background: var(--lime); }
+  .continue-card {
+    flex: 0 0 auto; min-width: 160px; max-width: 220px;
+    background: var(--paper);
+    border: 3px solid var(--lime);
+    box-shadow: 4px 4px 0 var(--lime);
+    padding: .8rem 1rem;
+    cursor: pointer;
+    transition: transform .12s, box-shadow .12s;
+  }
+  .continue-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--lime); }
+  .continue-card-title {
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: clamp(.7rem,1.2vw,.85rem);
+    line-height: 1.2; margin-bottom: .6rem;
+  }
+  .continue-card-pills { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .continue-pill {
+    font-family: 'VT323', monospace; font-size: .95rem;
+    padding: .1rem .5rem; border: 2px solid var(--ink);
+  }
+  .continue-pill.ep { background: var(--hot); color: var(--paper); }
+  .continue-pill.ch { background: transparent; color: var(--ink); }
+
   /* ---------- BACK TO TOP ---------- */
   #back-top {
     position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
@@ -340,6 +394,17 @@
     <a href="#tiji">Tiji (3–7 ans)</a>
   </div>
 </nav>
+
+
+<div id="continue-section">
+  <div class="inner">
+    <div class="continue-header">
+      <span class="continue-title">CONTINUER À REGARDER</span>
+      <button id="continue-clear">tout effacer</button>
+    </div>
+    <div class="continue-row" id="continue-row"></div>
+  </div>
+</div>
 
 <section id="teletoon">
 <div class="inner">
@@ -588,7 +653,7 @@
   // ---------- CARD NAVIGATION — single delegation pattern on all three grids ----------
   function navigateToCard(e) {
     const card = e.target.closest('.card[data-id]');
-    if (card) window.location.href = `show.html?id=${encodeURIComponent(card.dataset.id)}`;
+    if (card) window.location.href = `show.html?series=${encodeURIComponent(card.dataset.id)}`;
   }
   document.getElementById('grid-teletoon').addEventListener('click', navigateToCard);
   document.getElementById('grid-tiji').addEventListener('click', navigateToCard);
@@ -598,10 +663,74 @@
     if (e.persisted) { input.value = ''; doSearch(); }
   });
 
+  // ---------- CONTINUER À REGARDER ----------
+  const continueSection = document.getElementById('continue-section');
+  const continueRow     = document.getElementById('continue-row');
+
+  function buildContinueSection(data) {
+    const entries = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key.startsWith('tijitoon:progress:')) continue;
+      const seriesId = key.slice('tijitoon:progress:'.length);
+      const show = data[seriesId];
+      if (!show) continue;
+      try {
+        const { season, ep } = JSON.parse(localStorage.getItem(key));
+        const s = show.seasons[season];
+        const epObj = s?.episodes[ep];
+        if (!s || !epObj) continue;
+        entries.push({ seriesId, show, season, s, epObj });
+      } catch (_) {}
+    }
+
+    if (entries.length === 0) { continueSection.classList.remove('visible'); return; }
+
+    continueRow.innerHTML = '';
+    entries.forEach(({ seriesId, show, season, s, epObj }) => {
+      const card = document.createElement('div');
+      card.className = 'continue-card';
+
+      const title = document.createElement('div');
+      title.className = 'continue-card-title';
+      title.textContent = show.title.toUpperCase();
+
+      const pills = document.createElement('div');
+      pills.className = 'continue-card-pills';
+
+      const epPill = document.createElement('span');
+      epPill.className = 'continue-pill ep';
+      epPill.textContent = `S${s.id ?? String(season + 1).padStart(2,'0')}E${String(epObj.num).padStart(2,'0')}`;
+
+      const chPill = document.createElement('span');
+      chPill.className = 'continue-pill ch';
+      chPill.textContent = show.channel === 'tiji' ? 'Tiji' : 'Télétoon';
+
+      pills.append(epPill, chPill);
+      card.append(title, pills);
+      card.addEventListener('click', () => {
+        window.location.href = `show.html?series=${encodeURIComponent(seriesId)}`;
+      });
+      continueRow.appendChild(card);
+    });
+
+    continueSection.classList.add('visible');
+  }
+
+  document.getElementById('continue-clear').addEventListener('click', () => {
+    if (!confirm('Effacer tout l\'historique de visionnage ?')) return;
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i);
+      if (key.startsWith('tijitoon:progress:')) localStorage.removeItem(key);
+    }
+    continueSection.classList.remove('visible');
+    continueRow.innerHTML = '';
+  });
+
   // ---------- FETCH & INIT ----------
   fetch('data.json')
     .then(r => r.ok ? r.json() : Promise.reject())
-    .then(data => buildGrids(data))
+    .then(data => { buildGrids(data); buildContinueSection(data); })
     .catch(() => {
       document.querySelectorAll('.loading-placeholder').forEach(el => {
         el.textContent = 'Erreur de chargement.';
