@@ -330,6 +330,7 @@
   @media (max-width: 600px) {
     header { padding: 2.5rem 5vw 2rem; }
     .sticker.one { display: none; }
+    .sticker.two { display: none; }
     .card-grid { grid-template-columns: 1fr 1fr; gap: .55rem; }
     .card { padding: .7rem .75rem; }
     .table-head, .trow { grid-template-columns: 2rem 1fr 70px; }
@@ -472,7 +473,7 @@
         const s = show.seasons[season];
         const epObj = s?.episodes[ep];
         if (!s || !epObj) continue;
-        entries.push({ seriesId, show, season, s, epObj });
+        entries.push({ seriesId, show, season, ep, s, epObj });
       } catch (_) {}
     }
 
@@ -483,7 +484,7 @@
     if (!entries.length) { wrap.style.display = 'none'; return; }
     wrap.style.display = 'block';
 
-    entries.forEach(({ seriesId, show, season, s, epObj }) => {
+    entries.forEach(({ seriesId, show, season, ep, s, epObj }) => {
       const label = `S${s.id ?? String(season + 1).padStart(2,'0')}E${String(epObj.num).padStart(2,'0')}`;
 
       const card = document.createElement('div');
@@ -523,7 +524,7 @@
       card.appendChild(removeBtn);
       card.appendChild(inner);
       card.addEventListener('click', () => {
-        window.location.href = `show.html?series=${encodeURIComponent(seriesId)}`;
+        window.location.href = `show.html?series=${encodeURIComponent(seriesId)}&season=${season + 1}&ep=${ep + 1}`;
       });
       strip.appendChild(card);
     });

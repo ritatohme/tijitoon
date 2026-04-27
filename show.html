@@ -2,253 +2,485 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Tijitoon — Série</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik+Mono+One&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-  .topbar { position: sticky; top: 0; }
-  .topbar-title { opacity: .4; font-size: clamp(.8rem,1.5vw,1.1rem); }
+  body { background-image: none; overflow-x: hidden; }
+
+  /* ── TOPBAR ── */
+  .topbar { position: sticky; top: 0; z-index: 100; }
+  .topbar-title {
+    opacity: .4; font-size: clamp(.75rem,1.5vw,1rem);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    min-width: 0;
+  }
 
   /* ── HERO ── */
-  .show-hero { border-bottom: 4px solid var(--ink); }
-  .show-hero-inner {
-    padding: 4rem 5vw 3rem;
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
+  .show-hero {
+    background: var(--ink); color: var(--paper);
+    padding: 1.4rem 5vw 1.2rem;
+    border-bottom: 4px solid var(--lime);
   }
   .show-eyebrow {
-    font-family: 'VT323', monospace; font-size: clamp(1rem,2vw,1.3rem);
-    display: flex; align-items: center; gap: 1rem;
-    margin-bottom: 1.2rem; flex-wrap: wrap;
+    display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+    margin-bottom: .6rem;
   }
   .show-tag {
-    font-family: 'VT323', monospace; font-size: clamp(.85rem,1.5vw,1rem);
-    padding: .2rem .8rem; border: 2px solid var(--ink);
+    font-family: 'VT323', monospace; font-size: .9rem;
+    padding: .1rem .5rem; border: 2px solid rgba(255,246,227,.4);
   }
-  .tag-ANIME { background: var(--hot); color: var(--paper); }
-  .tag-FR    { background: var(--orange); }
-  .tag-TOON  { background: var(--lime); }
-  .tag-KIDS  { background: var(--sky); }
-  .tag-default { background: var(--lime); }
-  .show-years { font-family: 'VT323', monospace; font-size: 1.3rem; opacity: .6; }
+  .tag-ANIME   { background: var(--hot);    color: var(--paper); border-color: var(--hot); }
+  .tag-FR      { background: var(--orange); color: var(--ink);   border-color: var(--orange); }
+  .tag-TOON    { background: var(--lime);   color: var(--ink);   border-color: var(--lime); }
+  .tag-KIDS    { background: var(--sky);    color: var(--ink);   border-color: var(--sky); }
+  .tag-default { background: var(--lime);   color: var(--ink);   border-color: var(--lime); }
+  .tag-star    { background: var(--cream);  color: var(--ink);   border-color: var(--cream); }
+  .show-years  { font-family: 'VT323', monospace; font-size: 1rem; opacity: .4; }
   .ch-badge {
-    font-family: 'Bungee', sans-serif; font-size: .8rem;
-    padding: .3rem .9rem; border: 2px solid var(--ink);
-    box-shadow: 3px 3px 0 var(--ink);
+    font-family: 'Bungee', sans-serif; font-size: .7rem;
+    padding: .2rem .7rem; border: 2px solid rgba(255,246,227,.3);
+    box-shadow: 2px 2px 0 rgba(255,246,227,.2);
   }
-  .ch-badge.teletoon { background: var(--hot); color: var(--paper); }
-  .ch-badge.tiji     { background: var(--sky); color: var(--ink); }
-
+  .ch-badge.teletoon { background: var(--hot); border-color: var(--hot); }
+  .ch-badge.tiji     { background: var(--sky); color: var(--ink); border-color: var(--sky); }
   h1.show-title {
     font-family: 'Bungee', sans-serif;
-    font-size: clamp(1.5rem,4vw,3rem);
-    line-height: .95; letter-spacing: -.02em;
-    text-shadow: 3px 3px 0 var(--hot), 6px 6px 0 var(--sky);
-    max-width: 800px;
-    margin-bottom: .5rem;
+    font-size: clamp(1.4rem,4vw,2.8rem);
+    line-height: .92; letter-spacing: -.02em; color: var(--paper);
+    text-shadow: 3px 3px 0 rgba(255,61,127,.5), 6px 6px 0 rgba(58,199,255,.3);
     word-break: break-word;
   }
 
-  /* ── EPISODE NAV ── */
-  .ep-nav {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-top: 1.2rem;
-  }
-  .ep-nav-btn {
-    font-family: 'Bungee', sans-serif; font-size: clamp(.7rem,1.5vw,.85rem);
-    padding: .6rem 1.2rem;
-    color: var(--ink);
-    border: 3px solid var(--ink);
-    box-shadow: 4px 4px 0 var(--ink);
-    cursor: pointer;
-    white-space: nowrap; letter-spacing: .03em;
-    transition: background .1s, color .1s;
-  }
-  #btn-prev:not(:disabled) { background: var(--lime); }
-  #btn-next:not(:disabled) { background: var(--hot); color: var(--paper); }
-  .ep-nav-btn:hover:not(:disabled) { filter: brightness(1.1); }
-  .ep-nav-btn:disabled {
-    background: var(--paper); color: rgba(19,17,26,.25);
-    box-shadow: none; cursor: default;
-  }
-  .ep-nav-counter {
-    font-family: 'VT323', monospace; font-size: 1.2rem;
-    opacity: .5; text-align: center;
-    white-space: nowrap;
-  }
-
-  /* ── MAIN LAYOUT ── */
-  .show-body {
-    padding: 3rem 5vw 5rem;
+  /* ── 2-COL LAYOUT ── */
+  .show-layout {
     display: grid;
-    grid-template-columns: minmax(0,1fr) min(400px, 40%);
-    gap: 2.5rem;
+    grid-template-columns: minmax(0, 1fr) 380px;
     align-items: start;
-    max-width: 1200px;
+    padding-top: 1.5rem;
+    max-width: 1300px;
     margin: 0 auto;
+    padding: 0 3vw 4rem;
+    gap: 2rem;
   }
+  .show-left { min-width: 0; }
 
-  /* ── VIDEO PLAYER ── */
+  /* ── PLAYER ── */
+  .player-section {
+    background: #0d0c14;
+  }
   .player-wrap {
-    border: 3px solid var(--ink);
-    box-shadow: 8px 8px 0 var(--ink);
-    background: #111;
-    aspect-ratio: 16/9;
-    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 16 / 9;
     position: relative;
     overflow: hidden;
+    background: #111;
+    display: flex; align-items: center; justify-content: center;
   }
+  #player-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: none; }
+  #player-video  { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: none; }
+
   .player-placeholder {
-    display: flex; flex-direction: column; align-items: center; gap: 1rem;
-    color: rgba(255,246,227,.3);
-    font-family: 'VT323', monospace; font-size: 1.3rem;
-    text-align: center; padding: 2rem;
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem; text-align: center; padding: 1.5rem;
   }
-  .player-source {
+  .pl-title {
+    font-family: 'Bungee', sans-serif;
+    font-size: clamp(1.8rem,6vw,4.5rem);
+    line-height: .88; letter-spacing: -.03em;
+    color: rgba(255,246,227,.04);
+    text-transform: uppercase; word-break: break-word;
+  }
+  .pl-hint {
     font-family: 'VT323', monospace; font-size: 1rem;
-    margin-top: 1rem; opacity: .5;
+    color: rgba(255,246,227,.22);
+    border: 1px solid rgba(255,246,227,.12);
+    padding: .25rem 1rem; letter-spacing: .05em;
+  }
+  .pl-arrow::after { content: '↓'; }
+  @media (min-width: 861px) {
+    .pl-arrow::after { content: '→'; }
   }
   .player-external-link {
-    margin-top: .5rem; padding: .5rem 1.5rem;
-    background: rgba(255,246,227,.15);
-    border: 1px solid rgba(255,246,227,.3);
-    color: rgba(255,246,227,.8);
-    font-family: 'VT323', monospace; font-size: 1.2rem;
-    text-decoration: none; border-radius: 4px;
+    padding: .55rem 1.4rem;
+    background: var(--lime); color: var(--ink);
+    font-family: 'Bungee', sans-serif; font-size: .82rem;
+    text-decoration: none; border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .1s, box-shadow .1s; display: inline-block;
   }
-  .player-external-link:hover { background: rgba(255,246,227,.25); }
-  #player-iframe { width: 100%; height: 100%; border: none; display: none; }
+  .player-external-link:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+  .pl-ep-label {
+    font-family: 'VT323', monospace; font-size: 1rem;
+    color: rgba(255,246,227,.4);
+  }
+  .pl-unavail {
+    font-family: 'VT323', monospace; font-size: 1rem;
+    color: rgba(255,246,227,.3);
+  }
 
-  /* ── SIDEBAR ── */
-  .season-list { border: 3px solid var(--ink); border-top: none; }
-  .season-item {
-    padding: .9rem 1rem; border-bottom: 2px solid var(--ink);
-    cursor: pointer; font-family: 'Space Mono', monospace; font-size: .85rem;
-    transition: background .1s; display: flex; align-items: center; justify-content: space-between;
+  /* ── EP NAV BAR ── */
+  .ep-nav-bar {
+    background: var(--ink);
+    padding: .45rem .8rem;
+  }
+  .ep-nav-inner {
+    display: flex; align-items: center; gap: .6rem;
+    overflow: hidden;
+  }
+  .ep-nav-btn {
+    font-family: 'Bungee', sans-serif; font-size: clamp(.6rem,1.1vw,.75rem);
+    padding: .4rem .8rem; border: 2px solid rgba(255,246,227,.2);
+    color: rgba(255,246,227,.5); background: transparent;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    transition: all .1s;
+  }
+  #btn-prev:not(:disabled) { color: var(--paper); border-color: rgba(255,246,227,.4); }
+  #btn-next:not(:disabled) { color: var(--paper); border-color: rgba(255,246,227,.4); }
+  #btn-prev:not(:disabled):hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+  #btn-next:not(:disabled):hover { background: var(--hot); color: var(--paper); border-color: var(--hot); }
+  .ep-nav-btn:disabled { opacity: .2; cursor: default; }
+  .ep-nav-center {
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; align-items: center; gap: .1rem;
+    overflow: hidden;
+  }
+  .ep-now-playing {
+    font-family: 'VT323', monospace; font-size: .95rem;
+    color: rgba(255,246,227,.6);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    width: 100%; text-align: center;
+  }
+  .ep-nav-counter {
+    font-family: 'VT323', monospace; font-size: .8rem;
+    color: rgba(255,246,227,.3);
+  }
+
+  /* ── EPISODE BROWSER ── */
+  .ep-browser {
+    padding: 1.5rem 0 0;
+    min-width: 0;
+  }
+
+  /* Season pills */
+  .season-pills {
+    display: flex; gap: .4rem; flex-wrap: wrap;
+    margin-bottom: 1.2rem; align-items: center;
+  }
+  .season-pill {
+    font-family: 'Bungee', sans-serif; font-size: .78rem;
+    width: 2.2rem; height: 2.2rem;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--paper); border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    cursor: pointer; transition: all .1s; flex-shrink: 0;
+    color: var(--ink);
+  }
+  .season-pill:hover:not(.active) { background: var(--cream); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
+  .season-pill.active { background: var(--ink); color: var(--lime); box-shadow: none; transform: translate(2px,2px); }
+  .season-pill-label {
+    font-family: 'VT323', monospace; font-size: .95rem;
+    color: rgba(19,17,26,.4); padding-left: .2rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  /* Browser header: count + search + toggle */
+  .ep-browser-header {
+    display: flex; align-items: center; gap: .6rem;
+    margin-bottom: .8rem;
+  }
+  .ep-count-label {
+    font-family: 'VT323', monospace; font-size: .95rem;
+    color: rgba(19,17,26,.4); flex-shrink: 0;
+  }
+  .ep-search-wrap {
+    flex: 1; min-width: 120px;
+    display: flex; align-items: center;
+    border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
+    background: var(--paper);
+  }
+  .ep-search-wrap:focus-within { border-color: var(--hot); box-shadow: 2px 2px 0 var(--hot); }
+  .ep-search {
+    flex: 1; min-width: 0;
+    font-family: 'Space Mono', monospace; font-size: .75rem;
+    background: transparent; color: var(--ink);
+    border: none; padding: .3rem .7rem; outline: none;
+  }
+  .ep-search::placeholder { color: rgba(19,17,26,.3); }
+  .ep-search-clear {
+    font-family: 'VT323', monospace; font-size: 1.1rem;
+    background: none; border: none; cursor: pointer;
+    color: rgba(19,17,26,.35); padding: 0 .5rem;
+    line-height: 1; display: none;
+  }
+  .ep-search-clear:hover { color: var(--hot); }
+  .ep-search-clear.visible { display: block; }
+
+  /* Collapsed search icon */
+  .ep-search-toggle {
+    display: block;
+    background: var(--paper); border: 2px solid var(--ink);
+    box-shadow: 2px 2px 0 var(--ink);
+    cursor: pointer; padding: .2rem .55rem;
+    font-size: 1rem; flex-shrink: 0; line-height: 1;
+    color: var(--ink); margin-left: auto;
+  }
+  .ep-search-wrap { display: none; flex: 1; }
+  .ep-search-wrap.open { display: flex; }
+  @media (max-width: 600px) {
+    .ep-count-label { display: none; }
+  }
+  .ep-view-toggle {
+    display: flex; border: 2px solid var(--ink);
+    box-shadow: 2px 2px 0 var(--ink); flex-shrink: 0;
+  }
+  .ep-view-btn {
+    font-family: 'VT323', monospace; font-size: 1rem;
+    background: var(--paper); border: none; color: rgba(19,17,26,.4);
+    padding: .2rem .65rem; cursor: pointer; transition: all .1s; line-height: 1;
+  }
+  .ep-view-btn:not(:last-child) { border-right: 2px solid var(--ink); }
+  .ep-view-btn.active { background: var(--ink); color: var(--lime); }
+  .ep-view-btn:hover:not(.active) { background: var(--cream); color: var(--ink); }
+
+  /* Episode grid */
+  .ep-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: .5rem;
   }
-  .season-item:last-child { border-bottom: none; }
-  .season-item:hover  { background: var(--cream); }
-  .season-item.active { background: var(--lime); }
-  .season-item .s-label { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-  .season-item .s-count { font-family: 'VT323', monospace; font-size: 1rem; opacity: .5; white-space: nowrap; flex-shrink: 0; }
+  .ep-card {
+    background: var(--paper); border: 3px solid var(--ink);
+    padding: .7rem .85rem;
+    cursor: pointer; transition: transform .12s, box-shadow .12s, background .1s;
+    display: flex; flex-direction: column; gap: .25rem;
+    position: relative;
+  }
+  .ep-card:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+  .ep-card.playing { background: var(--lime); box-shadow: 4px 4px 0 var(--ink); transform: translate(-2px,-2px); }
+  .ep-card.saved::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--hot);
+  }
+  .ep-card.no-url { opacity: .4; cursor: default; }
+  .ep-card.no-url:hover { transform: none; box-shadow: none; }
+  .ep-card-num { font-family: 'VT323', monospace; font-size: .95rem; color: rgba(19,17,26,.3); }
+  .ep-card.playing .ep-card-num { color: var(--ink); opacity: .6; }
+  .ep-card-title { font-family: 'Space Mono', monospace; font-size: clamp(.65rem,1vw,.78rem); line-height: 1.3; }
+  .ep-card-play { display: none; }
 
   /* Episode list */
-  .ep-list {
-    border: 3px solid var(--ink); border-top: none;
-    max-height: 420px; overflow-y: auto;
+  .ep-list-wrap {
+    border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
+    overflow-y: auto; max-height: calc(10 * 2.4rem);
+    max-width: 600px;
+    display: none;
   }
-  .ep-item {
-    padding: .7rem 1rem; border-bottom: 1px solid rgba(19,17,26,.12);
-    cursor: pointer; font-family: 'Space Mono', monospace; font-size: clamp(.7rem,1.2vw,.8rem);
-    display: flex; align-items: center; gap: .8rem;
-    transition: background .1s;
+  .ep-list-wrap.active { display: block; }
+  .ep-list-row {
+    display: grid; grid-template-columns: 3rem 1fr;
+    align-items: center;
+    border-bottom: 1px solid rgba(19,17,26,.1);
+    cursor: pointer; transition: background .1s;
   }
-  .ep-item:last-child { border-bottom: none; }
-  .ep-item:hover   { background: var(--cream); }
-  .ep-item.playing { background: var(--lime); }
-  .ep-item .ep-num {
-    font-family: 'VT323', monospace; font-size: 1.1rem;
-    color: var(--ink); opacity: .4; flex-shrink: 0; width: 2.5rem;
+  .ep-list-row:last-child { border-bottom: none; }
+  .ep-list-row:hover { background: var(--cream); }
+  .ep-list-row.playing { background: var(--lime); }
+  .ep-list-row.no-url { opacity: .4; cursor: default; }
+  .ep-list-row.no-url:hover { background: transparent; }
+  .ep-list-row.saved { border-left: 3px solid var(--hot); }
+  .ep-list-num {
+    font-family: 'VT323', monospace; font-size: .95rem;
+    color: rgba(19,17,26,.3); text-align: right;
+    padding: .5rem .55rem; border-right: 2px solid rgba(19,17,26,.1);
   }
-  .ep-item.playing .ep-num { opacity: 1; color: var(--hot); }
-  .ep-item .ep-title { flex: 1; line-height: 1.3; }
-  .ep-item .ep-play { flex-shrink: 0; font-size: .7rem; opacity: 0; transition: opacity .1s; }
-  .ep-item:hover .ep-play   { opacity: .5; }
-  .ep-item.playing .ep-play { opacity: 1; color: var(--hot); }
-  .ep-item.saved { border-left: 3px solid var(--hot); }
-  .ep-item.saved .ep-num { opacity: 1; color: var(--hot); }
-  .ep-list::-webkit-scrollbar       { width: 6px; }
-  .ep-list::-webkit-scrollbar-track { background: var(--paper); }
-  .ep-list::-webkit-scrollbar-thumb { background: var(--ink); border-radius: 0; }
+  .ep-list-row.playing .ep-list-num { color: var(--hot); }
+  .ep-list-title {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(.68rem,1vw,.78rem); line-height: 1.3;
+    padding: .5rem .75rem;
+  }
 
-  /* details/summary collapse */
-  details.sidebar-section { border: 3px solid var(--ink); border-top: none; }
-  details.sidebar-section summary {
-    font-family: 'Bungee', sans-serif; font-size: clamp(.9rem,1.8vw,1.2rem);
-    background: var(--ink); color: var(--paper);
-    padding: .6rem 1rem;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: .5rem; list-style: none; cursor: pointer;
-    min-width: 0; overflow: hidden;
+  .ep-no-results {
+    font-family: 'VT323', monospace; font-size: 1rem;
+    color: rgba(19,17,26,.35); padding: 1.5rem 0; text-align: center;
+    display: none;
   }
-  details.sidebar-section summary .s-label {
-    font-family: 'VT323', monospace; font-size: 1.1rem; opacity: .5; font-weight: 400;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
-  }
-  details.sidebar-section summary::-webkit-details-marker { display: none; }
-  details.sidebar-section summary::after { content: '›'; padding-left: .5rem; transition: transform .2s; display: inline-block; }
-  details.sidebar-section[open] summary::after { transform: rotate(90deg); }
 
-  @media (max-width: 900px) {
-    .show-body { grid-template-columns: 1fr; }
-    .sidebar   { order: -1; min-width: 0; overflow: hidden; }
-    .ep-list   { max-height: 280px; }
+  .ep-pagination {
+    display: none;
+    align-items: center; justify-content: center; gap: .6rem;
+    margin-top: .6rem;
+  }
+  .ep-pagination.visible { display: flex; }
+  .ep-page-btn {
+    font-family: 'Bungee', sans-serif; font-size: .75rem;
+    padding: .3rem .7rem; border: 2px solid var(--ink);
+    box-shadow: 2px 2px 0 var(--ink);
+    background: var(--paper); color: var(--ink);
+    cursor: pointer; transition: all .1s;
+  }
+  .ep-page-btn:hover:not(:disabled) { background: var(--ink); color: var(--lime); }
+  .ep-page-btn:disabled { opacity: .25; cursor: default; box-shadow: none; }
+  .ep-page-info {
+    font-family: 'VT323', monospace; font-size: .95rem;
+    color: rgba(19,17,26,.4);
+  }
+
+  @media (max-width: 860px) {
+    .show-layout { grid-template-columns: 1fr; padding: 0 0 3rem; gap: 0; }
+    .player-section { padding: 0 4vw; }
+    .ep-browser { padding: 1.2rem 4vw 3rem; }
+    .ep-list-wrap { max-width: none; }
+  }
+  @media (max-width: 600px) {
+    .show-hero { padding: 1rem 4vw .9rem; }
+    .ep-grid { grid-template-columns: 1fr 1fr; gap: .4rem; }
+    .ep-card { padding: .55rem .65rem; }
+    .ep-list-wrap { max-height: calc(8 * 2.4rem); }
+    .ep-nav-bar { padding: .4rem 3vw; }
   }
 </style>
 </head>
 <body>
 
+<!-- TOPBAR -->
 <div class="topbar">
-  <a class="back-btn" id="back-btn" href="index.html">← CATALOGUE</a>
+  <a class="back-btn" href="index.html">← CATALOGUE</a>
   <span class="topbar-title" id="topbar-title"></span>
 </div>
 
+<!-- HERO -->
 <div class="show-hero">
-  <div class="show-hero-inner">
-    <div class="show-eyebrow">
-      <span class="show-tag" id="show-tag">TOON</span>
-      <span class="show-years" id="show-years">2000–2015</span>
-      <span class="ch-badge" id="show-channel">Télétoon</span>
-    </div>
-    <h1 class="show-title" id="show-title">SÉRIE</h1>
-  </div>
+  <h1 class="show-title" id="show-title">SÉRIE</h1>
 </div>
 
-<div class="show-body">
+<div class="show-layout">
 
-  <!-- Player -->
-  <div>
+<!-- LEFT: player + nav -->
+<div class="show-left">
+  <div class="player-section">
     <div class="player-wrap" id="player-wrap">
-      <iframe id="player-iframe" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="autoplay; fullscreen; picture-in-picture; web-share"></iframe>
-      <video id="player-video" controls controlslist="nodownload" style="display:none;width:100%;height:100%;"></video>
+      <iframe id="player-iframe" allowfullscreen webkitallowfullscreen mozallowfullscreen
+        allow="autoplay; fullscreen; picture-in-picture; web-share"></iframe>
+      <video id="player-video" controls controlslist="nodownload"></video>
       <div class="player-placeholder" id="player-placeholder">
-        <div>Sélectionne un épisode<br>pour lancer la lecture</div>
+        <div class="pl-title" id="pl-bg-title"></div>
+        <div class="pl-hint" id="pl-hint">Sélectionne un épisode <span class="pl-arrow"></span></div>
       </div>
     </div>
-    <div class="ep-nav" id="ep-nav">
-      <button class="ep-nav-btn" id="btn-prev" disabled onclick="navigateEp(-1)">← ÉP. PRÉC.</button>
-      <span class="ep-nav-counter" id="ep-nav-counter">— / —</span>
-      <button class="ep-nav-btn" id="btn-next" disabled onclick="navigateEp(1)">ÉP. SUIV. →</button>
-    </div>
-    <div class="player-source" id="player-source"></div>
   </div>
-
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar"></div>
-
+  <div class="ep-nav-bar">
+    <div class="ep-nav-inner">
+      <button class="ep-nav-btn" id="btn-prev" disabled onclick="navigateEp(-1)">← PRÉC.</button>
+      <div class="ep-nav-center">
+        <span class="ep-now-playing" id="ep-now-playing">—</span>
+        <span class="ep-nav-counter" id="ep-nav-counter">— / —</span>
+      </div>
+      <button class="ep-nav-btn" id="btn-next" disabled onclick="navigateEp(1)">SUIV. →</button>
+    </div>
+  </div>
 </div>
+
+<!-- RIGHT: episode browser -->
+<div class="ep-browser">
+  <div class="season-pills" id="season-tabs" style="display:none;"></div>
+  <div class="ep-browser-header">
+    <span class="ep-count-label" id="ep-count-label"></span>
+    <button class="ep-search-toggle" id="ep-search-toggle" aria-label="Rechercher">⌕</button>
+    <div class="ep-search-wrap" id="ep-search-wrap">
+      <input class="ep-search" id="ep-search" type="text" placeholder="Rechercher un épisode…" autocomplete="off">
+      <button class="ep-search-clear" id="ep-search-clear" aria-label="Effacer">✕</button>
+    </div>
+    <div class="ep-view-toggle">
+      <button class="ep-view-btn active" id="epv-grid" title="Grille">⊞</button>
+      <button class="ep-view-btn" id="epv-list" title="Liste">≡</button>
+    </div>
+  </div>
+  <div class="ep-no-results" id="ep-no-results">Aucun épisode trouvé</div>
+  <div class="ep-grid" id="ep-grid"></div>
+  <div class="ep-list-wrap" id="ep-list-wrap"></div>
+  <div class="ep-pagination" id="ep-pagination">
+    <button class="ep-page-btn" id="ep-page-prev">←</button>
+    <span class="ep-page-info" id="ep-page-info"></span>
+    <button class="ep-page-btn" id="ep-page-next">→</button>
+  </div>
+</div><!-- ep-browser -->
+
+</div><!-- show-layout -->
 
 <script>
   const params = new URLSearchParams(location.search);
   const showId = params.get('series') || params.get('id');
   if (!showId || !/^[\w-]+$/.test(showId)) window.location.replace('404.html');
 
-  const sidebar      = document.getElementById('sidebar');
-  const iframe       = document.getElementById('player-iframe');
-  const video        = document.getElementById('player-video');
-  const placeholder  = document.getElementById('player-placeholder');
-  const playerSource = document.getElementById('player-source');
-  const MOBILE_QUERY = window.matchMedia('(max-width: 900px)');
+  const iframe      = document.getElementById('player-iframe');
+  const video       = document.getElementById('player-video');
+  const placeholder = document.getElementById('player-placeholder');
+  const epGrid      = document.getElementById('ep-grid');
+  const epListWrap  = document.getElementById('ep-list-wrap');
+  const epPagination = document.getElementById('ep-pagination');
+  const epPagePrev   = document.getElementById('ep-page-prev');
+  const epPageNext   = document.getElementById('ep-page-next');
+  const epPageInfo   = document.getElementById('ep-page-info');
+  const PAGE_SIZE = 10;
+  let currentPage = 0;
+  const seasonTabs  = document.getElementById('season-tabs');
+  const epSearch       = document.getElementById('ep-search');
+  const epSearchClear  = document.getElementById('ep-search-clear');
+  const epSearchWrap   = document.getElementById('ep-search-wrap');
+  const epSearchToggle = document.getElementById('ep-search-toggle');
+
+  epSearchToggle.addEventListener('click', () => {
+    epSearchWrap.classList.toggle('open');
+    if (epSearchWrap.classList.contains('open')) epSearch.focus();
+  });
+
+  function collapseSearch() {
+    epSearch.value = '';
+    epSearchClear.classList.remove('visible');
+    epSearchWrap.classList.remove('open');
+    applySearch('', false);
+  }
+  const noResults   = document.getElementById('ep-no-results');
+
+  let epViewMode = localStorage.getItem('tijitoon_ep_view') || 'list';
+
+  const epvGrid = document.getElementById('epv-grid');
+  const epvList = document.getElementById('epv-list');
+  function applyEpView() {
+    const isList = epViewMode === 'list';
+    epGrid.style.display       = isList ? 'none' : '';
+    epListWrap.classList.toggle('active', isList);
+    epvGrid.classList.toggle('active', !isList);
+    epvList.classList.toggle('active', isList);
+  }
+  epvGrid.addEventListener('click', () => {
+    epViewMode = 'grid'; localStorage.setItem('tijitoon_ep_view', epViewMode); applyEpView();
+    if (currentEp !== -1 && currentSeason === flatEps[currentPos]?.seasonIdx) {
+      currentPage = Math.floor(currentEp / PAGE_SIZE);
+    }
+    renderPage();
+  });
+  epvList.addEventListener('click', () => {
+    epViewMode = 'list'; localStorage.setItem('tijitoon_ep_view', epViewMode); applyEpView(); renderPage();
+    if (currentEp !== -1 && epListRows[currentSeason]?.[currentEp]) {
+      setTimeout(() => epListRows[currentSeason][currentEp].scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
+    }
+  });
+  applyEpView();
+
+  const playerWrap = document.getElementById('player-wrap');
 
   const SANDBOX_PERMISSIONS = {
-    'ojamajo.moe': 'allow-scripts allow-popups allow-forms',
+    'ojamajo.moe':   'allow-scripts allow-popups allow-forms',
+    'archive.org':   'allow-scripts allow-same-origin allow-popups allow-forms allow-presentation',
   };
+  const DEFAULT_SANDBOX = 'allow-scripts allow-same-origin allow-popups allow-presentation';
 
   function getEpType(ep) {
     if (ep.type) return ep.type;
@@ -257,54 +489,38 @@
     return 'embed';
   }
 
-  const btnPrev      = document.getElementById('btn-prev');
-  const btnNext      = document.getElementById('btn-next');
-  const epNavCounter = document.getElementById('ep-nav-counter');
-
   let show          = null;
   let currentSeason = 0;
   let currentEp     = -1;
   let currentPos    = -1;
+  let flatEps       = [];
+  let epCards       = [];
+  let epListRows    = [];
   let isRestoringFromHistory = false;
 
-  let seasonItems        = [];
-  let epLists            = [];
-  let epSummaries        = [];
-  let seasonsDet         = null;
-  let flatEps            = [];
-  let updateSeasonsLabel = () => {};
-
-  // ── localStorage ─────────────────────────────────────────────────────────
   const LS_KEY = `tijitoon:progress:${showId}`;
 
-  function saveProgress(seasonIdx, epIdx) {
-    try { localStorage.setItem(LS_KEY, JSON.stringify({ season: seasonIdx, ep: epIdx })); } catch (_) {}
+  function saveProgress(si, ei) {
+    try { localStorage.setItem(LS_KEY, JSON.stringify({ season: si, ep: ei })); } catch(_) {}
   }
-
   function loadProgress() {
     try {
       const raw = localStorage.getItem(LS_KEY);
       if (!raw) return null;
       const { season, ep } = JSON.parse(raw);
       if (typeof season === 'number' && typeof ep === 'number') return { season, ep };
-    } catch (_) {}
+    } catch(_) {}
     return null;
   }
 
-  // ── URL / history helpers ─────────────────────────────────────────────────
-  function buildUrl(seasonIdx, epIdx) {
+  function buildUrl(si, ei) {
     const u = new URLSearchParams();
-    u.set('series', showId);
-    u.set('season', seasonIdx + 1);
-    u.set('ep', epIdx + 1);
+    u.set('series', showId); u.set('season', si + 1); u.set('ep', ei + 1);
     return `${location.pathname}?${u}`;
   }
-
-  function pushEpUrl(seasonIdx, epIdx) {
-    history.pushState({ series: showId, season: seasonIdx, ep: epIdx }, '', buildUrl(seasonIdx, epIdx));
+  function pushEpUrl(si, ei) {
+    history.pushState({ series: showId, season: si, ep: ei }, '', buildUrl(si, ei));
   }
-
-  // Read ?season=N&ep=M from URL (1-based, returns 0-based indices or null)
   function readUrlEp() {
     const s = parseInt(params.get('season'), 10);
     const e = parseInt(params.get('ep'), 10);
@@ -312,349 +528,269 @@
     return null;
   }
 
-  // ── Data load ─────────────────────────────────────────────────────────────
   fetch('data.json')
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(data => {
       show = data[showId];
       if (!show) return window.location.replace('404.html');
+
       flatEps = show.seasons.flatMap((s, si) =>
         s.episodes.map((ep, ei) => ({ seasonIdx: si, epIdx: ei, ep }))
       );
+
       populateHero();
-      buildSidebar();
-      refreshSavedMark();
+      buildSeasonTabs();
+      buildEpGrid(0);
 
       const urlEp = readUrlEp();
+      const saved  = loadProgress();
+
       if (urlEp) {
-        // Deep link — treat as explicit selection, save progress
         const { season: si, ep: ei } = urlEp;
-        const s = show.seasons[si];
-        const ep = s?.episodes[ei];
+        const s = show.seasons[si]; const ep = s?.episodes[ei];
         if (s && ep) {
           history.replaceState({ series: showId, season: si, ep: ei }, '', buildUrl(si, ei));
-          selectEp(si, ei, ep, epLists[si].det, false, true);
+          if (si !== 0) switchSeason(si);
+          selectEp(si, ei, ep, true);
+        } else {
+          placeholder.style.display = 'flex';
         }
+      } else if (saved) {
+        if (saved.season !== 0) switchSeason(saved.season);
+        refreshSavedMark();
+        placeholder.style.display = 'flex';
       } else {
-        // No URL params — restore saved highlight without saving again
-        const saved = loadProgress();
-        if (saved) {
-          const s = show.seasons[saved.season];
-          const ep = s?.episodes[saved.ep];
-          if (s && ep) {
-            history.replaceState({ series: showId, season: saved.season, ep: saved.ep }, '', buildUrl(saved.season, saved.ep));
-            selectEp(saved.season, saved.ep, ep, epLists[saved.season].det, false, false);
-          }
-        }
+        placeholder.style.display = 'flex';
       }
     })
     .catch(() => window.location.replace('404.html'));
 
-  // Back / Forward navigation
   window.addEventListener('popstate', e => {
     if (!show || !e.state || e.state.series !== showId) return;
     const { season: si, ep: ei } = e.state;
-    const s = show.seasons[si];
-    const ep = s?.episodes[ei];
+    const s = show.seasons[si]; const ep = s?.episodes[ei];
     if (!s || !ep) return;
     isRestoringFromHistory = true;
-    selectEp(si, ei, ep, epLists[si].det, false, false);
+    if (si !== currentSeason) switchSeason(si);
+    selectEp(si, ei, ep, false);
     isRestoringFromHistory = false;
   });
 
-  // ── Hero ──────────────────────────────────────────────────────────────────
   function populateHero() {
     document.title = `Tijitoon — ${show.title}`;
     document.getElementById('show-title').textContent = show.title.toUpperCase();
-    document.getElementById('show-years').textContent = show.years || '';
+    document.getElementById('pl-bg-title').textContent = show.title;
     document.getElementById('topbar-title').textContent = show.title.toUpperCase();
-
-    const tagEl = document.getElementById('show-tag');
-    tagEl.textContent = show.tag;
-    tagEl.className = 'show-tag tag-' + (show.tag || 'default');
-
-    const chEl = document.getElementById('show-channel');
-    if (show.channel === 'tiji') {
-      chEl.textContent = 'Tiji';
-      chEl.classList.add('tiji');
-    } else {
-      chEl.textContent = 'Télétoon';
-      chEl.classList.add('teletoon');
-    }
   }
 
-  // ── Sidebar ───────────────────────────────────────────────────────────────
-  function buildSidebar() {
-    sidebar.innerHTML = '';
-    seasonItems  = [];
-    epLists      = [];
-    epSummaries  = [];
-    seasonsDet   = null;
-
-    const seasons     = show.seasons;
-    const multiSeason = seasons.length > 1;
-    const isMobile    = MOBILE_QUERY.matches;
-
-    if (multiSeason) {
-      const det = document.createElement('details');
-      det.className = 'sidebar-section';
-      if (!isMobile) det.open = true;
-      seasonsDet = det;
-
-      const sum = document.createElement('summary');
-      const label = document.createElement('span');
-      label.className = 's-label';
-      sum.append('SAISONS ', label);
-      det.appendChild(sum);
-
-      updateSeasonsLabel = () => {
-        if (det.open) {
-          label.textContent = `${seasons.length} saisons`;
-          sum.title = '';
-        } else {
-          const s = seasons[currentSeason];
-          label.textContent = `S${s.id ?? String(currentSeason + 1).padStart(2,'0')} · ${s.name}`;
-          sum.title = s.name;
-        }
-      };
-      updateSeasonsLabel();
-      det.addEventListener('toggle', updateSeasonsLabel);
-
-      const sl = document.createElement('div');
-      sl.className = 'season-list';
-      seasons.forEach((s, i) => {
-        const item = document.createElement('div');
-        item.className = 'season-item' + (i === currentSeason ? ' active' : '');
-        item.setAttribute('role', 'button');
-        item.setAttribute('tabindex', '0');
-
-        const sLabel = document.createElement('span');
-        sLabel.className = 's-label';
-        sLabel.textContent = s.name;
-        const sCount = document.createElement('span');
-        sCount.className = 's-count';
-        sCount.textContent = `${s.episodes.length} ép.`;
-        item.append(sLabel, sCount);
-
-        item.addEventListener('click', () => selectSeason(i));
-        item.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectSeason(i); }
-        });
-        sl.appendChild(item);
-        seasonItems.push(item);
-      });
-      det.appendChild(sl);
-      sidebar.appendChild(det);
-    }
-
-    seasons.forEach((season, si) => {
-      const epDet = document.createElement('details');
-      epDet.className = 'sidebar-section';
-      epDet.style.display = si === currentSeason ? '' : 'none';
-      if (!isMobile) epDet.open = true;
-
-      const epSum = document.createElement('summary');
-      const epLabel = document.createElement('span');
-      epLabel.className = 's-label';
-      epSum.append('ÉPISODES ', epLabel);
-      epDet.appendChild(epSum);
-
-      const updateEpLabel = () => {
-        if (epDet.open || currentEp === -1 || currentSeason !== si) {
-          epLabel.textContent = `${season.episodes.length} ép.`;
-        } else {
-          const ep = season.episodes[currentEp];
-          epLabel.textContent = `S${season.id ?? (si + 1)} E${String(ep.num).padStart(2, '0')}`;
-        }
-      };
-      updateEpLabel();
-      epDet.addEventListener('toggle', () => {
-        updateEpLabel();
-        if (epDet.open) {
-          const playing = epDet.querySelector('.ep-item.playing');
-          if (playing) setTimeout(() => playing.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
-        }
-      });
-      epSummaries.push({ el: epSum, label: epLabel, update: updateEpLabel });
-
-      const el = document.createElement('div');
-      el.className = 'ep-list';
-      season.episodes.forEach((ep, i) => {
-        const item = document.createElement('div');
-        item.className = 'ep-item' + (si === currentSeason && i === currentEp ? ' playing' : '');
-        item.setAttribute('role', 'button');
-        item.setAttribute('tabindex', '0');
-
-        const num = document.createElement('span');
-        num.className = 'ep-num';
-        num.textContent = `E${String(ep.num).padStart(2, '0')}`;
-        const title = document.createElement('span');
-        title.className = 'ep-title';
-        title.textContent = ep.title;
-        const play = document.createElement('span');
-        play.className = 'ep-play';
-        play.textContent = '▶';
-        item.append(num, title, play);
-
-        item.addEventListener('click', () => selectEp(si, i, ep, epDet, true));
-        item.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectEp(si, i, ep, epDet, true); }
-        });
-        el.appendChild(item);
-      });
-      epDet.appendChild(el);
-      sidebar.appendChild(epDet);
-      epLists.push({ det: epDet, el });
+  function buildSeasonTabs() {
+    if (show.seasons.length <= 1) return;
+    seasonTabs.style.display = '';
+    show.seasons.forEach((s, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'season-pill' + (i === 0 ? ' active' : '');
+      btn.textContent = `S${i + 1}`;
+      btn.title = s.name || `Saison ${i + 1}`;
+      btn.addEventListener('click', () => { if (i !== currentSeason) switchSeason(i); });
+      seasonTabs.appendChild(btn);
     });
-
-    updateEpNav();
-
-    MOBILE_QUERY.addEventListener('change', e => {
-      sidebar.querySelectorAll('details.sidebar-section').forEach(det => {
-        det.open = !e.matches;
-      });
-    });
+    const label = document.createElement('span');
+    label.className = 'season-pill-label';
+    label.id = 'season-ep-count';
+    const s0 = show.seasons[0];
+    label.textContent = `— ${s0.name || 'Saison 1'}`;
+    seasonTabs.appendChild(label);
   }
 
   function switchSeason(i) {
     currentSeason = i;
-    seasonItems.forEach((item, j) => item.classList.toggle('active', j === i));
-    epLists.forEach(({ det, el }, j) => {
-      det.style.display = j === i ? '' : 'none';
-      el.querySelectorAll('.ep-item').forEach(item => item.classList.remove('playing'));
+    currentPage = 0;
+    collapseSearch();
+    seasonTabs.querySelectorAll('.season-pill').forEach((btn, j) =>
+      btn.classList.toggle('active', j === i)
+    );
+    const countEl = document.getElementById('season-ep-count');
+    if (countEl) countEl.textContent = `— ${show.seasons[i].name || `Saison ${i + 1}`}`;
+    buildEpGrid(i);
+    epListWrap.scrollTop = 0;
+  }
+
+  function buildEpGrid(seasonIdx) {
+    epGrid.innerHTML = '';
+    epListWrap.innerHTML = '';
+    epCards[seasonIdx]    = [];
+    epListRows[seasonIdx] = [];
+    const season = show.seasons[seasonIdx];
+    const count  = season.episodes.length;
+    document.getElementById('ep-count-label').textContent = `${count} épisode${count > 1 ? 's' : ''}`;
+
+    season.episodes.forEach((ep, i) => {
+      const hasUrl = !!ep.url;
+      const numStr = `E${String(ep.num).padStart(2,'0')}`;
+
+      const handler = () => {
+        currentPage = Math.floor(i / PAGE_SIZE);
+        collapseSearch();
+        selectEp(seasonIdx, i, ep, true);
+        if (!isRestoringFromHistory) pushEpUrl(seasonIdx, i);
+      };
+
+      const card = document.createElement('div');
+      card.className = 'ep-card' + (!hasUrl ? ' no-url' : '');
+      card.dataset.title = normalize(ep.title);
+      card.innerHTML = `
+        <div class="ep-card-num">${numStr}</div>
+        <div class="ep-card-title">${ep.title}</div>`;
+      if (hasUrl) card.addEventListener('click', handler);
+      epGrid.appendChild(card);
+      epCards[seasonIdx].push(card);
+
+      const row = document.createElement('div');
+      row.className = 'ep-list-row' + (!hasUrl ? ' no-url' : '');
+      row.dataset.title = normalize(ep.title);
+      row.innerHTML = `
+        <span class="ep-list-num">${numStr}</span>
+        <span class="ep-list-title">${ep.title}</span>`;
+      if (hasUrl) row.addEventListener('click', handler);
+      epListWrap.appendChild(row);
+      epListRows[seasonIdx].push(row);
     });
-    updateSeasonsLabel();
-    epSummaries.forEach(({ update }) => update());
-  }
 
-  function selectSeason(i) {
-    if (i === currentSeason) {
-      if (seasonsDet) seasonsDet.open = false;
-      return;
+    if (currentEp !== -1 && seasonIdx === flatEps[currentPos]?.seasonIdx) {
+      epCards[seasonIdx]?.[currentEp]?.classList.add('playing');
+      epListRows[seasonIdx]?.[currentEp]?.classList.add('playing');
     }
-    currentEp = -1;
-    switchSeason(i);
-    if (seasonsDet) seasonsDet.open = false;
-    selectEp(i, 0, show.seasons[i].episodes[0], epLists[i].det, true, false);
-    if (!MOBILE_QUERY.matches) epLists[i].det.open = true;
+    refreshSavedMark();
+    applySearch('');
   }
 
-  function selectEp(seasonIdx, epIdx, ep, epDet, pushHistory, saveToStorage = true) {
-    if (seasonIdx !== currentSeason) switchSeason(seasonIdx);
-    currentEp = epIdx;
+  function normalize(str) {
+    return str.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  }
+
+  epSearch.addEventListener('input', () => {
+    epSearchClear.classList.toggle('visible', epSearch.value.length > 0);
+    applySearch(epSearch.value);
+  });
+  epSearchClear.addEventListener('click', () => {
+    collapseSearch();
+    epSearch.focus();
+  });
+
+  function applySearch(q, resetPage = true) {
+    const query = normalize(q.trim());
+    if (resetPage) currentPage = 0;
+    renderPage(query);
+  }
+
+  function renderPage(query) {
+    query = query ?? normalize(epSearch.value.trim());
+    const cards = Array.from(epGrid.querySelectorAll('.ep-card'));
+    const rows  = Array.from(epListWrap.querySelectorAll('.ep-list-row'));
+
+    const matchedCards = cards.filter(c => !query || c.dataset.title.includes(query));
+    const matchedRows  = rows.filter(r => !query || r.dataset.title.includes(query));
+
+    const total = matchedCards.length;
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const start = currentPage * PAGE_SIZE;
+    const end   = start + PAGE_SIZE;
+
+    cards.forEach(c => c.style.display = 'none');
+    matchedCards.slice(start, end).forEach(c => c.style.display = '');
+    rows.forEach(r => r.style.display = !query || r.dataset.title.includes(query) ? '' : 'none');
+
+    noResults.style.display = total === 0 ? 'block' : 'none';
+
+    if (total > PAGE_SIZE && epViewMode === 'grid') {
+      epPagination.classList.add('visible');
+      epPageInfo.textContent = `${start + 1}–${Math.min(end, total)} / ${total}`;
+      epPagePrev.disabled = currentPage === 0;
+      epPageNext.disabled = currentPage >= totalPages - 1;
+    } else {
+      epPagination.classList.remove('visible');
+    }
+  }
+
+  epPagePrev.addEventListener('click', () => { currentPage--; renderPage(); });
+  epPageNext.addEventListener('click', () => { currentPage++; renderPage(); });
+
+  function selectEp(seasonIdx, epIdx, ep, doSave) {
+    currentEp  = epIdx;
     currentPos = flatEps.findIndex(e => e.seasonIdx === seasonIdx && e.epIdx === epIdx);
 
-    const { el, det } = epLists[seasonIdx];
-    let activeItem = null;
-    el.querySelectorAll('.ep-item').forEach((item, j) => {
-      item.classList.toggle('playing', j === epIdx);
-      if (j === epIdx) activeItem = item;
-    });
-    if (activeItem) activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    epSummaries[seasonIdx].update();
-
-    loadEpisode(ep);
-    updateEpNav();
-    if (MOBILE_QUERY.matches) det.open = false;
-    if (seasonsDet && seasonsDet !== epDet) seasonsDet.open = false;
-
-    // URL + history
-    if (pushHistory && !isRestoringFromHistory) {
-      pushEpUrl(seasonIdx, epIdx);
+    if (epCards[seasonIdx])   epCards[seasonIdx].forEach((c, j)   => c.classList.toggle('playing', j === epIdx));
+    if (epListRows[seasonIdx]) {
+      epListRows[seasonIdx].forEach((r, j) => {
+        r.classList.toggle('playing', j === epIdx);
+        if (j === epIdx) setTimeout(() => r.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
+      });
     }
 
-    if (saveToStorage) {
-      saveProgress(seasonIdx, epIdx);
-      refreshSavedMark();
-    }
+    const sLabel = `S${String(seasonIdx + 1).padStart(2,'0')}E${String(ep.num).padStart(2,'0')}`;
+    document.getElementById('ep-now-playing').textContent = `${sLabel} — ${ep.title}`;
+    document.getElementById('ep-nav-counter').textContent = `${currentPos + 1} / ${flatEps.length}`;
+    document.getElementById('btn-prev').disabled = currentPos <= 0;
+    document.getElementById('btn-next').disabled = currentPos >= flatEps.length - 1;
+
+    loadEpisode(ep, seasonIdx);
+
+    if (doSave) { saveProgress(seasonIdx, epIdx); refreshSavedMark(); }
   }
 
   function refreshSavedMark() {
     const saved = loadProgress();
-    epLists.forEach(({ el }, si) => {
-      el.querySelectorAll('.ep-item').forEach((item, ei) => {
-        item.classList.toggle('saved', !!saved && saved.season === si && saved.ep === ei);
+    [epCards, epListRows].forEach(collection => {
+      Object.entries(collection).forEach(([si, items]) => {
+        items.forEach((el, ei) => {
+          el.classList.toggle('saved', !!saved && saved.season === +si && saved.ep === ei);
+        });
       });
     });
-  }
-
-
-  function updateEpNav() {
-    const total = flatEps.length;
-    epNavCounter.textContent = currentPos === -1
-      ? `— / ${total}`
-      : `E${String(currentPos + 1).padStart(2,'0')} / ${total}`;
-    btnPrev.disabled = currentPos <= 0;
-    btnNext.disabled = currentPos === -1 || currentPos >= total - 1;
   }
 
   function navigateEp(dir) {
     if (currentPos === -1) return;
     const next = flatEps[currentPos + dir];
     if (!next) return;
-    selectEp(next.seasonIdx, next.epIdx, next.ep, epLists[next.seasonIdx].det, true);
+    if (next.seasonIdx !== currentSeason) switchSeason(next.seasonIdx);
+    selectEp(next.seasonIdx, next.epIdx, next.ep, true);
+    if (!isRestoringFromHistory) pushEpUrl(next.seasonIdx, next.epIdx);
   }
 
-  function loadEpisode(ep) {
-    if (!ep.url) {
-      showNoVideo(ep);
-      return;
-    }
+  function loadEpisode(ep, seasonIdx) {
+    iframe.style.display = 'none'; iframe.src = '';
+    video.style.display  = 'none'; video.src  = '';
+    placeholder.style.display = 'none';
+    placeholder.className = 'player-placeholder';
+
+    if (!ep.url) { showNoVideo(ep, seasonIdx); return; }
+    if (!/^https?:$/.test(new URL(ep.url).protocol)) { showNoVideo(ep, seasonIdx); return; }
 
     const type = getEpType(ep);
 
-    iframe.style.display = 'none';
-    iframe.src = '';
-    video.style.display = 'none';
-    video.src = '';
-    placeholder.style.display = 'none';
-    placeholder.textContent = '';
-
     if (type === 'redirect') {
-      if (!/^https?:$/.test(new URL(ep.url).protocol)) { showNoVideo(ep); return; }
-      const epLabel = document.createElement('div');
-      epLabel.textContent = `Saison ${show.seasons[currentSeason].id ?? (currentSeason + 1)} — Épisode ${ep.num}`;
-      const link = document.createElement('a');
-      link.className = 'player-external-link';
-      link.href = ep.url;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.textContent = '▶ Regarder sur ojamajo.moe';
-      placeholder.append(epLabel, link);
       placeholder.style.display = 'flex';
-      playerSource.textContent = 'ojamajo.moe';
+      placeholder.innerHTML = `
+        <div class="pl-ep-label">S${seasonIdx + 1} — Épisode ${ep.num}</div>
+        <a class="player-external-link" href="${ep.url}" target="_blank" rel="noopener noreferrer">▶ Regarder sur ojamajo.moe</a>`;
     } else if (type === 'mp4') {
-      if (!/^https?:$/.test(new URL(ep.url).protocol)) { showNoVideo(ep); return; }
-      video.src = ep.url;
-      video.style.display = 'block';
-      playerSource.textContent = new URL(ep.url).hostname;
+      video.src = ep.url; video.style.display = 'block';
     } else {
-      if (!/^https?:$/.test(new URL(ep.url).protocol)) { showNoVideo(ep); return; }
       const host = new URL(ep.url).hostname;
-      const perms = SANDBOX_PERMISSIONS[host] ?? 'allow-scripts allow-same-origin';
+      const perms = SANDBOX_PERMISSIONS[host] ?? DEFAULT_SANDBOX;
       iframe.setAttribute('sandbox', perms);
       iframe.src = ep.url;
       iframe.style.display = 'block';
-      playerSource.textContent = host;
     }
   }
 
-  function showNoVideo(ep) {
-    iframe.style.display = 'none';
-    iframe.src = '';
-    video.style.display = 'none';
-    video.src = '';
-    placeholder.textContent = '';
-    const epLabel = document.createElement('div');
-    epLabel.textContent = `Saison ${currentSeason + 1} — Épisode ${ep.num}`;
-    const unavail = document.createElement('div');
-    unavail.style.cssText = 'font-size:1rem;opacity:.3';
-    unavail.textContent = 'Vidéo non disponible pour l\'instant';
-    placeholder.append(epLabel, unavail);
+  function showNoVideo(ep, seasonIdx) {
     placeholder.style.display = 'flex';
-    playerSource.textContent = '';
+    placeholder.innerHTML = `
+      <div class="pl-ep-label">S${seasonIdx + 1} — Épisode ${ep.num}</div>
+      <div class="pl-unavail">Vidéo non disponible pour l'instant</div>`;
   }
 </script>
-
 </body>
 </html>
