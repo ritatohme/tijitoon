@@ -585,6 +585,7 @@
         const { season: si, ep: ei } = saved;
         const s = show.seasons[si]; const ep = s?.episodes[ei];
         if (s && ep) {
+          history.replaceState({ series: showId, season: si, ep: ei }, '', buildUrl(si, ei));
           if (si !== 0) switchSeason(si);
           selectEp(si, ei, ep, false);
         } else {
