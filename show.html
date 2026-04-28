@@ -545,7 +545,7 @@
     return `${location.pathname}?${u}`;
   }
   function pushEpUrl(si, ei) {
-    history.pushState({ series: showId, season: si, ep: ei }, '', buildUrl(si, ei));
+    history.replaceState({ series: showId, season: si, ep: ei }, '', buildUrl(si, ei));
   }
   function readUrlEp() {
     const s = parseInt(params.get('season'), 10);
