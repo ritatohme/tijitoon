@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik+Mono+One&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
 <style>
   body {
     background-image:
@@ -107,12 +108,30 @@
     color: var(--lime); letter-spacing: .04em;
   }
   #cw-clear {
-    font-family: 'VT323', monospace; font-size: .9rem; background: transparent;
+    font-family: 'VT323', monospace; font-size: 1.1rem; background: transparent;
     border: 1px solid rgba(255,246,227,.2); color: rgba(255,246,227,.4);
-    padding: .1rem .5rem; cursor: pointer; margin-left: auto;
+    padding: .1rem .6rem; cursor: pointer; margin-left: auto; line-height: 1;
   }
   #cw-clear:hover { color: var(--hot); border-color: var(--hot); }
+  .cw-clear-icon { display: none; }
+  @media (max-width: 600px) {
+    .cw-clear-label { display: none; }
+    .cw-clear-icon { display: inline; color: var(--hot); }
+    #cw-clear { border-color: transparent; padding: .1rem .3rem; }
+  }
   #cw-strip { display: flex; gap: .6rem; flex-wrap: wrap; }
+  #cw-expand {
+    display: none;
+    font-family: 'VT323', monospace; font-size: .9rem; background: transparent;
+    border: 1px solid rgba(198,255,58,.3);
+    padding: .1rem .5rem; cursor: pointer; white-space: nowrap;
+  }
+  #cw-expand { color: var(--lime); border-color: rgba(198,255,58,.3); }
+  #cw-expand:hover { color: var(--lime); border-color: var(--lime); }
+  @media (max-width: 600px) {
+    #cw-expand { display: inline-block; }
+    .cw-card.cw-hidden { display: none; }
+  }
   .cw-card {
     display: inline-flex; flex-direction: column; gap: .25rem;
     background: var(--paper); border: 3px solid var(--paper);
@@ -146,6 +165,7 @@
     font-family: 'VT323', monospace; font-size: 1.15rem;
     background: var(--ink); border: 3px solid var(--ink);
     box-shadow: 4px 4px 0 var(--ink);
+    position: relative; z-index: 200;
     color: var(--paper); padding: .25rem 1rem;
     cursor: pointer; transition: all .1s; display: flex; align-items: center; gap: .4rem;
     white-space: nowrap;
@@ -158,29 +178,43 @@
   /* Filter dropdown */
   .filter-dropdown {
     position: absolute; top: calc(100% + 6px); left: 0;
-    background: var(--ink); border: 3px solid var(--ink);
+    background: var(--paper); border: 3px solid var(--ink);
     box-shadow: 6px 6px 0 var(--ink);
-    padding: .8rem 1rem; z-index: 200;
-    display: none; flex-wrap: wrap; gap: .4rem; min-width: 340px;
+    padding: .5rem; z-index: 200;
+    display: none; flex-direction: column; gap: .7rem; min-width: min(180px, 90vw);
   }
   .filter-dropdown.open { display: flex; }
 
   .fb-chip {
-    font-family: 'VT323', monospace; font-size: 1.05rem;
-    border: 2px solid rgba(255,246,227,.25); color: rgba(255,246,227,.7);
-    background: transparent; padding: .18rem .8rem; cursor: pointer;
-    transition: all .1s; white-space: nowrap;
+    font-family: 'VT323', monospace; font-size: 1.3rem;
+    border: none; color: rgba(19,17,26,.6);
+    background: transparent; padding: .6rem 1.2rem; cursor: pointer;
+    transition: all .1s; white-space: nowrap; text-align: left;
+    display: flex; align-items: center; gap: .5rem;
   }
-  .fb-chip:hover { border-color: var(--paper); color: var(--paper); }
-  .fb-chip.active { color: var(--ink); border-color: transparent; }
-  .fb-chip[data-f="all"].active      { background: var(--lime); color: var(--ink); }
+  .fb-chip:hover { background: rgba(19,17,26,.06); color: var(--ink); }
+  .fb-chip.active { color: var(--ink); }
+  .fb-chip[data-f="all"].active      { background: var(--lime); }
   .fb-chip[data-f="teletoon"].active { background: var(--hot); color: var(--paper); }
-  .fb-chip[data-f="tiji"].active     { background: var(--sky); color: var(--ink); }
+  .fb-chip[data-f="tiji"].active     { background: var(--sky); }
   .fb-chip[data-f="ANIME"].active    { background: var(--hot); color: var(--paper); }
-  .fb-chip[data-f="TOON"].active     { background: var(--lime); color: var(--ink); }
-  .fb-chip[data-f="FR"].active       { background: var(--orange); color: var(--ink); }
-  .fb-chip[data-f="KIDS"].active     { background: var(--sky); color: var(--ink); }
-  .fb-chip[data-f="★"].active       { background: var(--cream); color: var(--ink); }
+  .fb-chip[data-f="TOON"].active     { background: var(--lime); }
+  .fb-chip[data-f="FR"].active       { background: var(--orange); }
+  .fb-chip[data-f="KIDS"].active     { background: var(--sky); }
+  .fb-chip[data-f="★"].active       { background: var(--cream); }
+
+  .filter-divider {
+    border: none; border-top: 1px solid rgba(19,17,26,.12);
+    margin: .1rem 0;
+  }
+
+  .filter-clear {
+    background: transparent; border: none; cursor: pointer;
+    color: rgba(19,17,26,.4); font-size: .85rem; padding: .2rem .4rem;
+    transition: color .1s; flex-shrink: 0;
+    position: relative; z-index: 200;
+  }
+  .filter-clear:hover { color: var(--hot); }
 
   .fb-count {
     font-family: 'VT323', monospace; font-size: 1.05rem;
@@ -195,7 +229,7 @@
   }
   .view-btn {
     background: var(--paper); border: none; color: rgba(19,17,26,.35);
-    padding: .28rem .8rem; cursor: pointer; font-size: 1rem; transition: all .1s;
+    padding: .28rem .8rem; cursor: pointer; font-size: .9rem; transition: all .1s;
     line-height: 1;
   }
   .view-btn:not(:last-child) { border-right: 2px solid var(--ink); }
@@ -327,11 +361,17 @@
   #back-top.visible { opacity: 1; pointer-events: auto; }
   #back-top:hover { background: var(--lime); color: var(--ink); }
 
+  #filter-backdrop {
+    display: none; position: fixed; inset: 0; z-index: 199;
+    background: rgba(19,17,26,.4);
+  }
+  #filter-backdrop.active { display: block; }
+
   @media (max-width: 600px) {
     header { padding: 2.5rem 5vw 2rem; }
     .sticker.one { display: none; }
     .sticker.two { display: none; }
-    .card-grid { grid-template-columns: 1fr 1fr; gap: .55rem; }
+    .card-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .55rem; }
     .card { padding: .7rem .75rem; }
     .table-head, .trow { grid-template-columns: 2rem 1fr 70px; }
     .table-head .ch-col, .trow-ch { display: none; }
@@ -341,6 +381,7 @@
 </head>
 <body>
 
+<div id="filter-backdrop"></div>
 <!-- ══ HERO ══════════════════════════════════════════════ -->
 <header>
   <div class="sticker one">✦ 100% toon ✦</div>
@@ -378,7 +419,8 @@
   <div class="inner cw-inner">
     <div class="cw-header">
       <span class="cw-title">&#x25B6;&#xFE0E; CONTINUER À REGARDER</span>
-      <button id="cw-clear">tout effacer</button>
+      <button id="cw-expand"></button>
+      <button id="cw-clear" title="Tout effacer"><span class="cw-clear-label">tout effacer</span><span class="cw-clear-icon"><i class="fa-solid fa-trash"></i></span></button>
     </div>
     <div id="cw-strip"></div>
   </div>
@@ -391,21 +433,21 @@
       <button class="filter-btn" id="filter-btn">
         FILTRES <span class="filter-btn-arrow">▾</span>
       </button>
+      <button class="filter-clear" id="filter-clear" title="Effacer le filtre" style="display:none"><i class="fa-solid fa-xmark"></i></button>
       <span class="fb-count" id="fb-count"></span>
       <div class="view-toggle">
-        <button class="view-btn active" id="btn-cards" title="Grille de cartes">⊞</button>
-        <button class="view-btn" id="btn-list" title="Liste compacte">≡</button>
+        <button class="view-btn active" id="btn-cards" title="Grille de cartes"><i class="fa-solid fa-grip"></i></button>
+        <button class="view-btn" id="btn-list" title="Liste compacte"><i class="fa-solid fa-list"></i></button>
       </div>
 
       <div class="filter-dropdown" id="filter-dropdown">
-        <button class="fb-chip active" data-f="all">Tout</button>
         <button class="fb-chip" data-f="teletoon">Télétoon</button>
         <button class="fb-chip" data-f="tiji">Tiji</button>
+        <hr class="filter-divider">
         <button class="fb-chip" data-f="ANIME">Anime</button>
         <button class="fb-chip" data-f="TOON">Cartoon</button>
         <button class="fb-chip" data-f="FR">Prod. FR</button>
         <button class="fb-chip" data-f="KIDS">Préscolaire</button>
-        <button class="fb-chip" data-f="★">★ Icônes</button>
       </div>
     </div>
 
@@ -484,6 +526,40 @@
     if (!entries.length) { wrap.style.display = 'none'; return; }
     wrap.style.display = 'block';
 
+    const expandBtn = document.getElementById('cw-expand');
+    let expanded = false;
+    let firstRowLimit = null;
+
+    function computeLimit() {
+      const cards = Array.from(strip.querySelectorAll('.cw-card'));
+      if (!cards.length) return 0;
+      const tops = cards.map(c => c.getBoundingClientRect().top);
+      const firstTop = tops[0];
+      const count = tops.filter(t => Math.abs(t - firstTop) < 4).length;
+      return count || cards.length;
+    }
+
+    function updateExpand() {
+      const isMobile = window.matchMedia('(max-width: 600px)').matches;
+      const cards = Array.from(strip.querySelectorAll('.cw-card'));
+      if (!isMobile) {
+        cards.forEach(c => c.classList.remove('cw-hidden'));
+        expandBtn.style.display = 'none';
+        return;
+      }
+      if (firstRowLimit === null) firstRowLimit = computeLimit();
+      if (cards.length <= firstRowLimit) {
+        cards.forEach(c => c.classList.remove('cw-hidden'));
+        expandBtn.style.display = 'none';
+        return;
+      }
+      cards.forEach((c, i) => c.classList.toggle('cw-hidden', !expanded && i >= firstRowLimit));
+      expandBtn.style.display = '';
+      expandBtn.textContent = expanded ? '▲ réduire' : `▼ +${cards.length - firstRowLimit} de plus`;
+    }
+
+    expandBtn.onclick = () => { expanded = !expanded; updateExpand(); };
+
     entries.forEach(({ seriesId, show, season, ep, s, epObj }) => {
       const label = `S${s.id ?? String(season + 1).padStart(2,'0')}E${String(epObj.num).padStart(2,'0')}`;
 
@@ -506,7 +582,8 @@
         e.stopPropagation();
         localStorage.removeItem('tijitoon:progress:' + seriesId);
         card.remove();
-        if (!strip.children.length) wrap.style.display = 'none';
+        if (!strip.querySelectorAll('.cw-card').length) wrap.style.display = 'none';
+        else { firstRowLimit = null; requestAnimationFrame(updateExpand); }
       });
       card.addEventListener('mouseenter', () => removeBtn.style.opacity = '1');
       card.addEventListener('mouseleave', () => removeBtn.style.opacity = '0');
@@ -528,6 +605,8 @@
       });
       strip.appendChild(card);
     });
+
+    requestAnimationFrame(updateExpand);
   }
 
   document.getElementById('cw-clear').addEventListener('click', () => {
@@ -638,32 +717,48 @@
   // ── FILTER BUTTON TOGGLE ──────────────────────────────
   const filterBtn = document.getElementById('filter-btn');
   const filterDropdown = document.getElementById('filter-dropdown');
+  const filterBackdrop = document.getElementById('filter-backdrop');
+
+  function closeFilter() {
+    filterDropdown.classList.remove('open');
+    filterBtn.classList.remove('open');
+    filterBackdrop.classList.remove('active');
+  }
 
   filterBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     const isOpen = filterDropdown.classList.toggle('open');
     filterBtn.classList.toggle('open', isOpen);
+    filterBackdrop.classList.toggle('active', isOpen);
   });
 
-  document.addEventListener('click', () => {
-    filterDropdown.classList.remove('open');
-    filterBtn.classList.remove('open');
-  });
+  filterBackdrop.addEventListener('click', closeFilter);
+  document.addEventListener('click', closeFilter);
 
   filterDropdown.addEventListener('click', e => e.stopPropagation());
 
+  const filterClear = document.getElementById('filter-clear');
+
+  function setFilter(f, label) {
+    activeFilter = f;
+    document.querySelectorAll('.fb-chip').forEach(c =>
+      c.classList.toggle('active', c.dataset.f === activeFilter)
+    );
+    filterBtn.classList.toggle('has-filter', activeFilter !== 'all');
+    filterBtn.innerHTML = `${label} <span class="filter-btn-arrow">▾</span>`;
+    filterClear.style.display = activeFilter !== 'all' ? 'inline-block' : 'none';
+    closeFilter();
+    applyFilter();
+  }
+
+  filterClear.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setFilter('all', 'FILTRES');
+  });
+
   // ── FILTER CHIPS ───────────────────────────────────────
   document.querySelectorAll('.fb-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      activeFilter = chip.dataset.f;
-      document.querySelectorAll('.fb-chip').forEach(c =>
-        c.classList.toggle('active', c.dataset.f === activeFilter)
-      );
-      filterBtn.classList.toggle('has-filter', activeFilter !== 'all');
-      const label = activeFilter === 'all' ? 'FILTRES' : chip.textContent;
-      filterBtn.innerHTML = `${label} <span class="filter-btn-arrow">▾</span>`;
-      applyFilter();
-    });
+    chip.addEventListener('click', () => setFilter(chip.dataset.f, chip.textContent.trim()));
   });
 
   // ── SEARCH ─────────────────────────────────────────────
@@ -686,7 +781,7 @@
   const backTop = document.getElementById('back-top');
   window.addEventListener('scroll', () =>
     backTop.classList.toggle('visible', window.scrollY > 500)
-  );
+  , { passive: true });
 
   window.addEventListener('pageshow', e => {
     if (e.persisted) { searchInput.value = ''; searchQ = ''; searchClear.classList.remove('visible'); applyFilter(); }
