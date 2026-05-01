@@ -9,6 +9,26 @@
   --cream: #ffe4a8;
 }
 
+[data-theme="dark"] {
+  --ink: #0d0d0d;
+  --paper: #242830;
+  --hot: #832745;
+  --lime: #6b8a1e;
+  --sky: #1e5367;
+  --orange: #b2661f;
+  --purple: #7433db;
+  --cream: #e7c274;
+
+  --dm-text:       #b8b5b0;
+  --dm-muted:      #837d76;
+  --dm-surface:    #222325;
+  --dm-surface-lo: #1e1e20;
+  --dm-hover:      #2e2d3a;
+  --dm-playing:    #3d2d4a;
+  --dm-shadow:     #0d0d0d;
+}
+
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
@@ -49,3 +69,169 @@ body::before {
   transition: background .15s, color .15s;
 }
 .back-btn:hover { background: var(--lime); color: var(--ink); }
+
+.theme-toggle {
+  margin-left: auto;
+  display: flex; align-items: center; gap: .5rem;
+  font-family: 'VT323', monospace; font-size: 1rem;
+  color: var(--paper); opacity: .7;
+  cursor: pointer; user-select: none;
+  background: none; border: none; padding: 0;
+}
+.theme-toggle:hover { opacity: 1; }
+.theme-switch {
+  position: relative; width: 36px; height: 18px;
+  background: rgba(255,246,227,.2);
+  border: 2px solid var(--lime);
+  display: inline-block; flex-shrink: 0;
+}
+.theme-switch::after {
+  content: '';
+  position: absolute; top: 50%; left: 3px;
+  transform: translateY(-50%);
+  width: 10px; height: 10px;
+  background: var(--lime);
+  transition: transform .15s;
+}
+[data-theme="dark"] .theme-switch::after {
+  transform: translateY(-50%) translateX(16px);
+}
+[data-theme="dark"] .theme-toggle { color: var(--dm-text); }
+
+/* ── GLOBAL DARK OVERRIDES ── */
+
+/* Dot grid */
+[data-theme="dark"] body::before {
+  background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+}
+
+/* Hero / index */
+[data-theme="dark"] h1                { color: #e8e6e1; }
+[data-theme="dark"] .eyebrow          { color: var(--ink); border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+[data-theme="dark"] .ch-pill          { border-color: var(--dm-muted); }
+[data-theme="dark"] .teletoon-pill,
+[data-theme="dark"] .tiji-pill        { color: var(--dm-text); }
+[data-theme="dark"] .ch-pill-sep      { color: var(--dm-text); }
+[data-theme="dark"] .sub              { color: var(--dm-text); }
+[data-theme="dark"] .meta span        { color: var(--dm-text); }
+[data-theme="dark"] .sticker          { color: var(--dm-text); }
+[data-theme="dark"] .sticker.two      { color: var(--dm-text); }
+
+/* Search */
+[data-theme="dark"] .search-wrap                      { background: var(--dm-surface); border-color: var(--dm-muted); box-shadow: 6px 6px 0 var(--ink); }
+[data-theme="dark"] .search-input,
+[data-theme="dark"] .search-input::placeholder        { color: var(--dm-muted); }
+
+/* Continue watching */
+[data-theme="dark"] #continue-watching  { background: var(--dm-surface); }
+[data-theme="dark"] .cw-card            { background: var(--dm-surface-lo); border-color: var(--dm-muted); color: var(--dm-text); box-shadow: none; }
+[data-theme="dark"] .cw-card:hover      { box-shadow: 5px 5px 0 var(--ink); }
+[data-theme="dark"] .ep-badge           { color: var(--dm-text); border-color: var(--dm-muted); }
+[data-theme="dark"] .ch-mini.teletoon   { color: var(--dm-text); border-color: var(--dm-muted); }
+[data-theme="dark"] .ch-mini.tiji       { border-color: var(--dm-muted); }
+[data-theme="dark"] .cw-remove-btn      { color: var(--dm-text); border-color: var(--dm-muted); }
+
+/* Cards */
+[data-theme="dark"] .card              { background: var(--dm-surface); border-color: var(--dm-muted); color: var(--dm-text); }
+[data-theme="dark"] .card-tag,
+[data-theme="dark"] .card-ch,
+[data-theme="dark"] .card-tag.anime,
+[data-theme="dark"] .card-ch.teletoon  { border-color: var(--dm-muted); color: var(--dm-text); }
+
+/* Filter */
+[data-theme="dark"] .filter-btn         { color: var(--dm-text); border-color: var(--dm-muted); }
+[data-theme="dark"] .filter-clear       { color: var(--dm-muted); }
+[data-theme="dark"] .filter-dropdown   { border-color: var(--dm-muted); }
+[data-theme="dark"] .filter-divider    { border-top-color: var(--dm-muted); }
+[data-theme="dark"] .fb-chip            { color: var(--dm-muted); }
+[data-theme="dark"] .fb-chip:hover     { background: var(--dm-hover); color: var(--dm-text); }
+[data-theme="dark"] .fb-chip.active    { color: var(--dm-text); }
+[data-theme="dark"] .fb-count          { color: var(--dm-muted); }
+
+/* View toggle */
+[data-theme="dark"] .view-toggle                   { border-color: var(--dm-muted); box-shadow: 3px 3px 0 var(--ink); }
+[data-theme="dark"] .view-btn                      { color: var(--dm-muted); }
+[data-theme="dark"] .view-btn:not(:last-child)     { border-right-color: var(--dm-muted); }
+[data-theme="dark"] .view-btn.active               { color: var(--lime); }
+[data-theme="dark"] .view-btn:hover:not(.active)   { background: var(--dm-hover); color: var(--dm-text); }
+
+/* List / table view */
+[data-theme="dark"] .series-table      { border-color: var(--dm-muted); box-shadow: 6px 6px 0 var(--ink); }
+[data-theme="dark"] .table-head        { color: var(--dm-text); }
+[data-theme="dark"] .trow              { color: var(--dm-text); }
+[data-theme="dark"] .trow-num          { color: var(--dm-muted); }
+[data-theme="dark"] .trow:hover        { background: var(--dm-hover); color: var(--dm-text); }
+[data-theme="dark"] .trow:hover .trow-num { color: var(--dm-muted); }
+[data-theme="dark"] .trow-tag,
+[data-theme="dark"] .trow-ch,
+[data-theme="dark"] .trow-tag.anime,
+[data-theme="dark"] .trow-ch.teletoon  { border-color: var(--dm-muted); color: var(--dm-text); }
+
+/* Footer */
+[data-theme="dark"] footer             { color: var(--dm-text); border-top-color: var(--dm-muted); }
+[data-theme="dark"] footer a           { color: var(--dm-muted) !important; border-bottom-color: var(--dm-muted) !important; }
+
+/* show.html — hero & badges */
+[data-theme="dark"] h1.show-title      { color: #e8e6e1; }
+[data-theme="dark"] .show-hero         { color: var(--dm-text); }
+[data-theme="dark"] .show-tag          { border-color: var(--dm-muted); color: var(--dm-text); }
+[data-theme="dark"] .ch-badge          { border-color: var(--dm-muted); color: var(--dm-text); }
+[data-theme="dark"] .topbar-title      { color: var(--dm-muted); }
+
+/* show.html — season pills */
+[data-theme="dark"] .season-pill                  { border-color: var(--dm-muted); box-shadow: 3px 3px 0 var(--ink); color: var(--dm-text); }
+[data-theme="dark"] .season-pill:hover:not(.active) { background: var(--dm-hover); box-shadow: 4px 4px 0 var(--ink); }
+[data-theme="dark"] .season-pill-label            { color: var(--dm-muted); }
+[data-theme="dark"] .ep-count-label               { color: var(--dm-text); }
+
+/* show.html — episode grid */
+[data-theme="dark"] .ep-card                      { background: var(--dm-surface); border-color: var(--dm-muted); color: var(--dm-text); }
+[data-theme="dark"] .ep-card.playing              { background: var(--dm-playing); }
+[data-theme="dark"] .ep-card-num                  { color: var(--dm-text); }
+
+/* show.html — episode list */
+[data-theme="dark"] .ep-list-wrap                 { border-color: var(--dm-muted); box-shadow: 4px 4px 0 var(--ink); }
+[data-theme="dark"] .ep-list-row                  { border-bottom-color: var(--dm-muted); color: var(--dm-text); }
+[data-theme="dark"] .ep-list-row:hover            { background: var(--dm-hover); }
+[data-theme="dark"] .ep-list-row.playing          { background: var(--dm-playing); }
+[data-theme="dark"] .ep-list-row.playing .ep-list-num { color: var(--dm-muted); }
+[data-theme="dark"] .ep-list-num                  { color: var(--dm-muted); border-right-color: var(--dm-muted); }
+
+/* show.html — ep search */
+[data-theme="dark"] .ep-search-wrap               { background: var(--dm-surface); border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); }
+[data-theme="dark"] .ep-search-wrap:focus-within  { border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); }
+[data-theme="dark"] .ep-search                    { color: var(--dm-text); }
+[data-theme="dark"] .ep-search::placeholder       { color: var(--dm-muted); }
+[data-theme="dark"] .ep-search-clear              { color: var(--dm-muted); }
+[data-theme="dark"] .ep-search-toggle             { background: var(--dm-surface); border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); color: var(--dm-text); }
+
+/* show.html — ep view toggle */
+[data-theme="dark"] .ep-view-toggle               { border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); }
+[data-theme="dark"] .ep-view-btn                  { color: var(--dm-muted); }
+[data-theme="dark"] .ep-view-btn:not(:last-child) { border-right-color: var(--dm-muted); }
+[data-theme="dark"] .ep-view-btn.active           { color: var(--lime); }
+[data-theme="dark"] .ep-view-btn:hover:not(.active) { background: var(--dm-hover); color: var(--dm-text); }
+
+/* show.html — player / nav / pagination */
+[data-theme="dark"] .player-external-link         { border-color: var(--dm-muted); box-shadow: 3px 3px 0 var(--ink); }
+[data-theme="dark"] .ep-nav-bar                   { background: var(--dm-surface); }
+[data-theme="dark"] .ep-now-playing               { color: var(--dm-text); }
+[data-theme="dark"] .ep-nav-counter               { color: var(--dm-muted); }
+[data-theme="dark"] .ep-nav-btn                   { border-color: var(--dm-muted); color: var(--dm-muted); }
+[data-theme="dark"] #btn-prev:not(:disabled),
+[data-theme="dark"] #btn-next:not(:disabled)      { color: var(--dm-text); border-color: var(--dm-muted); }
+[data-theme="dark"] #btn-prev:not(:disabled):hover,
+[data-theme="dark"] #btn-next:not(:disabled):hover { color: var(--ink); }
+[data-theme="dark"] .ep-page-btn                  { background: var(--dm-surface); border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); color: var(--dm-text); }
+[data-theme="dark"] .ep-page-info                 { color: var(--dm-muted); }
+
+/* disclaimer.html */
+[data-theme="dark"] .block h2          { color: var(--dm-text); }
+[data-theme="dark"] .block p           { color: var(--dm-text); }
+[data-theme="dark"] .note              { color: var(--dm-text); border-color: var(--dm-muted); }
+
+/* 404.html */
+[data-theme="dark"] .error-code        { color: var(--dm-text); }
+[data-theme="dark"] .message           { color: var(--dm-text); }
+[data-theme="dark"] .btn               { border-color: var(--dm-muted); box-shadow: 5px 5px 0 var(--dm-shadow); color: var(--dm-text); }
+[data-theme="dark"] .btn.secondary     { background: #1a1a1c; }
