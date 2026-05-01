@@ -57,7 +57,7 @@ body::before {
 .topbar {
   background: var(--ink); color: var(--paper);
   padding: .7rem 5vw; border-bottom: 4px solid var(--lime);
-  display: flex; align-items: center; gap: 1.5rem;
+  display: flex; align-items: center; gap: clamp(.5rem, 2vw, 1.5rem);
   font-family: 'VT323', monospace; font-size: 1.3rem;
   position: relative; z-index: 50;
 }
@@ -67,6 +67,7 @@ body::before {
   display: flex; align-items: center; gap: .4rem;
   border: 2px solid transparent; padding: .2rem .6rem;
   transition: background .15s, color .15s;
+  flex-shrink: 0;
 }
 .back-btn:hover { background: var(--lime); color: var(--ink); }
 

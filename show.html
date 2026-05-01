@@ -60,12 +60,10 @@
   /* ── 2-COL LAYOUT ── */
   .show-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 380px;
+    grid-template-columns: minmax(0, 1fr) 22vw;
     align-items: start;
-    padding-top: 1.5rem;
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 3vw 4rem;
+    width: 100%;
+    padding: 6vw 6vw 4rem;
     gap: 2rem;
   }
   .show-left { min-width: 0; }
@@ -127,15 +125,16 @@
   /* ── EP NAV BAR ── */
   .ep-nav-bar {
     background: var(--ink);
-    padding: .45rem .8rem;
+    padding: clamp(.35rem, .5vw, .8rem) clamp(.6rem, 1vw, 1.4rem);
   }
   .ep-nav-inner {
     display: flex; align-items: center; gap: .6rem;
     overflow: hidden;
   }
   .ep-nav-btn {
-    font-family: 'Bungee', sans-serif; font-size: clamp(.6rem,1.1vw,.75rem);
-    padding: .4rem .8rem; border: 2px solid rgba(255,246,227,.2);
+    font-family: 'Bungee', sans-serif; font-size: clamp(.6rem, 1vw, 1rem);
+    padding: clamp(.3rem, .5vw, .7rem) clamp(.6rem, .9vw, 1.2rem);
+    border: 2px solid rgba(255,246,227,.2);
     color: rgba(255,246,227,.5); background: transparent;
     cursor: pointer; white-space: nowrap; flex-shrink: 0;
     transition: all .1s;
@@ -151,13 +150,13 @@
     overflow: hidden;
   }
   .ep-now-playing {
-    font-family: 'VT323', monospace; font-size: .95rem;
+    font-family: 'VT323', monospace; font-size: clamp(.85rem, 1.2vw, 1.4rem);
     color: rgba(255,246,227,.6);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     width: 100%; text-align: center;
   }
   .ep-nav-counter {
-    font-family: 'VT323', monospace; font-size: .8rem;
+    font-family: 'VT323', monospace; font-size: clamp(.7rem, 1vw, 1.1rem);
     color: rgba(255,246,227,.3);
   }
 
@@ -165,6 +164,8 @@
   .ep-browser {
     padding: 1.5rem 0 0;
     min-width: 0;
+    position: sticky;
+    top: 1rem;
   }
 
   /* Season pills */
@@ -173,8 +174,8 @@
     margin-bottom: 1.2rem; align-items: center;
   }
   .season-pill {
-    font-family: 'Bungee', sans-serif; font-size: .82rem;
-    width: 2.4rem; height: 2.4rem;
+    font-family: 'Bungee', sans-serif; font-size: clamp(.75rem, 1vw, 1.1rem);
+    width: clamp(2.2rem, 2.8vw, 3.2rem); height: clamp(2.2rem, 2.8vw, 3.2rem);
     display: flex; align-items: center; justify-content: center;
     background: var(--paper); border: 3px solid var(--ink);
     box-shadow: 3px 3px 0 var(--ink);
@@ -195,7 +196,7 @@
     margin-bottom: .8rem;
   }
   .ep-count-label {
-    font-family: 'VT323', monospace; font-size: .95rem;
+    font-family: 'VT323', monospace; font-size: clamp(.85rem, 1.1vw, 1.3rem);
     color: rgba(19,17,26,.4); flex-shrink: 0;
   }
   .ep-search-wrap {
@@ -208,9 +209,9 @@
   .ep-search-wrap:focus-within { border-color: var(--ink); box-shadow: 2px 2px 0 var(--ink); }
   .ep-search {
     flex: 1; min-width: 0;
-    font-family: 'Space Mono', monospace; font-size: .75rem;
+    font-family: 'Space Mono', monospace; font-size: clamp(.7rem, .9vw, 1rem);
     background: transparent; color: var(--ink);
-    border: none; padding: .3rem .7rem; outline: none;
+    border: none; padding: clamp(.25rem, .4vw, .5rem) clamp(.5rem, .7vw, .9rem); outline: none;
   }
   .ep-search::placeholder { color: rgba(19,17,26,.3); }
   .ep-search-clear {
@@ -227,8 +228,8 @@
     display: flex; align-items: center; justify-content: center;
     background: var(--paper); border: 2px solid var(--ink);
     box-shadow: 2px 2px 0 var(--ink);
-    cursor: pointer; padding: .35rem .65rem;
-    flex-shrink: 0; font-size: .9rem;
+    cursor: pointer; padding: clamp(.28rem, .4vw, .55rem) clamp(.5rem, .7vw, .9rem);
+    flex-shrink: 0; font-size: clamp(.8rem, 1vw, 1.1rem);
     color: var(--ink); margin-left: auto;
   }
   @media (max-width: 600px) {
@@ -240,9 +241,10 @@
     box-shadow: 2px 2px 0 var(--ink); flex-shrink: 0;
   }
   .ep-view-btn {
-    font-size: .9rem;
+    font-size: clamp(.8rem, 1vw, 1.1rem);
     background: var(--paper); border: none; color: rgba(19,17,26,.4);
-    padding: .35rem .8rem; cursor: pointer; transition: all .1s; line-height: 1;
+    padding: clamp(.28rem, .4vw, .55rem) clamp(.6rem, .8vw, 1rem);
+    cursor: pointer; transition: all .1s; line-height: 1;
   }
   .ep-view-btn:not(:last-child) { border-right: 2px solid var(--ink); }
   .ep-view-btn.active { background: var(--ink); color: var(--lime); }
@@ -251,12 +253,12 @@
   /* Episode grid */
   .ep-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: .5rem;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(100px, 8vw, 160px), 1fr));
+    gap: clamp(.35rem, .5vw, .75rem);
   }
   .ep-card {
     background: var(--paper); border: 3px solid var(--ink);
-    padding: .7rem .85rem;
+    padding: clamp(.5rem, .7vw, 1.1rem) clamp(.6rem, .8vw, 1.2rem);
     cursor: pointer; transition: transform .12s, box-shadow .12s, background .1s;
     display: flex; flex-direction: column; gap: .25rem;
     position: relative;
@@ -269,21 +271,20 @@
   }
   .ep-card.no-url { opacity: .4; cursor: default; }
   .ep-card.no-url:hover { transform: none; box-shadow: none; }
-  .ep-card-num { font-family: 'VT323', monospace; font-size: .95rem; color: rgba(19,17,26,.3); }
+  .ep-card-num { font-family: 'VT323', monospace; font-size: clamp(.85rem, 1.1vw, 1.4rem); color: rgba(19,17,26,.3); }
   .ep-card.playing .ep-card-num { color: var(--ink); opacity: .6; }
-  .ep-card-title { font-family: 'Space Mono', monospace; font-size: clamp(.65rem,1vw,.78rem); line-height: 1.3; }
+  .ep-card-title { font-family: 'Space Mono', monospace; font-size: clamp(.65rem, .85vw, 1rem); line-height: 1.3; overflow-wrap: break-word; word-break: break-word; }
   .ep-card-play { display: none; }
 
   /* Episode list */
   .ep-list-wrap {
     border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
-    overflow-y: auto; max-height: calc(10 * 2.4rem);
-    max-width: 600px;
+    overflow-y: auto; max-height: calc(10 * clamp(2rem, 2.8vw, 3.5rem));
     display: none;
   }
   .ep-list-wrap.active { display: block; }
   .ep-list-row {
-    display: grid; grid-template-columns: 3rem 1fr;
+    display: grid; grid-template-columns: clamp(2.5rem, 3.5vw, 4.5rem) 1fr;
     align-items: center;
     border-bottom: 1px solid rgba(19,17,26,.1);
     cursor: pointer; transition: background .1s;
@@ -295,15 +296,16 @@
   .ep-list-row.no-url:hover { background: transparent; }
   .ep-list-row.saved { border-left: 3px solid var(--hot); }
   .ep-list-num {
-    font-family: 'VT323', monospace; font-size: .95rem;
+    font-family: 'VT323', monospace; font-size: clamp(.85rem, 1.2vw, 1.4rem);
     color: rgba(19,17,26,.3); text-align: right;
-    padding: .5rem .55rem; border-right: 2px solid rgba(19,17,26,.1);
+    padding: clamp(.4rem, .6vw, .8rem) clamp(.4rem, .5vw, .7rem);
+    border-right: 2px solid rgba(19,17,26,.1);
   }
   .ep-list-row.playing .ep-list-num { color: var(--hot); }
   .ep-list-title {
     font-family: 'Space Mono', monospace;
-    font-size: clamp(.68rem,1vw,.78rem); line-height: 1.3;
-    padding: .5rem .75rem;
+    font-size: clamp(.68rem, 1vw, 1rem); line-height: 1.3;
+    padding: clamp(.4rem, .6vw, .8rem) clamp(.5rem, .8vw, 1rem);
   }
 
   .ep-no-results {
@@ -319,30 +321,30 @@
   }
   .ep-pagination.visible { display: flex; }
   .ep-page-btn {
-    font-family: 'Bungee', sans-serif; font-size: .75rem;
-    padding: .3rem .7rem; border: 2px solid var(--ink);
-    box-shadow: 2px 2px 0 var(--ink);
+    font-family: 'Bungee', sans-serif; font-size: clamp(.7rem, .9vw, 1rem);
+    padding: clamp(.25rem, .4vw, .55rem) clamp(.5rem, .7vw, .9rem);
+    border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
     background: var(--paper); color: var(--ink);
     cursor: pointer; transition: all .1s;
   }
   .ep-page-btn:hover:not(:disabled) { background: var(--ink); color: var(--lime); }
   .ep-page-btn:disabled { opacity: .25; cursor: default; box-shadow: none; }
   .ep-page-info {
-    font-family: 'VT323', monospace; font-size: .95rem;
+    font-family: 'VT323', monospace; font-size: clamp(.85rem, 1.1vw, 1.3rem);
     color: rgba(19,17,26,.4);
   }
 
   @media (max-width: 1080px) {
     .show-layout { grid-template-columns: 1fr; padding: 0 0 3rem; gap: 0; }
-    .player-section { padding: 0 4vw; }
-    .ep-browser { padding: 1.2rem 4vw 3rem; }
+    .player-section { padding: 0 6vw; }
+    .ep-browser { padding: 1.2rem 6vw 3rem; position: static; }
     .ep-list-wrap { max-width: none; }
   }
   @media (max-width: 600px) {
     .show-hero { padding: 1rem 4vw .9rem; }
     .ep-grid { gap: .4rem; }
     .ep-card { padding: .55rem .65rem; }
-    .ep-list-wrap { max-height: calc(8 * 2.4rem); }
+    .ep-list-wrap { max-height: calc(8 * 2rem); }
     .ep-nav-bar { padding: .4rem 3vw; }
   }
 </style>
@@ -361,6 +363,7 @@
 
 <!-- HERO -->
 <div class="show-hero">
+  <div class="show-eyebrow" id="show-eyebrow" style="display:none;"></div>
   <h1 class="show-title" id="show-title">SÉRIE</h1>
 </div>
 
@@ -436,13 +439,14 @@
   let PAGE_SIZE = 10;
   let currentPage = 0;
 
+  function clamp(min, val, max) { return Math.min(max, Math.max(min, val)); }
+
   function computePageSize() {
-    const card = epGrid.querySelector('.ep-card');
-    if (!card) return;
-    const gridWidth = epGrid.offsetWidth;
-    const cardWidth = card.offsetWidth;
-    const gap = parseFloat(getComputedStyle(epGrid).columnGap) || 0;
-    const perRow = Math.max(1, Math.round(gridWidth / (cardWidth + gap)));
+    const gridWidth = epGrid.offsetWidth || epGrid.parentElement?.offsetWidth || 0;
+    if (!gridWidth) return;
+    const gap = 8;
+    const minCard = clamp(100, gridWidth * 0.08, 160);
+    const perRow = Math.max(1, Math.floor((gridWidth + gap) / (minCard + gap)));
     PAGE_SIZE = perRow * 4;
   }
 
@@ -495,6 +499,7 @@
   }
   epvGrid.addEventListener('click', () => {
     epViewMode = 'grid'; localStorage.setItem('tijitoon_ep_view', epViewMode); applyEpView();
+    computePageSize();
     renderPage();
   });
   epvList.addEventListener('click', () => {
@@ -613,11 +618,27 @@
     isRestoringFromHistory = false;
   });
 
+  const TAG_LABELS = { ANIME: 'Anime', TOON: 'Cartoon', FR: 'Prod. FR', KIDS: 'Préscolaire', '★': '★' };
+
   function populateHero() {
     document.title = `Tijitoon — ${show.title}`;
     document.getElementById('show-title').textContent = show.title.toUpperCase();
     document.getElementById('pl-bg-title').textContent = show.title;
     document.getElementById('topbar-title').textContent = show.title.toUpperCase();
+
+    const eyebrow = document.getElementById('show-eyebrow');
+    const parts = [];
+    if (show.tag) {
+      const tagCls = show.tag === '★' ? 'tag-star' : `tag-${show.tag}`;
+      parts.push(`<span class="show-tag ${tagCls}">${TAG_LABELS[show.tag] ?? show.tag}</span>`);
+    }
+    const chLabel = show.channel === 'tiji' ? 'Tiji' : 'Télétoon';
+    parts.push(`<span class="ch-badge ${show.channel}">${chLabel}</span>`);
+    if (show.years) parts.push(`<span class="show-years">${show.years}</span>`);
+    if (parts.length) {
+      eyebrow.innerHTML = parts.join('');
+      eyebrow.style.display = '';
+    }
   }
 
   function buildSeasonTabs() {

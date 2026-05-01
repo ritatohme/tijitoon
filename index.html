@@ -19,7 +19,8 @@
       radial-gradient(circle at 50% 95%, rgba(198,255,58,.08), transparent 45%);
   }
 
-  .inner { max-width: 1400px; margin: 0 auto; width: 100%; }
+  .inner { width: 100%; padding: 0 6vw; }
+  #catalog .inner, footer .inner, header .inner { padding: 0; }
 
   /* ── HERO ── */
   header {
@@ -272,6 +273,7 @@
   .card-title {
     font-family: 'Rubik Mono One', sans-serif;
     font-size: clamp(.74rem, 1.1vw, .9rem); line-height: 1.25;
+    overflow-wrap: break-word; word-break: break-word;
   }
   .card-bottom { display: flex; gap: .35rem; flex-wrap: wrap; align-items: center; }
   .card-tag {
