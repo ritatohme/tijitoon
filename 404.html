@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>(function(){var s=localStorage.getItem('tijitoon_theme');if(s)document.documentElement.dataset.theme=s;})();</script>
 <style>
   body {
     background-image:
@@ -74,6 +75,10 @@
 
 <div class="topbar">
   <a class="back-btn" href="index.html">← CATALOGUE</a>
+  <button class="theme-toggle" id="theme-toggle" aria-label="Basculer le thème">
+    <span id="theme-label">DARK</span>
+    <span class="theme-switch"></span>
+  </button>
 </div>
 
 <div class="center">
@@ -127,5 +132,6 @@
 
 </div>
 
+<script src="theme.js"></script>
 </body>
 </html>

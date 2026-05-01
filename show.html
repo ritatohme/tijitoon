@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>(function(){var s=localStorage.getItem('tijitoon_theme');if(s)document.documentElement.dataset.theme=s;})();</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
 <style>
   body { background-image: none; overflow-x: hidden; }
@@ -53,10 +54,9 @@
     font-family: 'Bungee', sans-serif;
     font-size: clamp(1.4rem,4vw,2.8rem);
     line-height: .92; letter-spacing: -.02em; color: var(--paper);
-    text-shadow: 3px 3px 0 rgba(255,61,127,.5), 6px 6px 0 rgba(58,199,255,.3);
+    text-shadow: 3px 3px 0 var(--hot), 6px 6px 0 var(--sky);
     word-break: break-word;
   }
-
   /* ── 2-COL LAYOUT ── */
   .show-layout {
     display: grid;
@@ -353,6 +353,10 @@
 <div class="topbar">
   <a class="back-btn" href="index.html">← CATALOGUE</a>
   <span class="topbar-title" id="topbar-title"></span>
+  <button class="theme-toggle" id="theme-toggle" aria-label="Basculer le thème">
+    <span id="theme-label">DARK</span>
+    <span class="theme-switch"></span>
+  </button>
 </div>
 
 <!-- HERO -->
@@ -414,6 +418,7 @@
 
 </div><!-- show-layout -->
 
+<script src="theme.js"></script>
 <script>
   const params = new URLSearchParams(location.search);
   const showId = params.get('series') || params.get('id');
