@@ -80,7 +80,20 @@
     display: flex; align-items: center; justify-content: center;
   }
   #player-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: none; }
+  #player-iframe.mega-scaled { transform-origin: top left; }
   #player-video  { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: none; }
+  #fs-btn { display: none; }
+  #fs-exit {
+    display: none;
+    position: fixed; top: .75rem; left: .75rem; z-index: 10000;
+    background: rgba(0,0,0,.6); color: #fff; border: none;
+    border-radius: 4px; padding: .4rem .7rem; font-size: 1rem; cursor: pointer;
+  }
+  .player-wrap.fake-fs {
+    position: fixed; inset: 0; z-index: 9999;
+    width: 100vw; height: 100vh;
+    aspect-ratio: unset;
+  }
 
   .player-placeholder {
     position: absolute; inset: 0;
@@ -376,6 +389,7 @@
       <iframe id="player-iframe" allowfullscreen webkitallowfullscreen mozallowfullscreen
         allow="autoplay; fullscreen *; picture-in-picture; web-share"></iframe>
       <video id="player-video" controls controlslist="nodownload"></video>
+      <button id="fs-exit">✕</button>
       <div class="player-placeholder" id="player-placeholder">
         <div class="pl-title" id="pl-bg-title"></div>
         <div class="pl-hint" id="pl-hint">Sélectionne un épisode <span class="pl-arrow"></span></div>
@@ -389,6 +403,7 @@
         <span class="ep-now-playing" id="ep-now-playing">—</span>
         <span class="ep-nav-counter" id="ep-nav-counter">— / —</span>
       </div>
+      <button id="fs-btn" class="ep-nav-btn" title="Fullscreen">⛶</button>
       <button class="ep-nav-btn" id="btn-next" disabled onclick="navigateEp(1)">SUIV. →</button>
     </div>
   </div>
@@ -511,6 +526,26 @@
   applyEpView();
 
   const playerWrap = document.getElementById('player-wrap');
+  // TODO TEMP
+  const fsBtn = document.getElementById('fs-btn');
+  const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  const fsExit = document.getElementById('fs-exit');
+
+  function exitFakeFs() {
+    playerWrap.classList.remove('fake-fs');
+    fsExit.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  fsBtn.addEventListener('click', () => {
+    playerWrap.classList.add('fake-fs');
+    fsExit.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  });
+
+  fsExit.addEventListener('click', exitFakeFs);
+  // END TODO TEMP
 
   const SANDBOX_PERMISSIONS = {
     'ojamajo.moe':   'allow-scripts allow-popups allow-forms',
@@ -823,11 +858,41 @@
     if (!isRestoringFromHistory) pushEpUrl(next.seasonIdx, next.epIdx);
   }
 
+  const MEGA_MIN_WIDTH = 480;
+  let megaScaleObserver = null;
+
+  function applyMegaScale() {
+    const w = playerWrap.offsetWidth;
+    if (w >= MEGA_MIN_WIDTH) {
+      iframe.classList.remove('mega-scaled');
+      iframe.style.width = '';
+      iframe.style.height = '';
+      iframe.style.transform = '';
+    } else {
+      const scale = w / MEGA_MIN_WIDTH;
+      const scaledH = (w * 9 / 16) / scale;
+      iframe.classList.add('mega-scaled');
+      iframe.style.width  = MEGA_MIN_WIDTH + 'px';
+      iframe.style.height = scaledH + 'px';
+      iframe.style.transform = `scale(${scale})`;
+    }
+  }
+
+  function clearMegaScale() {
+    if (megaScaleObserver) { megaScaleObserver.disconnect(); megaScaleObserver = null; }
+    iframe.classList.remove('mega-scaled');
+    iframe.style.width = '';
+    iframe.style.height = '';
+    iframe.style.transform = '';
+  }
+
   function loadEpisode(ep, seasonIdx) {
     iframe.style.display = 'none'; iframe.src = '';
     video.style.display  = 'none'; video.src  = '';
     placeholder.style.display = 'none';
     placeholder.className = 'player-placeholder';
+    fsBtn.style.display = 'none';
+    clearMegaScale();
 
     if (!ep.url) { showNoVideo(ep, seasonIdx); return; }
     if (!/^https?:$/.test(new URL(ep.url).protocol)) { showNoVideo(ep, seasonIdx); return; }
@@ -843,10 +908,15 @@
       video.src = ep.url; video.style.display = 'block';
     } else {
       const host = new URL(ep.url).hostname;
-      const perms = SANDBOX_PERMISSIONS[host] ?? DEFAULT_SANDBOX;
-      iframe.setAttribute('sandbox', perms);
+      iframe.setAttribute('sandbox', SANDBOX_PERMISSIONS[host] ?? DEFAULT_SANDBOX);
       iframe.src = ep.url;
       iframe.style.display = 'block';
+      fsBtn.style.display = (isIOS && host === 'drive.google.com') ? 'inline-block' : 'none'; // TODO TEMP
+      if (host === 'mega.nz') {
+        applyMegaScale();
+        megaScaleObserver = new ResizeObserver(applyMegaScale);
+        megaScaleObserver.observe(playerWrap);
+      }
     }
   }
 
