@@ -323,7 +323,7 @@
 
   .ep-no-results {
     font-family: 'VT323', monospace; font-size: 1rem;
-    color: rgba(19,17,26,.35); padding: 1.5rem 0; text-align: center;
+    color: var(--no-results-color); padding: 1.5rem 0; text-align: center;
     display: none;
   }
 
@@ -483,12 +483,15 @@
   const epSearchWrap   = document.getElementById('ep-search-wrap');
   const epSearchToggle = document.getElementById('ep-search-toggle');
 
+  const epCountLabel = document.getElementById('ep-count-label');
+
   epSearchToggle.addEventListener('click', () => {
     const isOpen = epSearchWrap.classList.contains('open');
     if (isOpen) {
       collapseSearch();
     } else {
       epSearchWrap.classList.add('open');
+      epCountLabel.style.display = 'none';
       epSearch.focus();
     }
   });
@@ -497,6 +500,7 @@
     epSearch.value = '';
     epSearchClear.classList.remove('visible');
     epSearchWrap.classList.remove('open');
+    epCountLabel.style.display = '';
     applySearch('', false);
   }
   const noResults   = document.getElementById('ep-no-results');

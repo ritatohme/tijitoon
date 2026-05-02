@@ -7,10 +7,12 @@
   --orange: #ff8a1f;
   --purple: #9b5cff;
   --cream: #ffe4a8;
+  --no-results-color: rgba(45,45,45,.4);
 }
 
 [data-theme="dark"] {
   --ink: #0d0d0d;
+  --no-results-color: #837d76;
   --paper: #242830;
   --hot: #832745;
   --lime: #6b8a1e;
@@ -236,3 +238,4 @@ body::before {
 [data-theme="dark"] .message           { color: var(--dm-text); }
 [data-theme="dark"] .btn               { border-color: var(--dm-muted); box-shadow: 5px 5px 0 var(--dm-shadow); color: var(--dm-text); }
 [data-theme="dark"] .btn.secondary     { background: #1a1a1c; }
+
