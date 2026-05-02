@@ -197,6 +197,9 @@
   }
   .season-pill:hover:not(.active) { background: var(--cream); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
   .season-pill.active { background: var(--ink); color: var(--lime); box-shadow: none; transform: translate(2px,2px); }
+  .season-pill.film-type { border-color: var(--hot); color: var(--hot); }
+  .season-pill.film-type:hover:not(.active) { box-shadow: 4px 4px 0 var(--hot); }
+  .season-pill.film-type.active { background: var(--hot); color: var(--paper); border-color: var(--hot); box-shadow: none; }
   .season-pill-label {
     font-family: 'VT323', monospace; font-size: .95rem;
     color: rgba(19,17,26,.4); padding-left: .2rem;
@@ -683,10 +686,13 @@
   function buildSeasonTabs() {
     if (show.seasons.length <= 1) return;
     seasonTabs.style.display = '';
+    let filmCount = 0;
     show.seasons.forEach((s, i) => {
+      const isFilm = s.type === 'films';
+      if (isFilm) filmCount++;
       const btn = document.createElement('button');
-      btn.className = 'season-pill' + (i === 0 ? ' active' : '');
-      btn.textContent = `S${i + 1}`;
+      btn.className = 'season-pill' + (i === 0 ? ' active' : '') + (isFilm ? ' film-type' : '');
+      btn.textContent = isFilm ? `F${filmCount}` : `S${i + 1}`;
       btn.title = s.name || `Saison ${i + 1}`;
       btn.addEventListener('click', () => { if (i !== currentSeason) switchSeason(i); });
       seasonTabs.appendChild(btn);
