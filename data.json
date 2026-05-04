@@ -7173,6 +7173,18 @@
             "url": "https://geo.dailymotion.com/player.html?video=xrvg41"
           }
         ]
+      },
+      {
+        "num": 3,
+        "name": "Films",
+        "type": "films",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Film 1",
+            "url": "https://player.odycdn.com/v6/streams/426c43d3e3ff4f5f77c359c5b2bbaecc6b8cc40f/b14cdf.mp4"
+          }
+        ]
       }
     ]
   },
