@@ -7182,7 +7182,8 @@
           {
             "num": 1,
             "title": "Film 1",
-            "url": "https://player.odycdn.com/v6/streams/426c43d3e3ff4f5f77c359c5b2bbaecc6b8cc40f/b14cdf.mp4"
+            "url": "https://player.odycdn.com/v6/streams/426c43d3e3ff4f5f77c359c5b2bbaecc6b8cc40f/b14cdf.mp4",
+            "odysee": "B1_t04:4"
           }
         ]
       }
@@ -9044,7 +9045,8 @@
           {
             "num": 5,
             "title": "Épisode 5",
-            "url": "https://player.odycdn.com/v6/streams/47f7b884c28a6fa082f310d5638151d6a743d089/a02b6a.mp4"
+            "url": "https://player.odycdn.com/v6/streams/47f7b884c28a6fa082f310d5638151d6a743d089/a02b6a.mp4",
+            "odysee": "APP_Chapter_05#4"
           },
           {
             "num": 6,
@@ -9139,7 +9141,8 @@
           {
             "num": 24,
             "title": "Épisode 24",
-            "url": "https://player.odycdn.com/v6/streams/f4c2aa03b0b1b0a18e054e8402bceafaaad16a0e/b93b66.mp4"
+            "url": "https://player.odycdn.com/v6/streams/f4c2aa03b0b1b0a18e054e8402bceafaaad16a0e/b93b66.mp4",
+            "odysee": "APP_Chapter_24:f"
           },
           {
             "num": 25,
@@ -21602,7 +21605,8 @@
           {
             "num": 2,
             "title": "Film 2",
-            "url": "https://player.odycdn.com/v6/streams/b2ce37a82acc0074d3c3930bc9457e5db5869990/504b59.mp4"
+            "url": "https://player.odycdn.com/v6/streams/b2ce37a82acc0074d3c3930bc9457e5db5869990/504b59.mp4",
+            "odysee": "wc-imtr-32:b"
           },
           {
             "num": 3,

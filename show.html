@@ -569,6 +569,12 @@
   };
   const DEFAULT_SANDBOX = 'allow-scripts allow-same-origin allow-popups allow-presentation';
 
+  const WORKER_URL = 'https://crimson-night-b851.ritatohme99.workers.dev/';
+
+  function odycdnProxyUrl(mp4Url) {
+    return WORKER_URL + '?url=' + encodeURIComponent(mp4Url);
+  }
+
   function getEpType(ep) {
     if (ep.type) return ep.type;
     if (ep.url?.includes('ojamajo.moe/videos/watch')) return 'redirect';
@@ -924,7 +930,8 @@
         <div class="pl-ep-label">S${seasonIdx + 1} — Épisode ${ep.num}</div>
         <a class="player-external-link" href="${ep.url}" target="_blank" rel="noopener noreferrer">▶ Regarder sur ojamajo.moe</a>`;
     } else if (type === 'mp4') {
-      video.src = ep.url; video.style.display = 'block';
+      const src = ep.odysee ? odycdnProxyUrl(ep.url) : ep.url;
+      video.src = src; video.style.display = 'block';
     } else {
       const host = new URL(ep.url).hostname;
       iframe.setAttribute('sandbox', SANDBOX_PERMISSIONS[host] ?? DEFAULT_SANDBOX);
