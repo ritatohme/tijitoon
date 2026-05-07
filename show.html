@@ -275,6 +275,12 @@
   .ep-view-btn:hover:not(.active) { background: var(--cream); color: var(--ink); }
 
   /* Episode grid */
+  @keyframes season-flash {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .season-switching { animation: season-flash .18s ease-out; }
+
   .ep-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(clamp(100px, 8vw, 160px), 1fr));
@@ -527,15 +533,25 @@
     epvGrid.classList.toggle('active', !isList);
     epvList.classList.toggle('active', isList);
   }
+  function isPlayingInCurrentSeason() {
+    return currentEp !== -1 && flatEps[currentPos]?.seasonIdx === currentSeason;
+  }
+
   epvGrid.addEventListener('click', () => {
-    epViewMode = 'grid'; localStorage.setItem('tijitoon_ep_view', epViewMode); applyEpView();
+    epViewMode = 'grid';
+    localStorage.setItem('tijitoon_ep_view', epViewMode);
+    applyEpView();
     computePageSize();
-    if (currentEp !== -1) currentPage = Math.floor(currentEp / PAGE_SIZE);
+    if (isPlayingInCurrentSeason()) currentPage = Math.floor(currentEp / PAGE_SIZE);
     renderPage();
   });
+
   epvList.addEventListener('click', () => {
-    epViewMode = 'list'; localStorage.setItem('tijitoon_ep_view', epViewMode); applyEpView(); renderPage();
-    if (currentEp !== -1 && epListRows[currentSeason]?.[currentEp]) {
+    epViewMode = 'list';
+    localStorage.setItem('tijitoon_ep_view', epViewMode);
+    applyEpView();
+    renderPage();
+    if (isPlayingInCurrentSeason() && epListRows[currentSeason]?.[currentEp]) {
       setTimeout(() => epListRows[currentSeason][currentEp].scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
     }
   });
@@ -590,6 +606,7 @@
   let epCards       = [];
   let epListRows    = [];
   let isRestoringFromHistory = false;
+  const seasonPages = {};
 
   const LS_KEY = `tijitoon:progress:${showId}`;
 
@@ -722,15 +739,23 @@
 
   function switchSeason(i) {
     currentSeason = i;
-    currentPage = 0;
+    const playingHere = currentEp !== -1 && flatEps[currentPos]?.seasonIdx === i;
+    currentPage = playingHere && seasonPages[i] !== undefined ? seasonPages[i] : 0;
     collapseSearch();
-    seasonTabs.querySelectorAll('.season-pill').forEach((btn, j) =>
-      btn.classList.toggle('active', j === i)
-    );
+    seasonTabs.querySelectorAll('.season-pill').forEach((btn, j) => btn.classList.toggle('active', j === i));
     const countEl = document.getElementById('season-ep-count');
     if (countEl) countEl.textContent = `— ${show.seasons[i].name || `Saison ${i + 1}`}`;
     buildEpGrid(i);
-    epListWrap.scrollTop = 0;
+    if (epViewMode === 'list' && playingHere && epListRows[i]?.[currentEp]) {
+      setTimeout(() => epListRows[i][currentEp].scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
+    } else {
+      epListWrap.scrollTop = 0;
+    }
+    [epGrid, epListWrap].forEach(el => {
+      el.classList.remove('season-switching');
+      void el.offsetWidth;
+      el.classList.add('season-switching');
+    });
   }
 
   function buildEpGrid(seasonIdx) {
@@ -773,13 +798,13 @@
       epListRows[seasonIdx].push(row);
     });
 
-    if (currentEp !== -1 && seasonIdx === flatEps[currentPos]?.seasonIdx) {
+    if (isPlayingInCurrentSeason()) {
       epCards[seasonIdx]?.[currentEp]?.classList.add('playing');
       epListRows[seasonIdx]?.[currentEp]?.classList.add('playing');
     }
     refreshSavedMark();
     computePageSize();
-    applySearch('');
+    applySearch('', false);
   }
 
   function normalize(str) {
@@ -833,13 +858,20 @@
     }
   }
 
-  epPagePrev.addEventListener('click', () => { currentPage--; renderPage(); });
-  epPageNext.addEventListener('click', () => { currentPage++; renderPage(); });
+  function flashEpGrid() {
+    epGrid.classList.remove('season-switching');
+    void epGrid.offsetWidth;
+    epGrid.classList.add('season-switching');
+  }
+
+  epPagePrev.addEventListener('click', () => { currentPage--; renderPage(); flashEpGrid(); });
+  epPageNext.addEventListener('click', () => { currentPage++; renderPage(); flashEpGrid(); });
 
   function selectEp(seasonIdx, epIdx, ep, doSave) {
     currentEp  = epIdx;
     currentPos = flatEps.findIndex(e => e.seasonIdx === seasonIdx && e.epIdx === epIdx);
     currentPage = Math.floor(currentEp / PAGE_SIZE);
+    seasonPages[seasonIdx] = currentPage;
 
     renderPage();
 
@@ -847,7 +879,7 @@
     if (epListRows[seasonIdx]) {
       epListRows[seasonIdx].forEach((r, j) => {
         r.classList.toggle('playing', j === epIdx);
-        if (j === epIdx) setTimeout(() => r.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
+        if (j === epIdx && epViewMode === 'list') setTimeout(() => r.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
       });
     }
 
