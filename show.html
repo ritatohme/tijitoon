@@ -516,7 +516,7 @@
   }
   const noResults   = document.getElementById('ep-no-results');
 
-  let epViewMode = localStorage.getItem('tijitoon_ep_view') || 'list';
+  let epViewMode = localStorage.getItem('tijitoon_ep_view') || 'grid';
 
   const epvGrid = document.getElementById('epv-grid');
   const epvList = document.getElementById('epv-list');
@@ -819,7 +819,7 @@
 
     cards.forEach(c => c.style.display = 'none');
     matchedCards.slice(start, end).forEach(c => c.style.display = '');
-    rows.forEach(r => r.style.display = !query || r.dataset.title.includes(query) ? '' : 'none');
+    rows.forEach(r => r.style.display = matchedRows.includes(r) ? '' : 'none');
 
     noResults.style.display = total === 0 ? 'block' : 'none';
 
