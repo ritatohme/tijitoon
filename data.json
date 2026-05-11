@@ -6132,6 +6132,148 @@
     "seasons": [
       {
         "num": 1,
+        "name": "La Forêt des Pommes",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X01%20-%20Les%20Valeureuses%20Jumelles.mp4"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X02%20-%20Les%20Pr%C3%A9diction%20De%20La%20Voyante.mp4"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X03%20-%20Le%20Concours%20De%20Musique.mp4"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X04%20-%20De%20Nouveaux%20Amis.mp4"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X05%20-%20La%20D%C3%A9esse%20De%20La%20Lune.mp4"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X06%20-%20Cache-Cache%20Kossoli.mp4"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X07%20-%20Une%20D%C3%A9licieuse%20Surprise.mp4"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X08%20-%20A%20La%20Recherche%20Des%20Pommes%20Avec%20Les%20F%C3%A9es.mp4"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X09%20-%20Du%20Pudding%20Aux%20Pommes.mp4"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X10%20-%20Mimmy%20Au%20Bois%20Dormant.mp4"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X11%20-%20Bienvenue%20Dans%20La%20For%C3%AAt%20Enchant%C3%A9e.mp4"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X12%20-%20A%20L%27aventure%20Dans%20La%20For%C3%AAt%20Myst%C3%A9rieuse.mp4"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://archive.org/download/hellokittyetlaforetdespommes_vf/1X13%20-%20La%20Pomme%20Dor%C3%A9e.mp4"
+          }
+        ]
+      },
+      {
+        "num": 2,
+        "name": "Le Mystère de la Forêt des Pommes",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X01%20-%20Kitty%20Et%20Mimmy%20D%C3%A9tectives.mp4"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X02%20-%20Kitty%20Et%20Mimmy%20Graines%20De%20Vedettes.mp4"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X03%20-%20Kitty%20Et%20Mimmy%20Vont%20Au%20Bal.mp4"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X04%20-%20Kitty%20Et%20Mimmy%20Diseuses%20De%20Bonne%20Aventure.mp4"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X05%20-%20Kitty%20Et%20Mimmy%20Magiciennes.mp4"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X06%20-%20Kitty%20Et%20Mimmy%20Pr%C3%A9sentatrices.mp4"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X07%20-%20Kitty%20Et%20Mimmy%20P%C3%A2tissi%C3%A8res.mp4"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X08%20-%20Au%20Beau%20Milieu%20Des%20R%C3%AAves.mp4"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X09%20-%20Kitty%20Et%20Mimmy%20Ninjas.mp4"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X10%20-%20Le%20Secret%20Du%20Prince.mp4"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X11%20-%20Kitty%20Et%20Mimmy%20Sir%C3%A8nes.mp4"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X12%20-%20L%27%C3%A9nigme%20De%20L%27ombre%20Noire.mp4"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://archive.org/download/hellokittyetlemysteredelaforetdespommes/2X13%20-%20F%C3%AAte%20Au%20Ch%C3%A2teau.mp4"
+          }
+        ]
+      },
+      {
+        "num": 3,
         "name": "La Forêt des Pommes et le Monde Parallèle",
         "episodes": [
           {
@@ -6270,11 +6412,6 @@
             "url": "https://archive.org/download/hello-kitty-la-foret-des-pommes-et-le-monde-parallele/Hello%20Kitty%20-%20La%20Fore%CC%82t%20des%20Pommes%20et%20le%20Monde%20Paralle%CC%80le/3x27%20-%20Le%20restaurant%20de%20Monga%20et%20Montine.mp4"
           }
         ]
-      },
-      {
-        "num": 2,
-        "name": "Saison 2",
-        "episodes": []
       }
     ]
   },
