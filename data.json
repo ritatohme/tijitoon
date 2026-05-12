@@ -1234,6 +1234,18 @@
             "url": "https://youtube.com/embed/EjOCrX16Rm0"
           }
         ]
+      },
+      {
+        "num": 3,
+        "name": "Films",
+        "type": "films",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Film 1",
+            "url": "https://youtube.com/embed/qzx_WdYIXI8"
+          }
+        ]
       }
     ]
   },
@@ -19552,6 +19564,18 @@
             "num": 26,
             "title": "Épisode 26",
             "url": "https://youtube.com/embed/ebZ5eXTMtr8"
+          }
+        ]
+      },
+      {
+        "num": 7,
+        "name": "Films",
+        "type": "films",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Film 1",
+            "url": "https://youtube.com/embed/F_T3H6qfFek"
           }
         ]
       }
