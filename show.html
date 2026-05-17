@@ -83,6 +83,31 @@
   #player-iframe.mega-scaled { transform-origin: top left; }
   #player-video  { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: none; }
   #fs-btn { display: none; }
+  #audio-track-btn {
+    display: none;
+    font-family: 'Bungee', sans-serif; font-size: clamp(.6rem, 1vw, 1rem);
+    padding: clamp(.3rem, .5vw, .7rem) clamp(.6rem, .9vw, 1.2rem);
+    background: transparent; color: rgba(255,246,227,.9);
+    border: 2px solid rgba(255,246,227,.4);
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    transition: all .1s;
+  }
+
+  #audio-track-btn:hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+  #audio-track-menu {
+    display: none;
+    position: absolute; bottom: calc(100% + .4rem); left: 50%; transform: translateX(-50%); z-index: 100;
+    background: var(--ink); border: 2px solid rgba(255,255,255,.15);
+    border-radius: 4px; overflow: hidden; min-width: 90px;
+  }
+  #audio-track-menu button {
+    display: block; width: 100%; padding: .4rem .8rem;
+    background: none; border: none; color: rgba(255,246,227,.5);
+    font-size: .78rem; text-align: left; cursor: pointer;
+    font-family: 'Bungee', sans-serif;
+  }
+  #audio-track-menu button:hover { background: rgba(255,255,255,.1); }
+  #audio-track-menu button.active { color: var(--lime); }
   #fs-exit {
     display: none;
     position: fixed; top: .75rem; left: .75rem; z-index: 10000;
@@ -150,7 +175,7 @@
   }
   .ep-nav-inner {
     display: flex; align-items: center; gap: .6rem;
-    overflow: hidden;
+    overflow: visible;
   }
   .ep-nav-btn {
     font-family: 'Bungee', sans-serif; font-size: clamp(.6rem, 1vw, 1rem);
@@ -160,8 +185,8 @@
     cursor: pointer; white-space: nowrap; flex-shrink: 0;
     transition: all .1s;
   }
-  #btn-prev:not(:disabled) { color: var(--paper); border-color: rgba(255,246,227,.4); }
-  #btn-next:not(:disabled) { color: var(--paper); border-color: rgba(255,246,227,.4); }
+  #btn-prev:not(:disabled) { color: rgba(255,246,227,.9); border-color: rgba(255,246,227,.4); }
+  #btn-next:not(:disabled) { color: rgba(255,246,227,.9); border-color: rgba(255,246,227,.4); }
   #btn-prev:not(:disabled):hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
   #btn-next:not(:disabled):hover { background: var(--hot); color: var(--paper); border-color: var(--hot); }
   .ep-nav-btn:disabled { opacity: .2; cursor: default; }
@@ -421,6 +446,10 @@
         <span class="ep-nav-counter" id="ep-nav-counter">— / —</span>
       </div>
       <button id="fs-btn" class="ep-nav-btn" title="Fullscreen">⛶</button>
+      <div style="position:relative">
+        <div id="audio-track-menu"></div>
+        <button id="audio-track-btn">AUDIO</button>
+      </div>
       <button class="ep-nav-btn" id="btn-next" disabled onclick="navigateEp(1)">SUIV. →</button>
     </div>
   </div>
@@ -454,14 +483,51 @@
 </div><!-- show-layout -->
 
 <script src="theme.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
 <script>
   const params = new URLSearchParams(location.search);
   const showId = params.get('series') || params.get('id');
   if (!showId || !/^[\w-]+$/.test(showId)) window.location.replace('404.html');
 
-  const iframe      = document.getElementById('player-iframe');
-  const video       = document.getElementById('player-video');
-  const placeholder = document.getElementById('player-placeholder');
+  const iframe         = document.getElementById('player-iframe');
+  const video          = document.getElementById('player-video');
+  const placeholder    = document.getElementById('player-placeholder');
+  const audioBtn       = document.getElementById('audio-track-btn');
+  const audioMenu      = document.getElementById('audio-track-menu');
+
+  audioBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = audioMenu.style.display === 'block';
+    audioMenu.style.display = isOpen ? 'none' : 'block';
+  });
+  audioMenu.addEventListener('click', (e) => { e.stopPropagation(); });
+  document.addEventListener('click', () => { audioMenu.style.display = 'none'; });
+
+  function buildAudioMenu(tracks, hlsInstance) {
+    audioMenu.innerHTML = '';
+    tracks.forEach((t, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = t.name || t.lang || `Track ${i + 1}`;
+      if (i === hlsInstance.audioTrack) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        hlsInstance.audioTrack = i;
+        audioMenu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audioBtn.textContent = btn.textContent;
+        audioMenu.style.display = 'none';
+      });
+      audioMenu.appendChild(btn);
+    });
+    audioBtn.textContent = tracks[hlsInstance.audioTrack]?.name || tracks[hlsInstance.audioTrack]?.lang || 'AUDIO';
+    audioBtn.removeAttribute('disabled');
+    audioBtn.style.display = 'block';
+  }
+
+  function hideAudioMenu() {
+    audioBtn.style.display = 'none';
+    audioMenu.style.display = 'none';
+    audioMenu.innerHTML = '';
+  }
   const epGrid      = document.getElementById('ep-grid');
   const epListWrap  = document.getElementById('ep-list-wrap');
   const epPagination = document.getElementById('ep-pagination');
@@ -596,6 +662,7 @@
     if (ep.url?.includes('ojamajo.moe/videos/watch')) return 'redirect';
     // if (ep.url?.endsWith('.mp4')) return 'mp4';
     if (ep.url?.endsWith('.mp4') && !ep.url.includes('archive.org/embed')) return 'mp4';
+    if (ep.url?.endsWith('.m3u8')) return 'm3u8';
     return 'embed';
   }
 
@@ -947,6 +1014,7 @@
   function loadEpisode(ep, seasonIdx) {
     iframe.style.display = 'none'; iframe.src = '';
     video.style.display  = 'none'; video.src  = '';
+    hideAudioMenu();
     placeholder.style.display = 'none';
     placeholder.className = 'player-placeholder';
     fsBtn.style.display = 'none';
@@ -965,6 +1033,25 @@
     } else if (type === 'mp4') {
       const src = ep.odysee ? odycdnProxyUrl(ep.url) : ep.url;
       video.src = src; video.style.display = 'block';
+    } else if (type === 'm3u8') {
+      video.style.display = 'block';
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(ep.url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, () => {
+          const frTrack = hls.audioTracks.findIndex(t =>
+            t.lang === 'fr' || /^fr/i.test(t.lang) || /vf|fra$|français|french/i.test(t.name)
+          );
+          if (frTrack !== -1) {
+            hls.audioTrack = frTrack;
+            setTimeout(() => { hls.audioTrack = frTrack; }, 300);
+          }
+          if (hls.audioTracks.length > 1) buildAudioMenu(hls.audioTracks, hls);
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = ep.url;
+      }
     } else {
       const host = new URL(ep.url).hostname;
       iframe.setAttribute('sandbox', SANDBOX_PERMISSIONS[host] ?? DEFAULT_SANDBOX);
