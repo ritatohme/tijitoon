@@ -651,10 +651,11 @@
   };
   const DEFAULT_SANDBOX = 'allow-scripts allow-same-origin allow-popups allow-presentation';
 
-  const WORKER_URL = 'https://crimson-night-b851.ritatohme99.workers.dev/';
+  // const ODYCDN_PROXY_URL = 'https://great-lorikeet-66.roughrecipe.deno.net/'; // deno fallback
+  const ODYCDN_PROXY_URL = 'https://crimson-night-b851.ritatohme99.workers.dev/';
 
   function odycdnProxyUrl(mp4Url) {
-    return WORKER_URL + '?url=' + encodeURIComponent(mp4Url);
+    return ODYCDN_PROXY_URL + '?url=' + encodeURIComponent(mp4Url);
   }
 
   function getEpType(ep) {
@@ -1031,7 +1032,7 @@
         <div class="pl-ep-label">S${seasonIdx + 1} — Épisode ${ep.num}</div>
         <a class="player-external-link" href="${ep.url}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-play"></i> Regarder sur ${new URL(ep.url).hostname}</a>`;
     } else if (type === 'mp4') {
-      const src = ep.odysee ? odycdnProxyUrl(ep.url) : ep.url;
+      const src = (ep.odysee || ep.url.includes('player.odycdn.com')) ? odycdnProxyUrl(ep.url) : ep.url;
       video.src = src; video.style.display = 'block';
     } else if (type === 'm3u8') {
       video.style.display = 'block';
