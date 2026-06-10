@@ -177,6 +177,7 @@ function getEpType(ep) {
   if (ep.type) return ep.type;
   if (ep.url?.includes('ojamajo.moe/videos/watch')) return 'redirect';
   if (ep.url?.includes('uqload.is/embed-')) return 'uqload';
+  if (ep.url?.includes('pcloud.link/publink') || ep.url?.includes('pcloud.com/publink')) return 'pcloud';
   // if (ep.url?.endsWith('.mp4')) return 'mp4';
   if (ep.url?.endsWith('.mp4') && !ep.url.includes('archive.org/embed')) return 'mp4';
   if (ep.url?.endsWith('.m3u8')) return 'm3u8';
@@ -593,6 +594,24 @@ function loadEpisode(ep, seasonIdx) {
         if (!m3u8url) { showNoVideo(ep, seasonIdx); return; }
         placeholder.style.display = 'none';
         playM3u8(m3u8url);
+      })
+      .catch(() => { if (gen === loadGen) showNoVideo(ep, seasonIdx); });
+  } else if (type === 'pcloud') {
+    // direct links expire after a few hours — resolve a fresh one per play
+    const code = epUrl.searchParams.get('code');
+    if (!code) { showNoVideo(ep, seasonIdx); return; }
+    const api = epUrl.hostname.startsWith('e.') ? 'eapi' : 'api'; // e.pcloud.link = EU datacenter
+    placeholder.style.display = 'flex';
+    placeholder.innerHTML = `<div class="pl-hint">Chargement…</div>`;
+    // pcloud rejects requests with a foreign Referer ("Invalid link referer", result 7010)
+    fetch(`https://${api}.pcloud.com/getpublinkdownload?code=${encodeURIComponent(code)}`, { referrerPolicy: 'no-referrer' })
+      .then(r => r.json())
+      .then(j => {
+        if (gen !== loadGen) return;
+        if (j.result !== 0 || !j.hosts?.length) { showNoVideo(ep, seasonIdx); return; }
+        placeholder.style.display = 'none';
+        video.src = 'https://' + j.hosts[0] + j.path;
+        video.style.display = 'block';
       })
       .catch(() => { if (gen === loadGen) showNoVideo(ep, seasonIdx); });
   } else if (type === 'redirect') {
