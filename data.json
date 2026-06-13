@@ -2620,7 +2620,7 @@
   },
   "danny-phantom": {
     "title": "Danny Phantom",
-    "channel": "teletoon",
+    "channel": "cartoon-network",
     "years": null,
     "tag": "TOON",
     "seasons": [
@@ -10928,7 +10928,7 @@
   },
   "kim-possible": {
     "title": "Kim Possible",
-    "channel": "teletoon",
+    "channel": "cartoon-network",
     "years": null,
     "tag": "TOON",
     "seasons": [
@@ -12120,7 +12120,7 @@
   },
   "dexter": {
     "title": "Le Laboratoire de Dexter",
-    "channel": "teletoon",
+    "channel": "cartoon-network",
     "years": null,
     "tag": "TOON",
     "seasons": [
@@ -20944,7 +20944,7 @@
   },
   "powerpuff-girls": {
     "title": "Powerpuff Girls",
-    "channel": "teletoon",
+    "channel": "cartoon-network",
     "years": null,
     "tag": "TOON",
     "seasons": [
