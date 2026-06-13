@@ -138,8 +138,9 @@ h1 {
   font-family: 'VT323', monospace; font-size: .82rem;
   padding: .02rem .35rem; border: 2px solid var(--ink);
 }
-.ch-mini.teletoon { background: var(--hot); color: var(--paper); }
-.ch-mini.tiji     { background: var(--sky); }
+.ch-mini.teletoon        { background: var(--hot); color: var(--paper); }
+.ch-mini.tiji            { background: var(--sky); }
+.ch-mini.cartoon-network { background: var(--lime); color: var(--ink); }
 .cw-remove-btn {
   width:18px; height:18px; border-radius:50%;
   background:var(--ink); color:var(--paper);
@@ -275,8 +276,9 @@ h1 {
   font-family: 'VT323', monospace; font-size: .85rem;
   padding: .04rem .42rem; border: 2px solid var(--ink);
 }
-.card-ch.teletoon { background: var(--hot); color: var(--paper); }
-.card-ch.tiji     { background: var(--sky); }
+.card-ch.teletoon        { background: var(--hot); color: var(--paper); }
+.card-ch.tiji            { background: var(--sky); }
+.card-ch.cartoon-network { background: var(--lime); color: var(--ink); }
 
 /* ── LIST VIEW ── */
 .list-view { display: none; }
@@ -329,8 +331,9 @@ h1 {
   font-family: 'VT323', monospace; font-size: .88rem;
   padding: .1rem .5rem; border: 2px solid var(--ink); text-align: center; white-space: nowrap;
 }
-.trow-ch.teletoon { background: var(--hot); color: var(--paper); }
-.trow-ch.tiji     { background: var(--sky); }
+.trow-ch.teletoon        { background: var(--hot); color: var(--paper); }
+.trow-ch.tiji            { background: var(--sky); }
+.trow-ch.cartoon-network { background: var(--lime); color: var(--ink); }
 
 .no-results {
   font-family: 'VT323', monospace; font-size: 1.2rem;

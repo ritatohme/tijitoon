@@ -17,7 +17,9 @@ function esc(str) {
 }
 
 function chLabel(channel) {
-  return channel === 'tiji' ? 'Tiji' : 'Télétoon';
+  if (channel === 'tiji') return 'Tiji';
+  if (channel === 'cartoon-network') return 'Cartoon Network';
+  return 'Télétoon';
 }
 
 function tagCls(tag) {

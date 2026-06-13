@@ -34,8 +34,9 @@ body { background-image: none; overflow-x: hidden; }
   padding: .2rem .7rem; border: 2px solid rgba(255,246,227,.3);
   box-shadow: 2px 2px 0 rgba(255,246,227,.2);
 }
-.ch-badge.teletoon { background: var(--hot); border-color: var(--hot); }
-.ch-badge.tiji     { background: var(--sky); color: var(--ink); border-color: var(--sky); }
+.ch-badge.teletoon        { background: var(--hot); border-color: var(--hot); }
+.ch-badge.tiji            { background: var(--sky); color: var(--ink); border-color: var(--sky); }
+.ch-badge.cartoon-network { background: var(--lime); color: var(--ink); border-color: var(--lime); }
 h1.show-title {
   font-family: 'Bungee', sans-serif;
   font-size: clamp(1.4rem,4vw,2.8rem);
