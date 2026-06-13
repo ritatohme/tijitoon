@@ -174,25 +174,25 @@ body::before {
 [data-theme="dark"] footer             { color: var(--dm-text); border-top-color: var(--dm-muted); }
 [data-theme="dark"] footer a           { color: var(--dm-muted) !important; border-bottom-color: var(--dm-muted) !important; }
 
-/* show.html — hero & badges */
+/* show.html - hero & badges */
 [data-theme="dark"] h1.show-title      { color: #e8e6e1; }
 [data-theme="dark"] .show-hero         { color: var(--dm-text); }
 [data-theme="dark"] .show-tag          { border-color: var(--dm-muted); color: var(--dm-text); }
 [data-theme="dark"] .ch-badge          { border-color: var(--dm-muted); color: var(--dm-text); }
 [data-theme="dark"] .topbar-title      { color: var(--dm-muted); }
 
-/* show.html — season pills */
+/* show.html - season pills */
 [data-theme="dark"] .season-pill                  { border-color: var(--dm-muted); box-shadow: 3px 3px 0 var(--ink); color: var(--dm-text); }
 [data-theme="dark"] .season-pill:hover:not(.active) { background: var(--dm-hover); box-shadow: 4px 4px 0 var(--ink); }
 [data-theme="dark"] .season-pill-label            { color: var(--dm-muted); }
 [data-theme="dark"] .ep-count-label               { color: var(--dm-text); }
 
-/* show.html — episode grid */
+/* show.html - episode grid */
 [data-theme="dark"] .ep-card                      { background: var(--dm-surface); border-color: var(--dm-muted); color: var(--dm-text); }
 [data-theme="dark"] .ep-card.playing              { background: var(--dm-playing); }
 [data-theme="dark"] .ep-card-num                  { color: var(--dm-text); }
 
-/* show.html — episode list */
+/* show.html - episode list */
 [data-theme="dark"] .ep-list-wrap                 { border-color: var(--dm-muted); box-shadow: 4px 4px 0 var(--ink); }
 [data-theme="dark"] .ep-list-row                  { border-bottom-color: var(--dm-muted); color: var(--dm-text); }
 [data-theme="dark"] .ep-list-row:hover            { background: var(--dm-hover); }
@@ -200,7 +200,7 @@ body::before {
 [data-theme="dark"] .ep-list-row.playing .ep-list-num { color: var(--dm-muted); }
 [data-theme="dark"] .ep-list-num                  { color: var(--dm-muted); border-right-color: var(--dm-muted); }
 
-/* show.html — ep search */
+/* show.html - ep search */
 [data-theme="dark"] .ep-search-wrap               { background: var(--dm-surface); border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); }
 [data-theme="dark"] .ep-search-wrap:focus-within  { border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); }
 [data-theme="dark"] .ep-search                    { color: var(--dm-text); }
@@ -208,14 +208,14 @@ body::before {
 [data-theme="dark"] .ep-search-clear              { color: var(--dm-muted); }
 [data-theme="dark"] .ep-search-toggle             { background: var(--dm-surface); border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); color: var(--dm-text); }
 
-/* show.html — ep view toggle */
+/* show.html - ep view toggle */
 [data-theme="dark"] .ep-view-toggle               { border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); }
 [data-theme="dark"] .ep-view-btn                  { color: var(--dm-muted); }
 [data-theme="dark"] .ep-view-btn:not(:last-child) { border-right-color: var(--dm-muted); }
 [data-theme="dark"] .ep-view-btn.active           { color: var(--lime); }
 [data-theme="dark"] .ep-view-btn:hover:not(.active) { background: var(--dm-hover); color: var(--dm-text); }
 
-/* show.html — player / nav / pagination */
+/* show.html - player / nav / pagination */
 [data-theme="dark"] .player-external-link         { border-color: var(--dm-muted); box-shadow: 3px 3px 0 var(--ink); }
 [data-theme="dark"] .ep-nav-bar                   { background: var(--dm-surface); }
 [data-theme="dark"] .ep-now-playing               { color: var(--dm-text); }

@@ -168,6 +168,7 @@ const DEFAULT_SANDBOX = 'allow-scripts allow-same-origin allow-popups allow-pres
 const CRIMSON_WORKER_URL = 'https://crimson-night-b851.ritatohme99.workers.dev';
 const ODYCDN_PROXY_URL   = CRIMSON_WORKER_URL + '/';
 const LOUDAPE_PROXY_URL   = 'https://loud-ape-44.roughrecipe.deno.net';
+const OJAMAJO_WORKER_URL  = 'https://rapid-lab-6552.ritaclifford95.workers.dev';
 
 function odycdnProxyUrl(mp4Url) {
   return ODYCDN_PROXY_URL + '?url=' + encodeURIComponent(mp4Url);
@@ -176,7 +177,7 @@ function odycdnProxyUrl(mp4Url) {
 function getEpType(ep) {
   if (ep.type) return ep.type;
   if (ep.url?.includes('mhd.seekplayer.me')) return 'seekplayer';
-  if (ep.url?.includes('ojamajo.moe/videos/watch')) return 'redirect';
+  if (ep.url?.includes('player.ojamajo.moe/videos/watch')) return 'ojamajo';
   if (ep.url?.includes('uqload.is/embed-')) return 'uqload';
   if (ep.url?.includes('pcloud.link/publink') || ep.url?.includes('pcloud.com/publink')) return 'pcloud';
   // if (ep.url?.endsWith('.mp4')) return 'mp4';
@@ -262,7 +263,7 @@ fetch('data.json')
       } else {
         placeholder.style.display = 'flex';
         placeholder.innerHTML = `
-          <div class="pl-ep-label">S${si + 1} — Épisode ${ei + 1}</div>
+          <div class="pl-ep-label">S${si + 1} - Épisode ${ei + 1}</div>
           <div class="pl-unavail">Épisode introuvable</div>`;
       }
     } else if (saved) {
@@ -293,7 +294,7 @@ window.addEventListener('popstate', e => {
 });
 
 function populateHero() {
-  document.title = `Tijitoon — ${show.title}`;
+  document.title = `Tijitoon - ${show.title}`;
   document.getElementById('show-title').textContent = show.title.toUpperCase();
   document.getElementById('pl-bg-title').textContent = show.title;
   document.getElementById('topbar-title').textContent = show.title.toUpperCase();
@@ -330,7 +331,7 @@ function buildSeasonTabs() {
   label.className = 'season-pill-label';
   label.id = 'season-ep-count';
   const s0 = show.seasons[0];
-  label.textContent = `— ${s0.name || 'Saison 1'}`;
+  label.textContent = `- ${s0.name || 'Saison 1'}`;
   seasonTabs.appendChild(label);
 }
 
@@ -341,7 +342,7 @@ function switchSeason(i) {
   collapseSearch();
   seasonTabs.querySelectorAll('.season-pill').forEach((btn, j) => btn.classList.toggle('active', j === i));
   const countEl = document.getElementById('season-ep-count');
-  if (countEl) countEl.textContent = `— ${show.seasons[i].name || `Saison ${i + 1}`}`;
+  if (countEl) countEl.textContent = `- ${show.seasons[i].name || `Saison ${i + 1}`}`;
   buildEpGrid(i);
   if (epViewMode === 'list' && playingHere && epListRows[i]?.[currentEp]) {
     setTimeout(() => epListRows[i][currentEp].scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
@@ -477,7 +478,7 @@ function selectEp(seasonIdx, epIdx, ep, doSave) {
   }
 
   const sLabel = `S${String(seasonIdx + 1).padStart(2,'0')}E${String(ep.num).padStart(2,'0')}`;
-  document.getElementById('ep-now-playing').textContent = `${sLabel} — ${ep.title}`;
+  document.getElementById('ep-now-playing').textContent = `${sLabel} - ${ep.title}`;
   document.getElementById('ep-nav-counter').textContent = `${currentPos + 1} / ${flatEps.length}`;
   document.getElementById('btn-prev').disabled = currentPos <= 0;
   document.getElementById('btn-next').disabled = currentPos >= flatEps.length - 1;
@@ -598,7 +599,7 @@ function loadEpisode(ep, seasonIdx) {
       })
       .catch(() => { if (gen === loadGen) showNoVideo(ep, seasonIdx); });
   } else if (type === 'pcloud') {
-    // direct links expire after a few hours — resolve a fresh one per play
+    // direct links expire after a few hours - resolve a fresh one per play
     const code = epUrl.searchParams.get('code');
     if (!code) { showNoVideo(ep, seasonIdx); return; }
     const api = epUrl.hostname.startsWith('e.') ? 'eapi' : 'api'; // e.pcloud.link = EU datacenter
@@ -615,10 +616,13 @@ function loadEpisode(ep, seasonIdx) {
         video.style.display = 'block';
       })
       .catch(() => { if (gen === loadGen) showNoVideo(ep, seasonIdx); });
+  } else if (type === 'ojamajo') {
+    const uuid = epUrl.pathname.split('/').pop();
+    playM3u8(`${OJAMAJO_WORKER_URL}/ojamajo/playlist?uuid=${encodeURIComponent(uuid)}`);
   } else if (type === 'redirect') {
     placeholder.style.display = 'flex';
     placeholder.innerHTML = `
-      <div class="pl-ep-label">S${seasonIdx + 1} — Épisode ${esc(ep.num)}</div>
+      <div class="pl-ep-label">S${seasonIdx + 1} - Épisode ${esc(ep.num)}</div>
       <a class="player-external-link" href="${esc(ep.url)}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-play"></i> Regarder sur ${esc(epUrl.hostname)}</a>`;
   } else if (type === 'seekplayer') {
     const id = epUrl.hash.slice(1);
@@ -650,6 +654,6 @@ function loadEpisode(ep, seasonIdx) {
 function showNoVideo(ep, seasonIdx) {
   placeholder.style.display = 'flex';
   placeholder.innerHTML = `
-    <div class="pl-ep-label">S${seasonIdx + 1} — Épisode ${esc(ep.num)}</div>
+    <div class="pl-ep-label">S${seasonIdx + 1} - Épisode ${esc(ep.num)}</div>
     <div class="pl-unavail">Vidéo non disponible pour l'instant</div>`;
 }

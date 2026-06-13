@@ -145,7 +145,7 @@ function buildRow(id, show, idx) {
   el.innerHTML = `
     <span class="trow-num">${String(idx + 1).padStart(2,'0')}</span>
     <span class="trow-title">${esc(show.title)}</span>
-    <span class="trow-tag ${tagCls(show.tag || '')}">${esc(show.tag || '—')}</span>
+    <span class="trow-tag ${tagCls(show.tag || '')}">${esc(show.tag || '-')}</span>
     <span class="trow-ch ${esc(show.channel)}">${chLabel(show.channel)}</span>`;
   return el;
 }
