@@ -169,6 +169,7 @@ const CRIMSON_WORKER_URL = 'https://crimson-night-b851.ritatohme99.workers.dev';
 const ODYCDN_PROXY_URL   = CRIMSON_WORKER_URL + '/';
 const LOUDAPE_PROXY_URL   = 'https://loud-ape-44.roughrecipe.deno.net';
 const OJAMAJO_WORKER_URL  = 'https://rapid-lab-6552.ritaclifford95.workers.dev';
+const EMBED_WORKER_URL    = 'https://flaky-sturgeon-55.roughrecipe.deno.net';
 
 function odycdnProxyUrl(mp4Url) {
   return ODYCDN_PROXY_URL + '?url=' + encodeURIComponent(mp4Url);
@@ -179,6 +180,8 @@ function getEpType(ep) {
   if (ep.url?.includes('mhd.seekplayer.me')) return 'seekplayer';
   if (ep.url?.includes('player.ojamajo.moe/videos/watch')) return 'ojamajo';
   if (ep.url?.includes('uqload.is/embed-')) return 'uqload';
+  if (ep.url?.includes('vidmoly.biz/embed-')) return 'vidmoly';
+  if (ep.url?.includes('sendvid.com/embed/')) return 'sendvid';
   if (ep.url?.includes('pcloud.link/publink') || ep.url?.includes('pcloud.com/publink')) return 'pcloud';
   // if (ep.url?.endsWith('.mp4')) return 'mp4';
   if (ep.url?.endsWith('.mp4') && !ep.url.includes('archive.org/embed')) return 'mp4';
@@ -584,7 +587,16 @@ function loadEpisode(ep, seasonIdx) {
 
   const type = getEpType(ep);
 
-  if (type === 'uqload') {
+  if (type === 'vidmoly') {
+    const id = ep.url.match(/embed-([a-z0-9]+)\.html/i)?.[1];
+    if (!id) { showNoVideo(ep, seasonIdx); return; }
+    playM3u8(`${EMBED_WORKER_URL}/vidmoly?id=${encodeURIComponent(id)}`);
+  } else if (type === 'sendvid') {
+    const id = ep.url.match(/embed\/([a-z0-9]+)/i)?.[1];
+    if (!id) { showNoVideo(ep, seasonIdx); return; }
+    video.src = `${EMBED_WORKER_URL}/sendvid?id=${encodeURIComponent(id)}`;
+    video.style.display = 'block';
+  } else if (type === 'uqload') {
     const id = ep.url.match(/embed-([a-z0-9]+)\.html/)?.[1];
     if (!id) { showNoVideo(ep, seasonIdx); return; }
     placeholder.style.display = 'flex';
