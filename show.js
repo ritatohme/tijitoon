@@ -181,6 +181,7 @@ function getEpType(ep) {
   if (ep.url?.includes('embedseek.com')) return 'embedseek';
   if (ep.url?.includes('player.ojamajo.moe/videos/watch')) return 'ojamajo';
   if (ep.url?.includes('uqload.is/embed-')) return 'uqload';
+  if (ep.url?.includes('vidzy.live/embed-')) return 'vidzy';
   if (ep.url?.includes('vidmoly.biz/embed-')) return 'vidmoly';
   if (ep.url?.includes('sendvid.com/embed/')) return 'sendvid';
   if (ep.url?.includes('pcloud.link/publink') || ep.url?.includes('pcloud.com/publink')) return 'pcloud';
@@ -603,6 +604,20 @@ function loadEpisode(ep, seasonIdx) {
     placeholder.style.display = 'flex';
     placeholder.innerHTML = `<div class="pl-hint">Chargement…</div>`;
     fetch(`${CRIMSON_WORKER_URL}/uqload?id=${id}`)
+      .then(r => r.json())
+      .then(({ url: m3u8url }) => {
+        if (gen !== loadGen) return;
+        if (!m3u8url) { showNoVideo(ep, seasonIdx); return; }
+        placeholder.style.display = 'none';
+        playM3u8(m3u8url);
+      })
+      .catch(() => { if (gen === loadGen) showNoVideo(ep, seasonIdx); });
+  } else if (type === 'vidzy') {
+    const id = ep.url.match(/embed-([a-z0-9]+)\.html/)?.[1];
+    if (!id) { showNoVideo(ep, seasonIdx); return; }
+    placeholder.style.display = 'flex';
+    placeholder.innerHTML = `<div class="pl-hint">Chargement…</div>`;
+    fetch(`${CRIMSON_WORKER_URL}/vidzy?id=${id}`)
       .then(r => r.json())
       .then(({ url: m3u8url }) => {
         if (gen !== loadGen) return;
