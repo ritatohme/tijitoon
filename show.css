@@ -72,6 +72,7 @@ h1.show-title {
 #fs-btn { display: none; }
 #audio-track-btn {
   display: none;
+  align-items: center; justify-content: center; gap: .65em;
   font-family: 'Bungee', sans-serif; font-size: clamp(.6rem, 1vw, 1rem);
   padding: clamp(.3rem, .5vw, .7rem) clamp(.6rem, .9vw, 1.2rem);
   background: transparent; color: rgba(255,246,227,.9);
@@ -160,6 +161,7 @@ h1.show-title {
   overflow: visible;
 }
 .ep-nav-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5em;
   font-family: 'Bungee', sans-serif; font-size: clamp(.6rem, 1vw, 1rem);
   padding: clamp(.3rem, .5vw, .7rem) clamp(.6rem, .9vw, 1.2rem);
   border: 2px solid rgba(255,246,227,.2);
@@ -167,6 +169,7 @@ h1.show-title {
   cursor: pointer; white-space: nowrap; flex-shrink: 0;
   transition: all .1s;
 }
+.ep-nav-btn i { font-size: 1.3em; }
 #btn-prev:not(:disabled) { color: rgba(255,246,227,.9); border-color: rgba(255,246,227,.4); }
 #btn-next:not(:disabled) { color: rgba(255,246,227,.9); border-color: rgba(255,246,227,.4); }
 #btn-prev:not(:disabled):hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }

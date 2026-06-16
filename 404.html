@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>(function(){var s=localStorage.getItem('tijitoon_theme');if(s)document.documentElement.dataset.theme=s;})();</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
 <style>
   body {
     background-image:
@@ -56,6 +57,7 @@
     display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;
   }
   .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.5em;
     font-family:'VT323',monospace;font-size:1.3rem;
     padding:.5rem 1.5rem;
     border:3px solid var(--ink);
@@ -75,7 +77,7 @@
 <body>
 
 <div class="topbar">
-  <a class="back-btn" href="index.html">← CATALOGUE</a>
+  <a class="back-btn" href="index.html"><i class="fa-solid fa-angle-left"></i> CATALOGUE</a>
   <button class="theme-toggle" id="theme-toggle" aria-label="Basculer le thème">
     <span id="theme-label">DARK</span>
     <span class="theme-switch"></span>
@@ -127,8 +129,8 @@
   </div>
 
   <div class="actions">
-    <a class="btn" href="index.html">→ Retour au catalogue</a>
-    <a class="btn secondary" onclick="history.back();return false;" href="#">← Page précédente</a>
+    <a class="btn" href="index.html">Retour au catalogue <i class="fa-solid fa-angle-right"></i></a>
+    <a class="btn secondary" onclick="history.back();return false;" href="#"><i class="fa-solid fa-angle-left"></i> Page précédente</a>
   </div>
 
 </div>

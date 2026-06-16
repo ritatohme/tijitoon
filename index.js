@@ -59,7 +59,9 @@ function buildContinueWatching(data) {
     }
     cards.forEach((c, i) => c.classList.toggle('cw-hidden', !expanded && i >= firstRowLimit));
     expandBtn.style.display = '';
-    expandBtn.textContent = expanded ? '▲ réduire' : `▼ ${cards.length - firstRowLimit} de plus`;
+    expandBtn.innerHTML = expanded
+      ? '<i class="fa-solid fa-caret-up"></i> réduire'
+      : `<i class="fa-solid fa-caret-down"></i> ${cards.length - firstRowLimit} de plus`;
   }
 
   expandBtn.onclick = () => { expanded = !expanded; updateExpand(); };
@@ -72,7 +74,7 @@ function buildContinueWatching(data) {
     card.style.position = 'relative';
 
     const removeBtn = document.createElement('button');
-    removeBtn.textContent = '✕';
+    removeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
     removeBtn.className = 'cw-remove-btn';
     removeBtn.style.cssText = `position:absolute; top:-7px; right:-7px; opacity:0; transition:opacity .15s;`;
     removeBtn.addEventListener('click', (e) => {
@@ -166,6 +168,8 @@ function renderAll(data) {
   });
 
   document.getElementById('meta-count').textContent = `> ${allEntries.length} séries`;
+  const channelCount = new Set(allEntries.map(([, show]) => show.channel)).size;
+  document.getElementById('meta-channels').textContent = `> ${channelCount} chaînes`;
   applyFilter();
   applyView();
 }
@@ -241,7 +245,7 @@ function setFilter(f, label) {
     c.classList.toggle('active', c.dataset.f === activeFilter)
   );
   filterBtn.classList.toggle('has-filter', activeFilter !== 'all');
-  filterBtn.innerHTML = `${label} <span class="filter-btn-arrow">▾</span>`;
+  filterBtn.innerHTML = `${label} <span class="filter-btn-arrow"><i class="fa-solid fa-caret-down"></i></span>`;
   filterClear.style.display = activeFilter !== 'all' ? 'inline-block' : 'none';
   closeFilter();
   applyFilter();

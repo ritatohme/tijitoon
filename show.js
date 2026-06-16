@@ -6,6 +6,7 @@ const iframe         = document.getElementById('player-iframe');
 const video          = document.getElementById('player-video');
 const placeholder    = document.getElementById('player-placeholder');
 const audioBtn       = document.getElementById('audio-track-btn');
+const audioLabel     = document.getElementById('audio-track-label');
 const audioMenu      = document.getElementById('audio-track-menu');
 
 audioBtn.addEventListener('click', (e) => {
@@ -26,14 +27,14 @@ function buildAudioMenu(tracks, hlsInstance) {
       hlsInstance.audioTrack = i;
       audioMenu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      audioBtn.textContent = btn.textContent;
+      audioLabel.textContent = btn.textContent;
       audioMenu.style.display = 'none';
     });
     audioMenu.appendChild(btn);
   });
-  audioBtn.textContent = tracks[hlsInstance.audioTrack]?.name || tracks[hlsInstance.audioTrack]?.lang || 'AUDIO';
+  audioLabel.textContent = tracks[hlsInstance.audioTrack]?.name || tracks[hlsInstance.audioTrack]?.lang || 'AUDIO';
   audioBtn.removeAttribute('disabled');
-  audioBtn.style.display = 'block';
+  audioBtn.style.display = 'flex';
 }
 
 function hideAudioMenu() {

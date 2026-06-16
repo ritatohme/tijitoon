@@ -26,12 +26,16 @@ h1 {
   text-shadow: 4px 4px 0 var(--hot), 8px 8px 0 var(--sky);
 }
 .channel-pills { display: flex; align-items: center; gap: 1rem; margin: 1.2rem 0 0; }
+@media (max-width: 600px) {
+  .channel-pills { display: none; }
+}
 .ch-pill {
   font-family: 'Bungee', sans-serif; font-size: 1.1rem;
   padding: .4rem 1.2rem; border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink);
 }
-.teletoon-pill { background: var(--hot); color: var(--paper); }
-.tiji-pill     { background: var(--sky); color: var(--ink); }
+.teletoon-pill        { background: var(--hot);  color: var(--paper); }
+.tiji-pill            { background: var(--sky);   color: var(--ink); }
+.cartoon-network-pill { background: var(--lime);  color: var(--ink); }
 .ch-pill-sep   { font-family: 'Bungee', sans-serif; font-size: 1.4rem; }
 .sub {
   max-width: 720px; margin-top: 1rem; font-size: clamp(.85rem,1.5vw,1.05rem); line-height: 1.6;
@@ -193,9 +197,12 @@ h1 {
 .fb-chip[data-f="all"].active      { background: var(--lime); }
 .fb-chip[data-f="teletoon"].active { background: var(--hot); color: var(--paper); }
 .fb-chip[data-f="tiji"].active     { background: var(--sky); }
+.fb-chip[data-f="cartoon-network"].active { background: var(--lime); }
 .fb-chip[data-f="ANIME"].active    { background: var(--hot); color: var(--paper); }
 [data-theme="dark"] .fb-chip[data-f="teletoon"].active,
-[data-theme="dark"] .fb-chip[data-f="ANIME"].active { color: var(--dm-text); }
+[data-theme="dark"] .fb-chip[data-f="ANIME"].active,
+[data-theme="dark"] .fb-chip[data-f="TOON"].active,
+[data-theme="dark"] .fb-chip[data-f="cartoon-network"].active { color: var(--dm-text); }
 .fb-chip[data-f="TOON"].active     { background: var(--lime); }
 .fb-chip[data-f="FR"].active       { background: var(--orange); }
 .fb-chip[data-f="KIDS"].active     { background: var(--sky); }
@@ -353,12 +360,14 @@ footer .blink { animation: blink 1s steps(2) infinite; }
 /* ── BACK TO TOP ── */
 #back-top {
   position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+  display: inline-flex; align-items: center; justify-content: center; gap: .45em;
   font-family: 'VT323', monospace; font-size: 1.1rem;
   background: var(--ink); color: var(--lime);
   border: 3px solid var(--lime); padding: .4rem 1rem;
   cursor: pointer; box-shadow: 4px 4px 0 var(--lime);
   opacity: 0; pointer-events: none; transition: opacity .2s;
 }
+#back-top i { font-size: .75em; }
 #back-top.visible { opacity: 1; pointer-events: auto; }
 #back-top:hover { background: var(--lime); color: var(--ink); }
 

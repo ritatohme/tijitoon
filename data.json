@@ -2080,7 +2080,7 @@
     "title": "Courage the Cowardly Dog",
     "channel": "cartoon-network",
     "years": null,
-    "tag": "FR",
+    "tag": "TOON",
     "seasons": [
       {
         "num": 1,
@@ -3291,7 +3291,7 @@
   },
   "dragon-ball": {
     "title": "Dragon Ball",
-    "channel": "teletoon",
+    "channel": "cartoon-network",
     "years": null,
     "tag": "ANIME",
     "seasons": [
@@ -4133,7 +4133,7 @@
   },
   "dragon-ball-z": {
     "title": "Dragon Ball Z",
-    "channel": "teletoon",
+    "channel": "cartoon-network",
     "years": null,
     "tag": "ANIME",
     "seasons": [

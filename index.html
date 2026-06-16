@@ -34,14 +34,16 @@
       <span class="ch-pill teletoon-pill">TÉLÉTOON</span>
       <span class="ch-pill-sep">+</span>
       <span class="ch-pill tiji-pill">TIJI</span>
+      <span class="ch-pill-sep">+</span>
+      <span class="ch-pill cartoon-network-pill">Cartoon Network</span>
     </div>
     <div class="sub">
-      Le catalogue le plus complet des dessins animés de notre enfance - toutes les séries diffusées sur <strong>Télétoon et Tiji en France entre 2000 et 2015</strong>. Animes japonais, cartoons américains, productions françaises.
+      Le catalogue le plus complet des dessins animés de notre enfance - toutes les séries diffusées sur <strong>Télétoon, Tiji et Cartoon Network en France entre 1984 et 2015</strong>. Animes japonais, cartoons américains, productions françaises.
     </div>
     <div class="meta">
-      <span>&gt; 2000 - 2015</span>
+      <span>&gt; 1984 - 2015</span>
       <span id="meta-count">&gt; … séries</span>
-      <span>&gt; 2 chaînes</span>
+      <span id="meta-channels">&gt; … chaînes</span>
     </div>
 
     <div style="position:relative;max-width:580px;padding-bottom:1.2rem;">
@@ -49,9 +51,9 @@
         <span class="search-prefix">&gt;&gt;</span>
         <input id="search-input" class="search-input" type="text"
           placeholder="Rechercher une série…" autocomplete="off" spellcheck="false"/>
-        <button class="search-clear" id="search-clear" aria-label="Effacer">✕</button>
+        <button class="search-clear" id="search-clear" aria-label="Effacer"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="sticker two">★ souvenirs garantis ★</div>
+      <div class="sticker two"><i class="fa-solid fa-star"></i> souvenirs garantis <i class="fa-solid fa-star"></i></div>
     </div>
   </div>
 </header>
@@ -60,7 +62,7 @@
 <div id="continue-watching">
   <div class="inner cw-inner">
     <div class="cw-header">
-      <span class="cw-title">&#x25B6;&#xFE0E; CONTINUER À REGARDER</span>
+      <span class="cw-title"><i class="fa-solid fa-caret-right"></i> CONTINUER À REGARDER</span>
       <button id="cw-expand"></button>
       <button id="cw-clear" title="Tout effacer"><span class="cw-clear-label">tout effacer</span><span class="cw-clear-icon"><i class="fa-solid fa-trash"></i></span></button>
     </div>
@@ -73,13 +75,13 @@
   <div class="inner">
     <div class="catalog-toolbar">
       <button class="filter-btn" id="filter-btn">
-        FILTRES <span class="filter-btn-arrow">▾</span>
+        FILTRES <span class="filter-btn-arrow"><i class="fa-solid fa-caret-down"></i></span>
       </button>
       <button class="filter-clear" id="filter-clear" title="Effacer le filtre" style="display:none"><i class="fa-solid fa-xmark"></i></button>
       <span class="fb-count" id="fb-count"></span>
       <div class="view-toggle">
         <button class="view-btn active" id="btn-cards" title="Grille de cartes"><i class="fa-solid fa-grip"></i></button>
-        <button class="view-btn" id="btn-list" title="Liste compacte"><i class="fa-solid fa-list"></i></button>
+        <button class="view-btn" id="btn-list" title="Liste compacte"><i class="fa-solid fa-bars"></i></button>
       </div>
 
       <div class="filter-dropdown" id="filter-dropdown">
@@ -126,7 +128,7 @@
   </div>
 </footer>
 
-<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-arrow-up"></i> TOP</button>
 
 <script src="theme.js"></script>
 <script src="shared.js"></script>

@@ -18,7 +18,7 @@
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <a class="back-btn" href="index.html">← CATALOGUE</a>
+  <a class="back-btn" href="index.html"><i class="fa-solid fa-angle-left"></i> CATALOGUE</a>
   <span class="topbar-title" id="topbar-title"></span>
   <button class="theme-toggle" id="theme-toggle" aria-label="Basculer le thème">
     <span id="theme-label">DARK</span>
@@ -50,7 +50,7 @@
   </div>
   <div class="ep-nav-bar">
     <div class="ep-nav-inner">
-      <button class="ep-nav-btn" id="btn-prev" disabled>← PRÉC.</button>
+      <button class="ep-nav-btn" id="btn-prev" disabled><i class="fa-solid fa-angle-left"></i> PRÉC.</button>
       <div class="ep-nav-center">
         <span class="ep-now-playing" id="ep-now-playing">-</span>
         <span class="ep-nav-counter" id="ep-nav-counter">- / -</span>
@@ -58,9 +58,9 @@
       <button id="fs-btn" class="ep-nav-btn" title="Fullscreen">⛶</button>
       <div style="position:relative">
         <div id="audio-track-menu"></div>
-        <button id="audio-track-btn">AUDIO</button>
+        <button id="audio-track-btn"><i class="fa-solid fa-globe"></i><span id="audio-track-label">AUDIO</span></button>
       </div>
-      <button class="ep-nav-btn" id="btn-next" disabled>SUIV. →</button>
+      <button class="ep-nav-btn" id="btn-next" disabled>SUIV. <i class="fa-solid fa-angle-right"></i></button>
     </div>
   </div>
 </div>
@@ -73,20 +73,20 @@
     <button class="ep-search-toggle" id="ep-search-toggle" aria-label="Rechercher"><i class="fa-solid fa-magnifying-glass"></i></button>
     <div class="ep-search-wrap" id="ep-search-wrap">
       <input class="ep-search" id="ep-search" type="text" placeholder="Rechercher…" autocomplete="off">
-      <button class="ep-search-clear" id="ep-search-clear" aria-label="Effacer">✕</button>
+      <button class="ep-search-clear" id="ep-search-clear" aria-label="Effacer"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="ep-view-toggle">
       <button class="ep-view-btn active" id="epv-grid" title="Grille"><i class="fa-solid fa-grip"></i></button>
-      <button class="ep-view-btn" id="epv-list" title="Liste"><i class="fa-solid fa-list"></i></button>
+      <button class="ep-view-btn" id="epv-list" title="Liste"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
   <div class="ep-no-results" id="ep-no-results">Aucun épisode trouvé</div>
   <div class="ep-grid" id="ep-grid"></div>
   <div class="ep-list-wrap" id="ep-list-wrap"></div>
   <div class="ep-pagination" id="ep-pagination">
-    <button class="ep-page-btn" id="ep-page-prev">←</button>
+    <button class="ep-page-btn" id="ep-page-prev"><i class="fa-solid fa-angle-left"></i></button>
     <span class="ep-page-info" id="ep-page-info"></span>
-    <button class="ep-page-btn" id="ep-page-next">→</button>
+    <button class="ep-page-btn" id="ep-page-next"><i class="fa-solid fa-angle-right"></i></button>
   </div>
 </div><!-- ep-browser -->
 
