@@ -1,0 +1,10 @@
+{
+  "id": "demande-2026-06-17",
+  "enabled": true,
+  "eyebrow": ">> NOUVEAU_",
+  "title": "FAIS TA DEMANDE!",
+  "text": "Tu penses à un dessin animé de ton enfance qu'on n'a pas encore ? Clique sur le bouton et dis-nous lequel !",
+  "btnLabel": "FAIRE UNE DEMANDE",
+  "btnUrl": "request.html",
+  "dismissLabel": "Plus tard"
+}
