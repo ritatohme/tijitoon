@@ -2076,6 +2076,148 @@
       }
     ]
   },
+  "charlotte-aux-fraises": {
+    "title": "Charlotte aux Fraises",
+    "channel": "tiji",
+    "years": null,
+    "tag": "KIDS",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Saison 1",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://geo.dailymotion.com/player.html?video=xa9j2q2"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://youtube.com/embed/_Ez5ywv5Qp0"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://geo.dailymotion.com/player.html?video=xa9j396"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://youtube.com/embed/Ief_zHcDSzc"
+          }
+        ]
+      },
+      {
+        "num": 2,
+        "name": "Saison 2",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://youtube.com/embed/hklIqmfBPm0"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://youtube.com/embed/dFNZGrX6GG0"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://youtube.com/embed/Ta4fG8bDFOU"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://youtube.com/embed/90TDYsv-Xhs"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://youtube.com/embed/qsOO6KC2M-4"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://youtube.com/embed/Wf_9bc2NaAA"
+          }
+        ]
+      },
+      {
+        "num": 3,
+        "name": "Saison 3",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://youtube.com/embed/GCCoLLS1kFw"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://youtube.com/embed/dNfW3iOfm0I"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://youtube.com/embed/ttEHB2KNihM"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://youtube.com/embed/AQFsYw0wFnY"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://youtube.com/embed/jxcjDSHrJEY"
+          }
+        ]
+      },
+      {
+        "num": 4,
+        "name": "Saison 4",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://youtube.com/embed/1vHosb3zA2Q"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://youtube.com/embed/KbFoZV4g6O0"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://youtube.com/embed/Bow0cFE6PcI"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://youtube.com/embed/R7Mqm89QgRQ"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://youtube.com/embed/uSdX_AFNxm0"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://youtube.com/embed/RbXvrD9pe8U"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://youtube.com/embed/iWv7QWJRk6M"
+          }
+        ]
+      }
+    ]
+  },
   "courage-le-chien-froussard": {
     "title": "Courage the Cowardly Dog",
     "channel": "cartoon-network",
@@ -8204,6 +8346,540 @@
       }
     ]
   },
+  "hamtaro": {
+    "title": "Hamtaro",
+    "channel": "teletoon",
+    "years": null,
+    "tag": "ANIME",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Saison 1",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "La nouvelle maison",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E001.La.nouvelle.maison.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 2,
+            "title": "Le club des Ham-Hams",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E002.Le.club.des.Ham-Hams.VFF.TVRip.432p.AVC.XP3.mp4"
+          },
+          {
+            "num": 3,
+            "title": "De nouveaus venus au club",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E003.De.nouveaus.venus.au.club.VFF.TVRip.432p.AVC.XP3.mp4"
+          },
+          {
+            "num": 4,
+            "title": "Bijou, descends !",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E004.Bijou%2C.descends.!.VFF.TVRip.432p.AVC.XP3.mp4"
+          },
+          {
+            "num": 5,
+            "title": "Pépites de sucre",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E005.P%C3%A9pites.de.sucre.VFF.TVRip.432p.AVC.XP3.mp4"
+          },
+          {
+            "num": 6,
+            "title": "Excursion à la mer",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E006.Excursion.%C3%A0.la.mer.VFF.TVRip.432p.AVC.XP3.mp4"
+          },
+          {
+            "num": 7,
+            "title": "La fête de l été",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E007.La.f%C3%AAte.de.l.%C3%A9t%C3%A9.VFF.TVRip.432p.AVC.XP3.mp4"
+          },
+          {
+            "num": 8,
+            "title": "Les tournesols géants",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E008.Les.tournesols.g%C3%A9ants.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 9,
+            "title": "Les Ham-Hams à l école",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E009.Les.Ham-Hams.%C3%A0.l.%C3%A9cole.VFF.TVRip.432p.AVC.XP3.mp4"
+          },
+          {
+            "num": 10,
+            "title": "La disquette perdue",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E010.La.disquette.perdue.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 11,
+            "title": "La sagesse des anciens",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E011.La.sagesse.des.anciens.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 12,
+            "title": "Bijou en danger",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E012.Bijou.en.danger.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 13,
+            "title": "La chanson de Tigrette",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E013.La.chanson.de.Tigrette.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 14,
+            "title": "A la recherche de Tigris",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E014.A.la.recherche.de.Tigris.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 15,
+            "title": "Le gros chagrin de Bijou",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E015.Le.gros.chagrin.de.Bijou.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 16,
+            "title": "Guéris vite, Laura",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E016.Gu%C3%A9ris.vite%2C.Laura.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 17,
+            "title": "Hamtaro, le super détective",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E017.Hamtaro%2C.le.super.d%C3%A9tective.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 18,
+            "title": "La pantoufle de verre",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E018.La.pantoufle.de.verre.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 19,
+            "title": "Les Ham-Hams au parc",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E019.Les.Ham-Hams.au.parc.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 20,
+            "title": "Le mystère de Ronpschit",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E020.Le.myst%C3%A8re.de.Ronpschit.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 21,
+            "title": "Courage, Chapo",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E021.Courage%2C.Chapo.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 22,
+            "title": "Le cadeau de Pashmina",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E022.Le.cadeau.de.Pashmina.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 23,
+            "title": "Librius, rédacteur en chef",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E023.Librius%2C.r%C3%A9dacteur.en.chef.VFF.TVRip.576p.AVC.XP3.mp4"
+          },
+          {
+            "num": 24,
+            "title": "Reviens, Hamtaro !",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E024.Reviens%2C.Hamtaro.!.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 25,
+            "title": "Joyeux noël",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E025.Joyeux.no%C3%ABl.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 26,
+            "title": "La légende d Hamtaro l intrépide",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E026.La.l%C3%A9gende.d.Hamtaro.l.intr%C3%A9pide.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 27,
+            "title": "La bataille de boules de neige",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E027.La.bataille.de.boules.de.neige.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 28,
+            "title": "Tata Vivi est un phénomène",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E028.Tata.Vivi.est.un.ph%C3%A9nom%C3%A8ne.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 29,
+            "title": "A la recherche des lunettes de papa",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E029.A.la.recherche.des.lunettes.de.papa.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 30,
+            "title": "La grande course de Brandy",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E030.La.grande.course.de.Brandy.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 31,
+            "title": "Hamiral pouponne",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E031.Hamiral.pouponne.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 32,
+            "title": "La saint valentin",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E032.La.saint.valentin.VFF.TVRip.576p.AVC.XP3.mp4"
+          },
+          {
+            "num": 33,
+            "title": "Traversons l arc en ciel",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E033.Traversons.l.arc.en.ciel.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 34,
+            "title": "Pénélope a disparu",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E034.P%C3%A9n%C3%A9lope.a.disparu.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 35,
+            "title": "Un spectacle de rêve",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E035.Un.spectacle.de.r%C3%AAve.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 36,
+            "title": "Adieu, Bijou",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E036.Adieu%2C.Bijou.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 37,
+            "title": "Hamidou est amoureux",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E037.Hamidou.est.amoureux.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 38,
+            "title": "La précieuse lettre",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E038.La.pr%C3%A9cieuse.lettre.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 39,
+            "title": "Les Ham-Hams volent",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E039.Les.Ham-Hams.volent.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 40,
+            "title": "Les cerisiers en fleurs",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E040.Les.cerisiers.en.fleurs.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 41,
+            "title": "Le musée hanté",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E041.Le.mus%C3%A9e.hant%C3%A9.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 42,
+            "title": "Bienvenue, Paprika !",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E042.Bienvenue%2C.Paprika.!.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 43,
+            "title": "La poursuite infernale",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E043.La.poursuite.infernale.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 44,
+            "title": "Un amour de grand-père",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E044.Un.amour.de.grand-p%C3%A8re.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 45,
+            "title": "Les Ham-Hams à l aquarium",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E045.Les.Ham-Hams.%C3%A0.l.aquarium.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 46,
+            "title": "Ensemble, c est mieux",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E046.Ensemble%2C.c.est.mieux.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 47,
+            "title": "Les petits messagers du coeur",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E047.Les.petits.messagers.du.coeur.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 48,
+            "title": "Le club en danger",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E048.Le.club.en.danger.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 49,
+            "title": "Le médaillon perdu",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E049.Le.m%C3%A9daillon.perdu.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 50,
+            "title": "La croisière des Ham-Hams",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E050.La.croisi%C3%A8re.des.Ham-Hams.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 51,
+            "title": "La réconciliation",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E051.La.r%C3%A9conciliation.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 52,
+            "title": "Robin des stères",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E052.Robin.des.st%C3%A8res.VFF.TVRip.288p.AVC.XP3.mp4"
+          },
+          {
+            "num": 53,
+            "title": "La visite de Paprika",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E053.La.visite.de.Paprika.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 54,
+            "title": "Une nouvelle étoile",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E054.Une.nouvelle.%C3%A9toile.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 55,
+            "title": "Le départ de Laura",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E055.Le.d%C3%A9part.de.Laura.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 56,
+            "title": "Hamiral a le mal de mer",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E056.Hamiral.a.le.mal.de.mer.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 57,
+            "title": "Le fantôme de la montagne",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E057.Le.fant%C3%B4me.de.la.montagne.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 58,
+            "title": "Marina craque",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E058.Marina.craque.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 59,
+            "title": "Un nouveau venu",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E059.Un.nouveau.venu.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 60,
+            "title": "L épreuve du coq",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E060.L.%C3%A9preuve.du.coq.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 61,
+            "title": "La chasse au trésor",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E061.La.chasse.au.tr%C3%A9sor.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 62,
+            "title": "Pénélope se fait un ami",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E062.P%C3%A9n%C3%A9lope.se.fait.un.ami.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 63,
+            "title": "Proviseur la terreur",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E063.Proviseur.la.terreur.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 64,
+            "title": "La réconciliation",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E064.La.r%C3%A9conciliation.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 65,
+            "title": "La fête foraine",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E065.La.f%C3%AAte.foraine.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 66,
+            "title": "Le nouveau Ham Ham parc",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E066.Le.nouveau.Ham.Ham.parc.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 67,
+            "title": "Rendez-vous au zoo",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E067.Rendez-vous.au.zoo.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 68,
+            "title": "Le manoir de la peur",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E068.Le.manoir.de.la.peur.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 69,
+            "title": "La bonne aventure",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E069.La.bonne.aventure.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 70,
+            "title": "Pâquerette a un bébé",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E070.P%C3%A2querette.a.un.b%C3%A9b%C3%A9.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 71,
+            "title": "Bijou est malade",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E071.Bijou.est.malade.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 72,
+            "title": "Une écharpe pour Brandy",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E072.Une.%C3%A9charpe.pour.Brandy.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 73,
+            "title": "La fête des mères",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E073.La.f%C3%AAte.des.m%C3%A8res.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 74,
+            "title": "Pénélope ne veut plus rentrer",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E074.P%C3%A9n%C3%A9lope.ne.veut.plus.rentrer.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 75,
+            "title": "L abominable femme des neiges",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E075.L.abominable.femme.des.neiges.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 76,
+            "title": "Laura et les sept hamsters",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E076.Laura.et.les.sept.hamsters.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 77,
+            "title": "Épisode 77",
+            "url": ""
+          },
+          {
+            "num": 78,
+            "title": "Sherlock Hamtaro et les petites canailles",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E078.Sherlock.Hamtaro.et.les.petites.canailles.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 79,
+            "title": "Les cerfs volants du nouvel an",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E079.Les.cerfs.volants.du.nouvel.an.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 80,
+            "title": "La demande en mariage",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E080.La.demande.en.mariage.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 81,
+            "title": "Le champion du cache-cache",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E081.Le.champion.du.cache-cache.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 82,
+            "title": "Hamtaro joue les cupidons",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E082.Hamtaro.joue.les.cupidons.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 83,
+            "title": "La fête des garçons",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E083.La.f%C3%AAte.des.gar%C3%A7ons.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 84,
+            "title": "Roberto et Brandy",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E084.Roberto.et.Brandy.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 85,
+            "title": "Méca-Ham, un nouvel ami",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E085%2C.M%C3%A9ca-Ham%2C.un.nouvel.ami.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 86,
+            "title": "L anniversaire de Marina",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E086.L.anniversaire.de.Marina.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 87,
+            "title": "Ninjaro le Ninj Ham",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E087.Ninjaro.le.Ninj.Ham.VFF.TVRip.720p.AVC.XP3.mp4"
+          },
+          {
+            "num": 88,
+            "title": "Printemps, où es-tu",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E088.Printemps%2C.o%C3%B9.es-tu.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 89,
+            "title": "Hamtaro le Hamelien",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E089.Hamtaro.le.Hamelien.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 90,
+            "title": "Hamiral a disparu",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E090.Hamiral.a.disparu.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 91,
+            "title": "La magie des cerisiers en fleurs",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E091.La.magie.des.cerisiers.en.fleurs.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 92,
+            "title": "Un amour de Rita",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E092.Un.amour.de.Rita.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 93,
+            "title": "Le docteur lion",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E093.Le.docteur.lion.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 94,
+            "title": "Le festin de Chef-Ham",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E094.Le.festin.de.Chef-Ham.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 95,
+            "title": "Les poissons volants",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E095.Les.poissons.volants.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 96,
+            "title": "L excursion à la montagne",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E096.L.excursion.%C3%A0.la.montagne.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 97,
+            "title": "Le voleur de chaussures",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E097.Le.voleur.de.chaussures.VFF.TVRip.480p.AVC.XP3.mp4"
+          },
+          {
+            "num": 98,
+            "title": "Une promesse est une promesse",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E098.Une.promesse.est.une.promesse.VFF.TVRip.576p.AVC.XP3.mp4"
+          },
+          {
+            "num": 99,
+            "title": "Le cadeau de Mimi",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E099.Le.cadeau.de.Mimi.VFF.TVRip.576p.AVC.XP3.mp4"
+          },
+          {
+            "num": 100,
+            "title": "Un mariage à sauver",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E100.Un.mariage.%C3%A0.sauver.VFF.TVRip.576p.AVC.XP3.mp4"
+          },
+          {
+            "num": 101,
+            "title": "La fète des pères",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E101.La.f%C3%A8te.des.p%C3%A8res.VFF.TVRip.576p.AVC.XP3.mp4"
+          },
+          {
+            "num": 102,
+            "title": "Evacuation d urgence",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E102.Evacuation.d.urgence.VFF.TVRip.576p.AVC.XP3.mp4"
+          },
+          {
+            "num": 103,
+            "title": "L histoire de la princesse Bijou",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E103.L.histoire.de.la.princesse.Bijou.VFF.TVRip.576p.AVC.XP3.mp4"
+          },
+          {
+            "num": 104,
+            "title": "La voie lactée",
+            "url": "https://archive.org/download/hamtaro-vf/Hamtaro.S01E104.La.voie.lact%C3%A9e.VFF.TVRip.576p.AVC.XP3.mp4"
+          }
+        ]
+      }
+    ]
+  },
   "heidi": {
     "title": "Heidi",
     "channel": "tiji",
@@ -14127,6 +14803,42 @@
             "num": 3,
             "title": "Épisode 3",
             "url": "https://geo.dailymotion.com/player.html?video=xa9uhx2"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://geo.dailymotion.com/player.html?video=xaaym3w"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://geo.dailymotion.com/player.html?video=xaayn50"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://geo.dailymotion.com/player.html?video=xaaypbc"
+          }
+        ]
+      },
+      {
+        "num": 7,
+        "name": "Saison 7",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://geo.dailymotion.com/player.html?video=xaflzoi"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://geo.dailymotion.com/player.html?video=xafm3yy"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://geo.dailymotion.com/player.html?video=xafm5q6"
           }
         ]
       }
@@ -23644,148 +24356,6 @@
             "num": 27,
             "title": "Épisode 27",
             "url": "https://www.youtube.com/embed/dH6xgKNAIJ0"
-          }
-        ]
-      }
-    ]
-  },
-  "charlotte-aux-fraises": {
-    "title": "Charlotte aux Fraises",
-    "channel": "tiji",
-    "years": null,
-    "tag": "KIDS",
-    "seasons": [
-      {
-        "num": 1,
-        "name": "Saison 1",
-        "episodes": [
-          {
-            "num": 1,
-            "title": "Épisode 1",
-            "url": "https://geo.dailymotion.com/player.html?video=xa9j2q2"
-          },
-          {
-            "num": 2,
-            "title": "Épisode 2",
-            "url": "https://youtube.com/embed/_Ez5ywv5Qp0"
-          },
-          {
-            "num": 3,
-            "title": "Épisode 3",
-            "url": "https://geo.dailymotion.com/player.html?video=xa9j396"
-          },
-          {
-            "num": 4,
-            "title": "Épisode 4",
-            "url": "https://youtube.com/embed/Ief_zHcDSzc"
-          }
-        ]
-      },
-      {
-        "num": 2,
-        "name": "Saison 2",
-        "episodes": [
-          {
-            "num": 1,
-            "title": "Épisode 1",
-            "url": "https://youtube.com/embed/hklIqmfBPm0"
-          },
-          {
-            "num": 2,
-            "title": "Épisode 2",
-            "url": "https://youtube.com/embed/dFNZGrX6GG0"
-          },
-          {
-            "num": 3,
-            "title": "Épisode 3",
-            "url": "https://youtube.com/embed/Ta4fG8bDFOU"
-          },
-          {
-            "num": 4,
-            "title": "Épisode 4",
-            "url": "https://youtube.com/embed/90TDYsv-Xhs"
-          },
-          {
-            "num": 5,
-            "title": "Épisode 5",
-            "url": "https://youtube.com/embed/qsOO6KC2M-4"
-          },
-          {
-            "num": 6,
-            "title": "Épisode 6",
-            "url": "https://youtube.com/embed/Wf_9bc2NaAA"
-          }
-        ]
-      },
-      {
-        "num": 3,
-        "name": "Saison 3",
-        "episodes": [
-          {
-            "num": 1,
-            "title": "Épisode 1",
-            "url": "https://youtube.com/embed/GCCoLLS1kFw"
-          },
-          {
-            "num": 2,
-            "title": "Épisode 2",
-            "url": "https://youtube.com/embed/dNfW3iOfm0I"
-          },
-          {
-            "num": 3,
-            "title": "Épisode 3",
-            "url": "https://youtube.com/embed/ttEHB2KNihM"
-          },
-          {
-            "num": 4,
-            "title": "Épisode 4",
-            "url": "https://youtube.com/embed/AQFsYw0wFnY"
-          },
-          {
-            "num": 5,
-            "title": "Épisode 5",
-            "url": "https://youtube.com/embed/jxcjDSHrJEY"
-          }
-        ]
-      },
-      {
-        "num": 4,
-        "name": "Saison 4",
-        "episodes": [
-          {
-            "num": 1,
-            "title": "Épisode 1",
-            "url": "https://youtube.com/embed/1vHosb3zA2Q"
-          },
-          {
-            "num": 2,
-            "title": "Épisode 2",
-            "url": "https://youtube.com/embed/KbFoZV4g6O0"
-          },
-          {
-            "num": 3,
-            "title": "Épisode 3",
-            "url": "https://youtube.com/embed/Bow0cFE6PcI"
-          },
-          {
-            "num": 4,
-            "title": "Épisode 4",
-            "url": "https://youtube.com/embed/R7Mqm89QgRQ"
-          },
-          {
-            "num": 5,
-            "title": "Épisode 5",
-            "url": "https://youtube.com/embed/uSdX_AFNxm0"
-          },
-          {
-            "num": 6,
-            "title": "Épisode 6",
-            "url": "https://youtube.com/embed/RbXvrD9pe8U"
-          },
-          {
-            "num": 7,
-            "title": "Épisode 7",
-            "url": "https://youtube.com/embed/iWv7QWJRk6M"
           }
         ]
       }
