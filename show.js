@@ -185,6 +185,7 @@ function getEpType(ep) {
   if (ep.url?.includes('vidzy.live/embed-')) return 'vidzy';
   if (ep.url?.includes('vidmoly.biz/embed-')) return 'vidmoly';
   if (ep.url?.includes('sendvid.com/embed/')) return 'sendvid';
+  if (ep.url?.includes('video.sibnet.ru/shell.php')) return 'sibnet';
   if (ep.url?.includes('pcloud.link/publink') || ep.url?.includes('pcloud.com/publink')) return 'pcloud';
   // if (ep.url?.endsWith('.mp4')) return 'mp4';
   if (ep.url?.endsWith('.mp4') && !ep.url.includes('archive.org/embed')) return 'mp4';
@@ -643,6 +644,21 @@ function loadEpisode(ep, seasonIdx) {
         placeholder.style.display = 'none';
         video.src = 'https://' + j.hosts[0] + j.path;
         video.style.display = 'block';
+      })
+      .catch(() => { if (gen === loadGen) showNoVideo(ep, seasonIdx); });
+  } else if (type === 'sibnet') {
+    const id = epUrl.searchParams.get('videoid');
+    if (!id) { showNoVideo(ep, seasonIdx); return; }
+    placeholder.style.display = 'flex';
+    placeholder.innerHTML = `<div class="pl-hint">Chargement…</div>`;
+    fetch(`${EMBED_WORKER_URL}/sibnet?id=${encodeURIComponent(id)}`)
+      .then(r => r.json())
+      .then(({ type: srcType, url: src }) => {
+        if (gen !== loadGen) return;
+        if (!src) { showNoVideo(ep, seasonIdx); return; }
+        placeholder.style.display = 'none';
+        if (srcType === 'mp4') { video.src = src; video.style.display = 'block'; }
+        else playM3u8(src);
       })
       .catch(() => { if (gen === loadGen) showNoVideo(ep, seasonIdx); });
   } else if (type === 'ojamajo') {
