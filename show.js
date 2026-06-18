@@ -162,6 +162,8 @@ fsExit.addEventListener('click', exitFakeFs);
 const SANDBOX_PERMISSIONS = {
   'ojamajo.moe':        'allow-scripts allow-popups allow-forms',
   'archive.org':        'allow-scripts allow-same-origin allow-popups allow-forms allow-presentation',
+  'abysscdn.com':       'allow-scripts allow-same-origin allow-presentation',
+  'abyssplayer.com':    'allow-scripts allow-same-origin allow-presentation',
 };
 const DEFAULT_SANDBOX = 'allow-scripts allow-same-origin allow-popups allow-presentation';
 
