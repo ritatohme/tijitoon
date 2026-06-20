@@ -389,6 +389,7 @@ h1.show-title {
   .ep-list-wrap { max-height: calc(8 * 2rem); }
   .ep-nav-bar { padding: .4rem 3vw; }
   .ep-nav-inner { gap: .4rem; }
+  #btn-next { margin-left: .5rem; }
   .nav-label, .report-label, #audio-track-label, .np-title { display: none; }
   #audio-track-btn i { font-size: 1.3em; }
 }
