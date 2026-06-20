@@ -383,9 +383,11 @@ function buildEpGrid(seasonIdx) {
       if (!isRestoringFromHistory) pushEpUrl(seasonIdx, i);
     };
 
+    const searchKey = normalize(ep.title) + ' ' + ep.num;
+
     const card = document.createElement('div');
     card.className = 'ep-card' + (!hasUrl ? ' no-url' : '');
-    card.dataset.title = normalize(ep.title);
+    card.dataset.search = searchKey;
     card.innerHTML = `
       <div class="ep-card-num">${numStr}</div>
       <div class="ep-card-title">${esc(ep.title)}</div>`;
@@ -395,7 +397,7 @@ function buildEpGrid(seasonIdx) {
 
     const row = document.createElement('div');
     row.className = 'ep-list-row' + (!hasUrl ? ' no-url' : '');
-    row.dataset.title = normalize(ep.title);
+    row.dataset.search = searchKey;
     row.innerHTML = `
       <span class="ep-list-num">${numStr}</span>
       <span class="ep-list-title">${esc(ep.title)}</span>`;
@@ -433,8 +435,8 @@ function renderPage(query) {
   const cards = Array.from(epGrid.querySelectorAll('.ep-card'));
   const rows  = Array.from(epListWrap.querySelectorAll('.ep-list-row'));
 
-  const matchedCards = cards.filter(c => !query || c.dataset.title.includes(query));
-  const matchedRows  = rows.filter(r => !query || r.dataset.title.includes(query));
+  const matchedCards = cards.filter(c => !query || c.dataset.search.includes(query));
+  const matchedRows  = rows.filter(r => !query || r.dataset.search.includes(query));
 
   const total = matchedCards.length;
   const totalPages = Math.ceil(total / PAGE_SIZE);
@@ -486,10 +488,13 @@ function selectEp(seasonIdx, epIdx, ep, doSave) {
   }
 
   const sLabel = `S${String(seasonIdx + 1).padStart(2,'0')}E${String(ep.num).padStart(2,'0')}`;
-  document.getElementById('ep-now-playing').textContent = `${sLabel} - ${ep.title}`;
+  document.getElementById('ep-now-playing').innerHTML = `<span class="np-code">${sLabel}</span><span class="np-title"> - ${esc(ep.title)}</span>`;
   document.getElementById('ep-nav-counter').textContent = `${currentPos + 1} / ${flatEps.length}`;
   document.getElementById('btn-prev').disabled = currentPos <= 0;
   document.getElementById('btn-next').disabled = currentPos >= flatEps.length - 1;
+
+  reportCtx = { show: show.title, label: sLabel, num: ep.num, title: ep.title, url: ep.url || '(aucune)' };
+  resetReportBtn();
 
   loadEpisode(ep, seasonIdx);
 
@@ -519,6 +524,42 @@ function navigateEp(dir) {
 
 document.getElementById('btn-prev').addEventListener('click', () => navigateEp(-1));
 document.getElementById('btn-next').addEventListener('click', () => navigateEp(1));
+
+const FORMSPREE_URL = 'https://formspree.io/f/mjgqbkoo';
+const reportBtn = document.getElementById('btn-report');
+let reportCtx = null;
+
+function resetReportBtn() {
+  reportBtn.disabled = false;
+  reportBtn.classList.remove('reported');
+  reportBtn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> <span class="report-label">LIEN MORT</span>';
+}
+
+reportBtn.addEventListener('click', () => {
+  if (!reportCtx || reportBtn.disabled) return;
+  reportBtn.disabled = true;
+  reportBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span class="report-label">ENVOI…</span>';
+  fetch(FORMSPREE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      serie: reportCtx.show,
+      episode: `${reportCtx.label} - ${reportCtx.title}`,
+      numero: reportCtx.num,
+      lien: reportCtx.url,
+      page: location.href
+    })
+  })
+    .then(r => {
+      if (!r.ok) throw new Error('formspree ' + r.status);
+      reportBtn.classList.add('reported');
+      reportBtn.innerHTML = '<i class="fa-solid fa-check"></i> <span class="report-label">SIGNALÉ</span>';
+    })
+    .catch(() => {
+      reportBtn.disabled = false;
+      reportBtn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> <span class="report-label">RÉESSAYER</span>';
+    });
+});
 
 const MEGA_MIN_WIDTH = 480;
 let megaScaleObserver = null;

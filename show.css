@@ -175,6 +175,9 @@ h1.show-title {
 #btn-prev:not(:disabled):hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
 #btn-next:not(:disabled):hover { background: var(--hot); color: var(--paper); border-color: var(--hot); }
 .ep-nav-btn:disabled { opacity: .2; cursor: default; }
+.ep-report-btn:not(:disabled) { color: rgba(255,246,227,.9); border-color: rgba(255,246,227,.4); }
+.ep-report-btn:not(:disabled):hover { background: var(--hot); color: var(--ink); border-color: var(--hot); }
+.ep-report-btn.reported { background: var(--lime); color: var(--ink); border-color: var(--lime); pointer-events: none; }
 .ep-nav-center {
   flex: 1; min-width: 0;
   display: flex; flex-direction: column; align-items: center; gap: .1rem;
@@ -385,4 +388,7 @@ h1.show-title {
   .ep-card { padding: .55rem .65rem; }
   .ep-list-wrap { max-height: calc(8 * 2rem); }
   .ep-nav-bar { padding: .4rem 3vw; }
+  .ep-nav-inner { gap: .4rem; }
+  .nav-label, .report-label, #audio-track-label, .np-title { display: none; }
+  #audio-track-btn i { font-size: 1.3em; }
 }
