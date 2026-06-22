@@ -23110,6 +23110,150 @@
       }
     ]
   },
+  "stoked": {
+    "title": "Stoked, ça va surfer",
+    "channel": "teletoon",
+    "years": null,
+    "tag": "FR",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Saison 1",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://youtube.com/embed/7_7Xy13n_j8"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://youtube.com/embed/RrHHasI3NOQ"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://youtube.com/embed/-4rvnNXjaHo"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://youtube.com/embed/VRC9815vxmE"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://youtube.com/embed/pgclAs1nFGo"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://youtube.com/embed/iSIc_NsGgQs"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://youtube.com/embed/LIK0sHtfaKw"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://youtube.com/embed/m1eXEp0-WRM"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://youtube.com/embed/YrzPnxZgWiU"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://youtube.com/embed/t3gtZI-nSIU"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://youtube.com/embed/CRc7g5wZhoo"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://youtube.com/embed/XivF05Im0Ug"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://youtube.com/embed/_DP1xVGoa_Y"
+          },
+          {
+            "num": 14,
+            "title": "Épisode 14",
+            "url": "https://youtube.com/embed/t_1GPIi-YAE"
+          },
+          {
+            "num": 15,
+            "title": "Épisode 15",
+            "url": "https://youtube.com/embed/ZyP2Q_-Vwpk"
+          },
+          {
+            "num": 16,
+            "title": "Épisode 16",
+            "url": "https://youtube.com/embed/IsaGX8WZzFk"
+          },
+          {
+            "num": 17,
+            "title": "Épisode 17",
+            "url": "https://youtube.com/embed/E4YlRpj6SuU"
+          },
+          {
+            "num": 18,
+            "title": "Épisode 18",
+            "url": "https://youtube.com/embed/FuBYQWnPGP4"
+          },
+          {
+            "num": 19,
+            "title": "Épisode 19",
+            "url": "https://youtube.com/embed/DiZ5td2jCtM"
+          },
+          {
+            "num": 20,
+            "title": "Épisode 20",
+            "url": "https://youtube.com/embed/70lCn4XGu_I"
+          },
+          {
+            "num": 21,
+            "title": "Épisode 21",
+            "url": "https://youtube.com/embed/ZWoFBDF6zWU"
+          },
+          {
+            "num": 22,
+            "title": "Épisode 22",
+            "url": "https://youtube.com/embed/2rnyAh7ZSS8"
+          },
+          {
+            "num": 23,
+            "title": "Épisode 23",
+            "url": "https://youtube.com/embed/f_p91jrZbEk"
+          },
+          {
+            "num": 24,
+            "title": "Épisode 24",
+            "url": "https://youtube.com/embed/1pJVV8NLMkw"
+          },
+          {
+            "num": 25,
+            "title": "Épisode 25",
+            "url": "https://youtube.com/embed/f9P9soWN1fw"
+          },
+          {
+            "num": 26,
+            "title": "Épisode 26",
+            "url": "https://youtube.com/embed/OXOYJrcqAgw"
+          }
+        ]
+      }
+    ]
+  },
   "tom-tom-nana": {
     "title": "Tom-Tom et Nana",
     "channel": "teletoon",

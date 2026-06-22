@@ -21,6 +21,48 @@ h1.show-title {
   text-shadow: 3px 3px 0 var(--hot), 6px 6px 0 var(--sky);
   word-break: break-word;
 }
+/* ── SHOW NOTES ──
+   Collapsed by default on every viewport; the toggle expands the lines. */
+.show-notes { margin-top: .75rem; display: none; }
+.show-notes.has-notes { display: block; }
+.show-notes-line {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(.68rem, 1vw, .82rem);
+  color: var(--paper);
+  border-left: 3px solid var(--lime);
+  padding-left: .75rem;
+  margin-bottom: .35rem;
+}
+.show-notes-line:last-of-type { margin-bottom: 0; }
+/* Accent colours cycle per line, matching the hero's hot/sky/lime/orange palette. */
+.show-notes-line:nth-child(4n + 1) { border-left-color: var(--hot); }
+.show-notes-line:nth-child(4n + 2) { border-left-color: var(--sky); }
+.show-notes-line:nth-child(4n + 3) { border-left-color: var(--lime); }
+.show-notes-line:nth-child(4n)     { border-left-color: var(--orange); }
+.show-notes-toggle {
+  display: inline-flex;
+  align-items: center; gap: .4em;
+  font-family: 'Bungee', sans-serif; font-size: .62rem; letter-spacing: .06em;
+  background: transparent;
+  border: 2px solid rgba(255, 246, 227, .22);
+  color: rgba(255, 246, 227, .55);
+  padding: .25rem .8rem;
+  cursor: pointer; margin-top: .5rem;
+  transition: border-color .15s, color .15s;
+}
+.show-notes-toggle:hover { border-color: rgba(255, 246, 227, .5); color: rgba(255, 246, 227, .9); }
+/* Touch devices can't un-hover, so a tap leaves :hover stuck "bright". Instead of
+   gating hover, just make the bright state the default where there's no hover pointer. */
+@media (hover: none) {
+  .show-notes-toggle { border-color: rgba(255, 246, 227, .5); color: rgba(255, 246, 227, .9); }
+}
+/* Collapsed by default; JS sets max-height to the measured open height on toggle,
+   so the reveal animates to the exact content height (no guessed upper bound). */
+.show-notes-lines { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+[data-theme="dark"] .show-notes-line { color: var(--dm-text); }
+[data-theme="dark"] .show-notes-toggle { color: var(--dm-text); }
+[data-theme="dark"] .show-notes-toggle:hover { color: var(--dm-text); }
+
 /* ── 2-COL LAYOUT ── */
 .show-layout {
   display: grid;

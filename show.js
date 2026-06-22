@@ -137,6 +137,22 @@ epvList.addEventListener('click', () => {
 });
 applyEpView();
 
+// ── SHOW NOTES TOGGLE ──
+const showNotesEl     = document.getElementById('show-notes');
+const showNotesToggle = document.getElementById('show-notes-toggle');
+const showNotesLines  = document.getElementById('show-notes-lines');
+if (showNotesToggle && showNotesEl && showNotesLines) {
+  showNotesToggle.addEventListener('click', () => {
+    const expanded = showNotesEl.classList.toggle('expanded');
+    // Animate to the exact content height on open, back to 0 on close.
+    showNotesLines.style.maxHeight = expanded ? `${showNotesLines.scrollHeight}px` : '0';
+    showNotesToggle.setAttribute('aria-expanded', String(expanded));
+    showNotesToggle.innerHTML = expanded
+      ? '<i class="fa-solid fa-caret-up"></i> RÉDUIRE'
+      : '<i class="fa-solid fa-caret-down"></i> LIRE PLUS';
+  });
+}
+
 const playerWrap = document.getElementById('player-wrap');
 // TODO TEMP
 const fsBtn = document.getElementById('fs-btn');
@@ -235,9 +251,11 @@ function readUrlEp() {
   return { season: s - 1, ep: null };
 }
 
-fetch('data.json')
-  .then(r => r.ok ? r.json() : Promise.reject())
-  .then(data => {
+Promise.all([
+  fetch('data.json').then(r => r.ok ? r.json() : Promise.reject()),
+  fetch('notes.json').then(r => r.ok ? r.json() : null).catch(() => null)
+])
+  .then(([data, notes]) => {
     show = data[showId];
     if (!show) return window.location.replace('404.html');
 
@@ -245,6 +263,7 @@ fetch('data.json')
       s.episodes.map((ep, ei) => ({ seasonIdx: si, epIdx: ei, ep }))
     );
 
+    populateNotes(notes);
     populateHero();
     buildSeasonTabs();
     buildEpGrid(0);
@@ -300,6 +319,20 @@ window.addEventListener('popstate', e => {
   selectEp(si, ei, ep, false);
   isRestoringFromHistory = false;
 });
+
+function populateNotes(notes) {
+  const notesEl = document.getElementById('show-notes');
+  const linesEl = document.getElementById('show-notes-lines');
+  const lines = notes?.[showId];
+  if (!notesEl || !linesEl || !Array.isArray(lines) || lines.length === 0) return;
+  lines.forEach(({ line }) => {
+    const p = document.createElement('p');
+    p.className = 'show-notes-line'; // accent colour is assigned per line via :nth-child in CSS
+    p.textContent = line;
+    linesEl.appendChild(p);
+  });
+  notesEl.classList.add('has-notes');
+}
 
 function populateHero() {
   document.title = `Tijitoon - ${show.title}`;
