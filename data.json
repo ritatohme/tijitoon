@@ -1,6 +1,7 @@
 {
   "angelo-la-debrouille": {
     "title": "Angelo la Débrouille",
+    "alt_title": "Angelo Rules",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -699,6 +700,7 @@
   },
   "angels-friends": {
     "title": "Angel's Friends",
+    "alt_title": "Angel's Friends",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -1251,6 +1253,7 @@
   },
   "babar": {
     "title": "Babar",
+    "alt_title": "Babar",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -1684,7 +1687,8 @@
     ]
   },
   "cardcaptor-sakura": {
-    "title": "Card Captor Sakura",
+    "title": "Sakura, chasseuse de cartes",
+    "alt_title": "Cardcaptor Sakura",
     "channel": "teletoon",
     "years": null,
     "tag": "ANIME",
@@ -2078,6 +2082,7 @@
   },
   "charlotte-aux-fraises": {
     "title": "Charlotte aux Fraises",
+    "alt_title": "Strawberry Shortcake",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -2219,7 +2224,8 @@
     ]
   },
   "courage-le-chien-froussard": {
-    "title": "Courage the Cowardly Dog",
+    "title": "Courage, le chien froussard",
+    "alt_title": "Courage the Cowardly Dog",
     "channel": "cartoon-network",
     "years": null,
     "tag": "TOON",
@@ -2761,7 +2767,8 @@
     ]
   },
   "danny-phantom": {
-    "title": "Danny Phantom",
+    "title": "Danny Fantôme",
+    "alt_title": "Danny Phantom",
     "channel": "cartoon-network",
     "years": null,
     "tag": "TOON",
@@ -3053,6 +3060,7 @@
   },
   "daria": {
     "title": "Daria",
+    "alt_title": "Daria",
     "channel": "teletoon",
     "years": null,
     "tag": "TOON",
@@ -3433,6 +3441,7 @@
   },
   "dragon-ball": {
     "title": "Dragon Ball",
+    "alt_title": "Dragon Ball",
     "channel": "cartoon-network",
     "years": null,
     "tag": "ANIME",
@@ -4275,6 +4284,7 @@
   },
   "dragon-ball-z": {
     "title": "Dragon Ball Z",
+    "alt_title": "Dragon Ball Z",
     "channel": "cartoon-network",
     "years": null,
     "tag": "ANIME",
@@ -5896,6 +5906,7 @@
   },
   "defis-extremes": {
     "title": "Défis Extrêmes",
+    "alt_title": "Total Drama",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -7471,6 +7482,7 @@
   },
   "dora": {
     "title": "Dora l'Exploratrice",
+    "alt_title": "Dora the Explorer",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -8421,7 +8433,8 @@
     ]
   },
   "go-diego-go": {
-    "title": "Go, Diego, Go",
+    "title": "Go Diego !",
+    "alt_title": "Go, Diego, Go!",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -8840,6 +8853,7 @@
   },
   "hamtaro": {
     "title": "Hamtaro",
+    "alt_title": "Hamtaro",
     "channel": "teletoon",
     "years": null,
     "tag": "ANIME",
@@ -9394,6 +9408,7 @@
   },
   "heidi": {
     "title": "Heidi",
+    "alt_title": "Heidi, Girl of the Alps",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -9668,6 +9683,7 @@
   },
   "hello-kitty": {
     "title": "Hello Kitty",
+    "alt_title": "Hello Kitty",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -10397,6 +10413,7 @@
   },
   "horseland": {
     "title": "Horseland",
+    "alt_title": "Horseland",
     "channel": "teletoon",
     "years": null,
     "tag": "TOON",
@@ -10618,6 +10635,7 @@
   },
   "les-explorateurs": {
     "title": "Il était une fois… les Explorateurs",
+    "alt_title": "Once Upon a Time... The Explorers",
     "channel": "tiji",
     "years": null,
     "tag": "FR",
@@ -10762,6 +10780,7 @@
   },
   "jewelpet": {
     "title": "Jewelpet",
+    "alt_title": "Jewelpet",
     "channel": "teletoon",
     "years": null,
     "tag": "ANIME",
@@ -11314,6 +11333,7 @@
   },
   "kika-bob": {
     "title": "Kika & Bob",
+    "alt_title": "Kika & Bob",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -11469,6 +11489,7 @@
   },
   "kilari": {
     "title": "Kilari",
+    "alt_title": "Kirarin Revolution",
     "channel": "teletoon",
     "years": null,
     "tag": "ANIME",
@@ -12260,6 +12281,7 @@
   },
   "kim-possible": {
     "title": "Kim Possible",
+    "alt_title": "Kim Possible",
     "channel": "cartoon-network",
     "years": null,
     "tag": "TOON",
@@ -12744,6 +12766,7 @@
   },
   "la-cuisine": {
     "title": "La Cuisine est un jeu d'enfants",
+    "alt_title": "Cooking is Child's Play",
     "channel": "tiji",
     "years": null,
     "tag": "FR",
@@ -12965,6 +12988,7 @@
   },
   "la-sorciere-camomille": {
     "title": "La Sorcière Camomille",
+    "alt_title": "The Bored Witch",
     "channel": "tiji",
     "years": null,
     "tag": "FR",
@@ -13164,6 +13188,7 @@
   },
   "lapprenti-pere-noel": {
     "title": "L'Apprenti Père Noël",
+    "alt_title": "Santa's Apprentice",
     "channel": "tiji",
     "years": null,
     "tag": "FR",
@@ -13451,6 +13476,7 @@
   },
   "dexter": {
     "title": "Le Laboratoire de Dexter",
+    "alt_title": "Dexter's Laboratory",
     "channel": "cartoon-network",
     "years": null,
     "tag": "TOON",
@@ -14558,6 +14584,7 @@
   },
   "le-royaume-des-couleurs": {
     "title": "Le Royaume des Couleurs",
+    "alt_title": "Yume no Crayon Oukoku",
     "channel": "tiji",
     "years": null,
     "tag": "FR",
@@ -14922,6 +14949,7 @@
   },
   "lecole-des-champions": {
     "title": "L'École des Champions",
+    "alt_title": "Moero! Top Striker",
     "channel": "teletoon",
     "years": null,
     "tag": "TOON",
@@ -15196,6 +15224,7 @@
   },
   "les-3-petites-soeurs": {
     "title": "Les Trois Petites Sœurs",
+    "alt_title": "The Triplets",
     "channel": "tiji",
     "years": null,
     "tag": "FR",
@@ -15501,6 +15530,7 @@
   },
   "les-belles-histoires": {
     "title": "Les Belles Histoires du Père Castor",
+    "alt_title": "Papa Beaver's Storytime",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -16307,6 +16337,7 @@
   },
   "les-copains-foret": {
     "title": "Les Copains de la forêt",
+    "alt_title": "Forest Friends",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -16581,6 +16612,7 @@
   },
   "les-malheurs-sophie": {
     "title": "Les Malheurs de Sophie",
+    "alt_title": "Sophie's Misfortunes",
     "channel": "tiji",
     "years": null,
     "tag": "FR",
@@ -16725,6 +16757,7 @@
   },
   "les-minijusticiers": {
     "title": "Les Minijusticiers",
+    "alt_title": "The Mini Mighty Kids",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -17129,6 +17162,7 @@
   },
   "magical-doremi": {
     "title": "Magical Doremi",
+    "alt_title": "Ojamajo Doremi",
     "channel": "teletoon",
     "years": null,
     "tag": "ANIME",
@@ -18166,6 +18200,7 @@
   },
   "martin-matin": {
     "title": "Martin Matin",
+    "alt_title": "Martin Morning",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -18712,6 +18747,7 @@
   },
   "mew-mew-power": {
     "title": "Mew Mew Power",
+    "alt_title": "Tokyo Mew Mew",
     "channel": "teletoon",
     "years": null,
     "tag": "ANIME",
@@ -18992,6 +19028,7 @@
   },
   "monster-allergy": {
     "title": "Monster Allergy",
+    "alt_title": "Monster Allergy",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -19272,6 +19309,7 @@
   },
   "pepin-troispommes": {
     "title": "Pépin Troispommes",
+    "alt_title": "Peter Three-Apples",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -19437,6 +19475,7 @@
   },
   "petit-potam": {
     "title": "Petit Potam",
+    "alt_title": "Little Hippo",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -19711,6 +19750,7 @@
   },
   "pichy-pichy-pitch": {
     "title": "Pichy Pichy Pitch",
+    "alt_title": "Mermaid Melody Pichi Pichi Pitch",
     "channel": "teletoon",
     "years": null,
     "tag": "ANIME",
@@ -20186,6 +20226,7 @@
   },
   "sailor-moon": {
     "title": "Sailor Moon",
+    "alt_title": "Sailor Moon",
     "channel": "teletoon",
     "years": null,
     "tag": "ANIME",
@@ -21224,6 +21265,7 @@
   },
   "samsam": {
     "title": "SamSam",
+    "alt_title": "SamSam",
     "channel": "tiji",
     "years": null,
     "tag": "FR",
@@ -21711,6 +21753,7 @@
   },
   "samurai-jack": {
     "title": "Samuraï Jack",
+    "alt_title": "Samurai Jack",
     "channel": "cartoon-network",
     "years": "2001–2004",
     "tag": "TOON",
@@ -22059,6 +22102,7 @@
   },
   "shugo-chara": {
     "title": "Shugo Chara",
+    "alt_title": "Shugo Chara!",
     "channel": "teletoon",
     "years": null,
     "tag": "ANIME",
@@ -22328,6 +22372,7 @@
   },
   "simsala-grimm": {
     "title": "Simsala Grimm",
+    "alt_title": "Simsala Grimm",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -22608,6 +22653,7 @@
   },
   "souris-villes-champs": {
     "title": "Souris des villes, souris des champs",
+    "alt_title": "The Country Mouse and the City Mouse Adventures",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",
@@ -22816,7 +22862,8 @@
     ]
   },
   "powerpuff-girls": {
-    "title": "Powerpuff Girls",
+    "title": "Les Supers Nanas",
+    "alt_title": "The Powerpuff Girls",
     "channel": "cartoon-network",
     "years": null,
     "tag": "TOON",
@@ -23256,6 +23303,7 @@
   },
   "stoked": {
     "title": "Stoked, ça va surfer",
+    "alt_title": "Stoked",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -23400,6 +23448,7 @@
   },
   "tom-tom-nana": {
     "title": "Tom-Tom et Nana",
+    "alt_title": "Tom-Tom and Nana",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -23696,6 +23745,7 @@
   },
   "totally-spies": {
     "title": "Totally Spies!",
+    "alt_title": "Totally Spies!",
     "channel": "teletoon",
     "years": null,
     "tag": "FR",
@@ -24532,6 +24582,7 @@
   },
   "winx": {
     "title": "Winx Club",
+    "alt_title": "Winx Club",
     "channel": "teletoon",
     "years": null,
     "tag": "TOON",
@@ -25519,6 +25570,7 @@
   },
   "zoe-kezako": {
     "title": "Zoé Kezako",
+    "alt_title": "Zoé Kézako",
     "channel": "tiji",
     "years": null,
     "tag": "KIDS",

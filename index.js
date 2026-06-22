@@ -126,6 +126,7 @@ function buildCard(id, show) {
   el.className = 'card';
   el.dataset.channel = show.channel;
   el.dataset.tag = show.tag || '';
+  el.dataset.search = normalize(`${show.title} ${show.alt_title || ''}`);
   el.innerHTML = `
     <div class="card-title">${esc(show.title)}</div>
     <div class="card-bottom">
@@ -144,6 +145,7 @@ function buildRow(id, show, idx) {
   el.href = `show.html?series=${encodeURIComponent(id)}`;
   el.dataset.channel = show.channel;
   el.dataset.tag = show.tag || '';
+  el.dataset.search = normalize(`${show.title} ${show.alt_title || ''}`);
   el.innerHTML = `
     <span class="trow-num">${String(idx + 1).padStart(2,'0')}</span>
     <span class="trow-title">${esc(show.title)}</span>
@@ -181,7 +183,7 @@ function applyFilter() {
 
   document.querySelectorAll('#card-grid .card').forEach(el => {
     const mf = activeFilter === 'all' || el.dataset.channel === activeFilter || el.dataset.tag === activeFilter;
-    const mq = !q || normalize(el.querySelector('.card-title').textContent).includes(q);
+    const mq = !q || el.dataset.search.includes(q);
     const show = mf && mq;
     el.classList.toggle('hidden', !show);
     if (show) visible++;
@@ -189,7 +191,7 @@ function applyFilter() {
 
   document.querySelectorAll('.trow').forEach(el => {
     const mf = activeFilter === 'all' || el.dataset.channel === activeFilter || el.dataset.tag === activeFilter;
-    const mq = !q || normalize(el.querySelector('.trow-title').textContent).includes(q);
+    const mq = !q || el.dataset.search.includes(q);
     el.classList.toggle('hidden', !(mf && mq));
   });
 
