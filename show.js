@@ -787,3 +787,59 @@ function showNoVideo(ep, seasonIdx) {
     <div class="pl-ep-label">S${seasonIdx + 1} - Épisode ${esc(ep.num)}</div>
     <div class="pl-unavail">Vidéo non disponible pour l'instant</div>`;
 }
+
+// ── KEYBOARD SHORTCUTS (native <video> only) ───────────
+// Inactive while an iframe embed is playing (cross-origin, not scriptable).
+function videoActive() {
+  return video.style.display === 'block';
+}
+
+function toggleFullscreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else if (video.requestFullscreen) {
+    video.requestFullscreen();
+  } else if (video.webkitEnterFullscreen) {
+    video.webkitEnterFullscreen(); // iOS Safari
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  // Don't hijack typing in search fields, and ignore modified shortcuts.
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const tag = document.activeElement && document.activeElement.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+  if (!videoActive()) return;
+
+  switch (e.key) {
+    case ' ':
+    case 'k':
+      e.preventDefault();
+      if (video.paused) video.play(); else video.pause();
+      break;
+    case 'ArrowRight':
+      e.preventDefault();
+      video.currentTime = Math.min(video.duration || Infinity, video.currentTime + 10);
+      break;
+    case 'ArrowLeft':
+      e.preventDefault();
+      video.currentTime = Math.max(0, video.currentTime - 10);
+      break;
+    case 'm':
+      e.preventDefault();
+      video.muted = !video.muted;
+      break;
+    case 'f':
+      e.preventDefault();
+      toggleFullscreen();
+      break;
+    case 'n':
+      e.preventDefault();
+      navigateEp(1);
+      break;
+    case 'p':
+      e.preventDefault();
+      navigateEp(-1);
+      break;
+  }
+});
