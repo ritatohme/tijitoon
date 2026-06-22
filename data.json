@@ -10616,6 +10616,150 @@
       }
     ]
   },
+  "les-explorateurs": {
+    "title": "Il était une fois… les Explorateurs",
+    "channel": "tiji",
+    "years": null,
+    "tag": "FR",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Saison 1",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E1/premium-1rjg7e/master.m3u8"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E2/premium-uzxsbc/master.m3u8"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E3/premium-eug49z/master.m3u8"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E4/premium-zfmy03/master.m3u8"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E5/premium-wyt3aa/master.m3u8"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E6/premium-8gyono/master.m3u8"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E7/premium-2w20m7/master.m3u8"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E8/premium-46hvhm/master.m3u8"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E9/premium-x9empz/master.m3u8"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E10/premium-r21xr2/master.m3u8"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E11/premium-cf6eyd/master.m3u8"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E12/premium-x08lq1/master.m3u8"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E13/premium-gxd5sk/master.m3u8"
+          },
+          {
+            "num": 14,
+            "title": "Épisode 14",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E14/premium-fdwvoj/master.m3u8"
+          },
+          {
+            "num": 15,
+            "title": "Épisode 15",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E15/premium-skspi7/master.m3u8"
+          },
+          {
+            "num": 16,
+            "title": "Épisode 16",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E16/premium-a0zkxy/master.m3u8"
+          },
+          {
+            "num": 17,
+            "title": "Épisode 17",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E17/premium-7fp08n/master.m3u8"
+          },
+          {
+            "num": 18,
+            "title": "Épisode 18",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E18/premium-0fbjqr/master.m3u8"
+          },
+          {
+            "num": 19,
+            "title": "Épisode 19",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E19/premium-2n9do5/master.m3u8"
+          },
+          {
+            "num": 20,
+            "title": "Épisode 20",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E20/premium-0zo4ps/master.m3u8"
+          },
+          {
+            "num": 21,
+            "title": "Épisode 21",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E21/premium-sr8nim/master.m3u8"
+          },
+          {
+            "num": 22,
+            "title": "Épisode 22",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E22/premium-z5gk4y/master.m3u8"
+          },
+          {
+            "num": 23,
+            "title": "Épisode 23",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E23/premium-n7axvy/master.m3u8"
+          },
+          {
+            "num": 24,
+            "title": "Épisode 24",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E24/premium-6mswi7/master.m3u8"
+          },
+          {
+            "num": 25,
+            "title": "Épisode 25",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E25/premium-s7hpwz/master.m3u8"
+          },
+          {
+            "num": 26,
+            "title": "Épisode 26",
+            "url": "https://zebi.senpai-stream.club/tv/4213/S1/E26/premium-xcjpka/master.m3u8"
+          }
+        ]
+      }
+    ]
+  },
   "jewelpet": {
     "title": "Jewelpet",
     "channel": "teletoon",
