@@ -257,18 +257,31 @@ h1.show-title {
   color: rgba(19,17,26,.4); flex-shrink: 0;
 }
 .ep-search-wrap {
-  flex: 1; min-width: 120px;
-  display: none; align-items: center;
-  border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
-  background: var(--paper);
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .22s ease, margin-bottom .22s ease;
+  margin-bottom: 0;
 }
-.ep-search-wrap.open { display: flex; }
-.ep-search-wrap:focus-within { border-color: var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+.ep-search-wrap.open { grid-template-rows: 1fr; margin-bottom: .8rem; }
+.ep-search-bar {
+  min-height: 0; overflow: hidden;
+  display: flex; align-items: center;
+  border: 3px solid var(--ink); border-width: 0;
+  background: var(--paper);
+  transition: border-width 0s .22s;
+}
+.ep-search-wrap.open .ep-search-bar {
+  border-width: 3px; box-shadow: 4px 4px 0 var(--ink);
+  transition: border-width 0s;
+}
+.ep-search-prefix {
+  font-family: 'VT323', monospace; font-size: 1.3rem;
+  padding: 0 .4rem 0 .8rem; color: var(--hot); flex-shrink: 0;
+}
 .ep-search {
   flex: 1; min-width: 0;
   font-family: 'Space Mono', monospace; font-size: clamp(.7rem, .9vw, 1rem);
   background: transparent; color: var(--ink);
-  border: none; padding: clamp(.25rem, .4vw, .5rem) clamp(.5rem, .7vw, .9rem); outline: none;
+  border: none; padding: clamp(.4rem, .6vw, .65rem) clamp(.4rem, .6vw, .6rem); outline: none;
 }
 .ep-search::placeholder { color: rgba(19,17,26,.3); }
 .ep-search-clear {
@@ -289,9 +302,13 @@ h1.show-title {
   flex-shrink: 0; font-size: clamp(.8rem, 1vw, 1.1rem);
   color: var(--ink); margin-left: auto;
 }
+.ep-search-toggle.active { background: var(--ink); color: var(--lime); box-shadow: none; transform: translate(2px,2px); }
 @media (max-width: 600px) {
   .ep-count-label { display: none; }
-  .ep-search { font-size: 1rem; }
+  /* Keep at 16px: iOS Safari auto-zooms the page on focus if an input is <16px.
+     Don't shrink the font to look smaller — tighten padding/prefix instead (below). */
+  .ep-search { font-size: 16px; padding: .3rem .45rem; }
+  .ep-search-prefix { font-size: 1rem; padding: 0 .3rem 0 .55rem; }
 }
 .ep-view-toggle {
   display: flex; border: 2px solid var(--ink);
@@ -345,6 +362,7 @@ h1.show-title {
   display: none;
 }
 .ep-list-wrap.active { display: block; }
+.ep-list-wrap.is-empty { display: none; }
 .ep-list-row {
   display: grid; grid-template-columns: clamp(2.5rem, 3.5vw, 4.5rem) 1fr;
   align-items: center;

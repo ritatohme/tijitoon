@@ -88,7 +88,7 @@ epSearchToggle.addEventListener('click', () => {
     collapseSearch();
   } else {
     epSearchWrap.classList.add('open');
-    epCountLabel.style.display = 'none';
+    epSearchToggle.classList.add('active');
     epSearch.focus();
   }
 });
@@ -97,7 +97,7 @@ function collapseSearch() {
   epSearch.value = '';
   epSearchClear.classList.remove('visible');
   epSearchWrap.classList.remove('open');
-  epCountLabel.style.display = '';
+  epSearchToggle.classList.remove('active');
   applySearch('', false);
 }
 const noResults   = document.getElementById('ep-no-results');
@@ -442,7 +442,7 @@ epSearch.addEventListener('input', () => {
 });
 epSearchClear.addEventListener('click', () => {
   collapseSearch();
-  epSearch.focus();
+  epSearch.blur();
 });
 
 function applySearch(q, resetPage = true) {
@@ -472,6 +472,7 @@ function renderPage(query) {
   rows.forEach(r => r.style.display = matchedRows.includes(r) ? '' : 'none');
 
   noResults.style.display = total === 0 ? 'block' : 'none';
+  epListWrap.classList.toggle('is-empty', total === 0);
 
   if (total > PAGE_SIZE && epViewMode === 'grid') {
     epPagination.classList.add('visible');

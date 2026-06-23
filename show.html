@@ -81,13 +81,16 @@
   <div class="ep-browser-header">
     <span class="ep-count-label" id="ep-count-label"></span>
     <button class="ep-search-toggle" id="ep-search-toggle" aria-label="Rechercher"><i class="fa-solid fa-magnifying-glass"></i></button>
-    <div class="ep-search-wrap" id="ep-search-wrap">
-      <input class="ep-search" id="ep-search" type="text" placeholder="Rechercher…" autocomplete="off">
-      <button class="ep-search-clear" id="ep-search-clear" aria-label="Effacer"><i class="fa-solid fa-xmark"></i></button>
-    </div>
     <div class="ep-view-toggle">
       <button class="ep-view-btn active" id="epv-grid" title="Grille"><i class="fa-solid fa-grip"></i></button>
       <button class="ep-view-btn" id="epv-list" title="Liste"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+  <div class="ep-search-wrap" id="ep-search-wrap">
+    <div class="ep-search-bar">
+      <span class="ep-search-prefix">&gt;&gt;</span>
+      <input class="ep-search" id="ep-search" type="text" placeholder="Rechercher un épisode…" autocomplete="off">
+      <button class="ep-search-clear" id="ep-search-clear" aria-label="Effacer"><i class="fa-solid fa-xmark"></i></button>
     </div>
   </div>
   <div class="ep-no-results" id="ep-no-results">Aucun épisode trouvé</div>
