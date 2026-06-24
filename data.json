@@ -12764,6 +12764,151 @@
       }
     ]
   },
+  "kung-foot": {
+    "title": "Kung Foot",
+    "alt_title": "Kung Foot",
+    "channel": "teletoon",
+    "years": null,
+    "tag": "FR",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Saison 1",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://youtube.com/embed/BvCVdYjjUc0"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://youtube.com/embed/MWBYjaQlUdI"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://youtube.com/embed/ZL3u7BmoLSY"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://youtube.com/embed/4mtsPLEpcpA"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://youtube.com/embed/ptcB0dvehlk"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://youtube.com/embed/bNnnKMrJ3b0"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://youtube.com/embed/V68ZTf-Bg5Y"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://youtube.com/embed/KPjE5Pevekk"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://youtube.com/embed/A6UUieAzMkM"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://youtube.com/embed/O6r_Hx_c74Y"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://youtube.com/embed/3EonCmhrRFc"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://youtube.com/embed/M3cSdG7FRzE"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://youtube.com/embed/THwaE1EQgeQ"
+          },
+          {
+            "num": 14,
+            "title": "Épisode 14",
+            "url": "https://youtube.com/embed/KDQEdFj8bBk"
+          },
+          {
+            "num": 15,
+            "title": "Épisode 15",
+            "url": "https://youtube.com/embed/RMDs3zqRfOM"
+          },
+          {
+            "num": 16,
+            "title": "Épisode 16",
+            "url": "https://youtube.com/embed/9A_eBpNwCag"
+          },
+          {
+            "num": 17,
+            "title": "Épisode 17",
+            "url": "https://youtube.com/embed/Lj6wGSlqjqw"
+          },
+          {
+            "num": 18,
+            "title": "Épisode 18",
+            "url": "https://youtube.com/embed/HNQkRWfM1h0"
+          },
+          {
+            "num": 19,
+            "title": "Épisode 19",
+            "url": "https://youtube.com/embed/kNzuanFQIDY"
+          },
+          {
+            "num": 20,
+            "title": "Épisode 20",
+            "url": "https://youtube.com/embed/Lex2G6mnFZM"
+          },
+          {
+            "num": 21,
+            "title": "Épisode 21",
+            "url": "https://youtube.com/embed/8oTPpu0Bn-0"
+          },
+          {
+            "num": 22,
+            "title": "Épisode 22",
+            "url": "https://youtube.com/embed/lex_fDL6fmM"
+          },
+          {
+            "num": 23,
+            "title": "Épisode 23",
+            "url": "https://youtube.com/embed/XJIhYdAIoeQ"
+          },
+          {
+            "num": 24,
+            "title": "Épisode 24",
+            "url": "https://youtube.com/embed/jQFTFM6ERGk"
+          },
+          {
+            "num": 25,
+            "title": "Épisode 25",
+            "url": "https://youtube.com/embed/MV2C0akhb3M"
+          },
+          {
+            "num": 26,
+            "title": "Épisode 26",
+            "url": "https://youtube.com/embed/z-SEOHBRnZw"
+          }
+        ]
+      }
+    ]
+  },
   "la-cuisine": {
     "title": "La Cuisine est un jeu d'enfants",
     "alt_title": "Cooking is Child's Play",
