@@ -206,7 +206,6 @@ h1 {
 .fb-chip[data-f="TOON"].active     { background: var(--lime); }
 .fb-chip[data-f="FR"].active       { background: var(--orange); }
 .fb-chip[data-f="KIDS"].active     { background: var(--sky); }
-.fb-chip[data-f="★"].active       { background: var(--cream); }
 
 .filter-divider {
   border: none; border-top: 1px solid rgba(19,17,26,.12);
@@ -277,7 +276,6 @@ h1 {
 .card-tag.anime  { background: var(--hot); color: var(--paper); }
 .card-tag.fr     { background: var(--orange); }
 .card-tag.kids   { background: var(--sky); }
-.card-tag.tod    { background: var(--cream); }
 .card-tag.toon   { background: var(--lime); }
 .card-ch {
   font-family: 'VT323', monospace; font-size: .85rem;
@@ -332,7 +330,6 @@ h1 {
 .trow-tag.anime  { background: var(--hot); color: var(--paper); }
 .trow-tag.fr     { background: var(--orange); }
 .trow-tag.kids   { background: var(--sky); }
-.trow-tag.tod    { background: var(--cream); }
 .trow-tag.toon   { background: var(--lime); }
 .trow-ch {
   font-family: 'VT323', monospace; font-size: .88rem;

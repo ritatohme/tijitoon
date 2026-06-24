@@ -89,7 +89,7 @@
   padding: .5rem 1rem; text-align: center;
 }
 .req-success.visible { display: block; }
-.req-success .fa-check { font-size: .8em; }
+.req-success i { font-size: .8em; }
 
 /* ── INTRO ── */
 .req-intro {
@@ -122,4 +122,4 @@
 [data-theme="dark"] .req-textarea     { color: var(--dm-text); }
 [data-theme="dark"] .req-textarea::placeholder { color: var(--dm-muted); }
 [data-theme="dark"] .req-submit       { color: var(--dm-text); border-color: var(--dm-muted); box-shadow: 5px 5px 0 var(--ink); }
-[data-theme="dark"] .req-success      { border-color: var(--dm-muted); box-shadow: 3px 3px 0 var(--ink); }
+[data-theme="dark"] .req-success      { color: var(--dm-text); border-color: var(--dm-muted); box-shadow: 3px 3px 0 var(--ink); }

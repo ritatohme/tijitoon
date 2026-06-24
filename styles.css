@@ -193,7 +193,8 @@ body::before {
 /* show.html - episode grid */
 [data-theme="dark"] .ep-card                      { background: var(--dm-surface); border-color: var(--dm-muted); color: var(--dm-text); }
 [data-theme="dark"] .ep-card.playing              { background: var(--dm-playing); }
-[data-theme="dark"] .ep-card-num                  { color: var(--dm-text); }
+[data-theme="dark"] .ep-card-num                  { color: var(--dm-muted); }
+[data-theme="dark"] .ep-card.playing .ep-card-num { color: var(--dm-muted); }
 
 /* show.html - episode list */
 [data-theme="dark"] .ep-list-wrap                 { border-color: var(--dm-muted); box-shadow: 4px 4px 0 var(--ink); }
@@ -231,6 +232,8 @@ body::before {
 [data-theme="dark"] #btn-next:not(:disabled)      { color: var(--dm-text); border-color: var(--dm-muted); }
 [data-theme="dark"] #btn-prev:not(:disabled):hover,
 [data-theme="dark"] #btn-next:not(:disabled):hover { color: var(--ink); }
+[data-theme="dark"] .ep-report-btn:not(:disabled)       { color: var(--dm-text); border-color: var(--dm-muted); }
+[data-theme="dark"] .ep-report-btn:not(:disabled):hover { color: var(--ink); }
 [data-theme="dark"] .ep-page-btn                  { background: var(--dm-surface); border-color: var(--dm-muted); box-shadow: 2px 2px 0 var(--ink); color: var(--dm-text); }
 [data-theme="dark"] .ep-page-info                 { color: var(--dm-muted); }
 

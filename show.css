@@ -196,7 +196,7 @@ h1.show-title {
 #btn-next:not(:disabled):hover { background: var(--hot); color: var(--paper); border-color: var(--hot); }
 .ep-nav-btn:disabled { opacity: .2; cursor: default; }
 .ep-report-btn:not(:disabled) { color: rgba(255,246,227,.9); border-color: rgba(255,246,227,.4); }
-.ep-report-btn:not(:disabled):hover { background: var(--hot); color: var(--ink); border-color: var(--hot); }
+.ep-report-btn:not(:disabled):hover { background: var(--hot); color: var(--paper); border-color: var(--hot); }
 .ep-report-btn.reported { background: var(--lime); color: var(--ink); border-color: var(--lime); pointer-events: none; }
 .ep-nav-center {
   flex: 1; min-width: 0;

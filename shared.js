@@ -23,7 +23,7 @@ function chLabel(channel) {
 }
 
 function tagCls(tag) {
-  return { ANIME: 'anime', FR: 'fr', KIDS: 'kids', '★': 'tod', TOON: 'toon' }[tag] || 'toon';
+  return { ANIME: 'anime', FR: 'fr', KIDS: 'kids', TOON: 'toon' }[tag] || 'toon';
 }
 
-const TAG_LABELS = { ANIME: 'Anime', TOON: 'Cartoon', FR: 'Prod. FR', KIDS: 'Préscolaire', '★': '★' };
+const TAG_LABELS = { ANIME: 'Anime', TOON: 'Cartoon', FR: 'Prod. FR', KIDS: 'Préscolaire' };
