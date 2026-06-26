@@ -13,7 +13,7 @@ function buildContinueWatching(data) {
     if (!key.startsWith(PROGRESS_PREFIX)) continue;
     const seriesId = key.slice(PROGRESS_PREFIX.length);
     const show = data[seriesId];
-    if (!show) continue;
+    if (!show || show.disabled) continue;
     try {
       const { season, ep } = JSON.parse(localStorage.getItem(key));
       const s = show.seasons[season];
@@ -123,7 +123,7 @@ document.getElementById('cw-clear').addEventListener('click', () => {
 // ── BUILD ITEMS ────────────────────────────────────────
 function buildCard(id, show) {
   const el = document.createElement('div');
-  el.className = 'card';
+  el.className = 'card' + (show.disabled ? ' disabled' : '');
   el.dataset.channel = show.channel;
   el.dataset.tag = show.tag || '';
   el.dataset.search = normalize(`${show.title} ${show.alt_title || ''}`);
@@ -133,16 +133,19 @@ function buildCard(id, show) {
       ${show.tag ? `<span class="card-tag ${tagCls(show.tag)}">${esc(show.tag)}</span>` : ''}
       <span class="card-ch ${esc(show.channel)}">${chLabel(show.channel)}</span>
     </div>`;
-  el.addEventListener('click', () => {
-    window.location.href = `show.html?series=${encodeURIComponent(id)}`;
-  });
+  if (!show.disabled) {
+    el.addEventListener('click', () => {
+      window.location.href = `show.html?series=${encodeURIComponent(id)}`;
+    });
+  }
   return el;
 }
 
 function buildRow(id, show, idx) {
-  const el = document.createElement('a');
-  el.className = 'trow';
-  el.href = `show.html?series=${encodeURIComponent(id)}`;
+  const disabled = !!show.disabled;
+  const el = document.createElement(disabled ? 'div' : 'a');
+  el.className = 'trow' + (disabled ? ' disabled' : '');
+  if (!disabled) el.href = `show.html?series=${encodeURIComponent(id)}`;
   el.dataset.channel = show.channel;
   el.dataset.tag = show.tag || '';
   el.dataset.search = normalize(`${show.title} ${show.alt_title || ''}`);

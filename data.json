@@ -8436,6 +8436,7 @@
     "title": "Go Diego !",
     "alt_title": "Go, Diego, Go!",
     "channel": "tiji",
+    "disabled": true,
     "years": null,
     "tag": "KIDS",
     "seasons": [

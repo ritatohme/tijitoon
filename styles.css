@@ -144,6 +144,7 @@ body::before {
 [data-theme="dark"] .card-tag.anime,
 [data-theme="dark"] .card-ch.teletoon,
 [data-theme="dark"] .card-ch.cartoon-network { border-color: var(--dm-muted); color: var(--dm-text); }
+[data-theme="dark"] .card.disabled::after { background: var(--lime); color: var(--dm-text); border-color: var(--dm-muted); }
 
 /* Filter */
 [data-theme="dark"] .filter-btn         { color: var(--dm-text); border-color: var(--dm-muted); }

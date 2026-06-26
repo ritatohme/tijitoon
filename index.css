@@ -262,6 +262,14 @@ h1 {
 }
 .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--ink); z-index: 2; }
 .card.hidden { display: none; }
+.card.disabled { opacity: .4; cursor: not-allowed; }
+.card.disabled:hover { transform: none; box-shadow: none; z-index: auto; }
+.card.disabled::after {
+  content: 'BIENTÔT'; position: absolute; top: -4px; right: -8px;
+  font-family: 'VT323', monospace; font-size: .85rem; line-height: 1;
+  background: var(--ink); color: var(--paper);
+  padding: .12rem .45rem; border: 2px solid var(--ink); transform: rotate(4deg);
+}
 
 .card-title {
   font-family: 'Rubik Mono One', sans-serif;
@@ -314,6 +322,9 @@ h1 {
 }
 .trow:hover { background: var(--lime); }
 .trow.hidden { display: none; }
+.trow.disabled { opacity: .4; cursor: not-allowed; }
+.trow.disabled:hover { background: transparent; }
+.trow.disabled .trow-title::after { content: ' · BIENTÔT'; opacity: .7; }
 .trow-num {
   font-family: 'VT323', monospace; font-size: .9rem;
   color: rgba(19,17,26,.25); text-align: right;
