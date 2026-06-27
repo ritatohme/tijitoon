@@ -183,7 +183,8 @@ const SANDBOX_PERMISSIONS = {
 const DEFAULT_SANDBOX = 'allow-scripts allow-same-origin allow-popups allow-presentation';
 
 // const ODYCDN_PROXY_URL = 'https://great-lorikeet-66.roughrecipe.deno.net/'; // deno fallback
-const CRIMSON_WORKER_URL = 'https://crimson-night-b851.ritatohme99.workers.dev';
+const CRIMSON_WORKER_URL    = 'https://crimson-night-b851.ritatohme99.workers.dev';
+const DESSINANIME_WORKER_URL = 'https://floral-star-ca2f.ritaclifford99.workers.dev';
 const ODYCDN_PROXY_URL   = CRIMSON_WORKER_URL + '/';
 const LOUDAPE_PROXY_URL   = 'https://loud-ape-44.roughrecipe.deno.net';
 const OJAMAJO_WORKER_URL  = 'https://rapid-lab-6552.ritaclifford95.workers.dev';
@@ -195,6 +196,7 @@ function odycdnProxyUrl(mp4Url) {
 
 function getEpType(ep) {
   if (ep.type) return ep.type;
+  if (ep.url?.includes('dessinanime.cc')) return 'dessinanime';
   if (ep.url?.includes('mhd.seekplayer.me')) return 'seekplayer';
   if (ep.url?.includes('embedseek.com')) return 'embedseek';
   if (ep.url?.includes('player.ojamajo.moe/videos/watch')) return 'ojamajo';
@@ -738,6 +740,19 @@ function loadEpisode(ep, seasonIdx) {
     placeholder.innerHTML = `
       <div class="pl-ep-label">S${seasonIdx + 1} - Épisode ${esc(ep.num)}</div>
       <a class="player-external-link" href="${esc(ep.url)}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-play"></i> Regarder sur ${esc(epUrl.hostname)}</a>`;
+  } else if (type === 'dessinanime') {
+    placeholder.style.display = 'flex';
+    placeholder.innerHTML = `<div class="pl-hint">Chargement…</div>`;
+    fetch(`${DESSINANIME_WORKER_URL}/dessinanime?url=${encodeURIComponent(ep.url)}`)
+      .then(r => r.json())
+      .then(({ source }) => {
+        if (gen !== loadGen) return;
+        if (!source) { showNoVideo(ep, seasonIdx); return; }
+        placeholder.style.display = 'none';
+        video.src = source;
+        video.style.display = 'block';
+      })
+      .catch(() => { if (gen === loadGen) showNoVideo(ep, seasonIdx); });
   } else if (type === 'seekplayer') {
     const id = epUrl.hash.slice(1);
     playM3u8(`${LOUDAPE_PROXY_URL}/?id=${encodeURIComponent(id)}`);
