@@ -227,8 +227,6 @@ body::before {
 [data-theme="dark"] .ep-now-playing               { color: var(--dm-text); }
 [data-theme="dark"] .ep-nav-counter               { color: var(--dm-muted); }
 [data-theme="dark"] .ep-nav-btn                   { border-color: var(--dm-muted); color: var(--dm-muted); }
-[data-theme="dark"] #audio-track-btn             { border-color: var(--dm-muted); color: var(--dm-text); }
-[data-theme="dark"] #audio-track-menu button     { color: var(--dm-muted); }
 [data-theme="dark"] #btn-prev:not(:disabled),
 [data-theme="dark"] #btn-next:not(:disabled)      { color: var(--dm-text); border-color: var(--dm-muted); }
 [data-theme="dark"] #btn-prev:not(:disabled):hover,

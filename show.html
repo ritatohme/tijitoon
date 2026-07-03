@@ -50,6 +50,7 @@
       <iframe id="player-iframe" allowfullscreen webkitallowfullscreen mozallowfullscreen
         allow="autoplay; fullscreen *; picture-in-picture; web-share"></iframe>
       <video id="player-video" controls controlslist="nodownload" playsinline webkit-playsinline></video>
+      <div id="art-player"></div>
       <button id="fs-exit">✕</button>
       <div class="player-placeholder" id="player-placeholder">
         <div class="pl-title" id="pl-bg-title"></div>
@@ -65,10 +66,6 @@
         <span class="ep-nav-counter" id="ep-nav-counter">- / -</span>
       </div>
       <button id="fs-btn" class="ep-nav-btn" title="Fullscreen">⛶</button>
-      <div style="position:relative">
-        <div id="audio-track-menu"></div>
-        <button id="audio-track-btn"><i class="fa-solid fa-globe"></i><span id="audio-track-label">AUDIO</span></button>
-      </div>
       <button class="ep-nav-btn ep-report-btn" id="btn-report" disabled><i class="fa-solid fa-triangle-exclamation"></i> <span class="report-label">LIEN MORT</span></button>
       <button class="ep-nav-btn" id="btn-next" disabled><span class="nav-label">SUIV.</span> <i class="fa-solid fa-angle-right"></i></button>
     </div>
@@ -107,7 +104,10 @@
 
 <script src="theme.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/artplayer@5.4.0/dist/artplayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/artplayer-plugin-hls-control@1.1.0/dist/artplayer-plugin-hls-control.min.js"></script>
 <script src="shared.js"></script>
+<script src="player.js"></script>
 <script src="show.js"></script>
 </body>
 </html>

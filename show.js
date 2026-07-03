@@ -3,45 +3,7 @@ const showId = params.get('series') || params.get('id');
 if (!showId || !/^[\w-]+$/.test(showId)) window.location.replace('404.html');
 
 const iframe         = document.getElementById('player-iframe');
-const video          = document.getElementById('player-video');
 const placeholder    = document.getElementById('player-placeholder');
-const audioBtn       = document.getElementById('audio-track-btn');
-const audioLabel     = document.getElementById('audio-track-label');
-const audioMenu      = document.getElementById('audio-track-menu');
-
-audioBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  const isOpen = audioMenu.style.display === 'block';
-  audioMenu.style.display = isOpen ? 'none' : 'block';
-});
-audioMenu.addEventListener('click', (e) => { e.stopPropagation(); });
-document.addEventListener('click', () => { audioMenu.style.display = 'none'; });
-
-function buildAudioMenu(tracks, hlsInstance) {
-  audioMenu.innerHTML = '';
-  tracks.forEach((t, i) => {
-    const btn = document.createElement('button');
-    btn.textContent = t.name || t.lang || `Track ${i + 1}`;
-    if (i === hlsInstance.audioTrack) btn.classList.add('active');
-    btn.addEventListener('click', () => {
-      hlsInstance.audioTrack = i;
-      audioMenu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      audioLabel.textContent = btn.textContent;
-      audioMenu.style.display = 'none';
-    });
-    audioMenu.appendChild(btn);
-  });
-  audioLabel.textContent = tracks[hlsInstance.audioTrack]?.name || tracks[hlsInstance.audioTrack]?.lang || 'AUDIO';
-  audioBtn.removeAttribute('disabled');
-  audioBtn.style.display = 'flex';
-}
-
-function hideAudioMenu() {
-  audioBtn.style.display = 'none';
-  audioMenu.style.display = 'none';
-  audioMenu.innerHTML = '';
-}
 const epGrid      = document.getElementById('ep-grid');
 const epListWrap  = document.getElementById('ep-list-wrap');
 const epPagination = document.getElementById('ep-pagination');
@@ -621,41 +583,15 @@ function clearMegaScale() {
   iframe.style.transform = '';
 }
 
-let activeHls = null;
-
-function playM3u8(src) {
-  video.style.display = 'block';
-  if (Hls.isSupported()) {
-    const hls = new Hls();
-    activeHls = hls;
-    hls.loadSource(src);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, () => {
-      const frTrack = hls.audioTracks.findIndex(t =>
-        t.lang === 'fr' || /^fr/i.test(t.lang) || /vf|fra$|français|french/i.test(t.name)
-      );
-      if (frTrack !== -1) {
-        hls.audioTrack = frTrack;
-        setTimeout(() => { hls.audioTrack = frTrack; }, 300);
-      }
-      if (hls.audioTracks.length > 1) buildAudioMenu(hls.audioTracks, hls);
-    });
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = src;
-  }
-}
-
-function playMp4(src) {
-  video.src = src;
-  video.style.display = 'block';
-}
+// Playback itself (ArtPlayer / hls.js / native fallback) lives in player.js:
+// playM3u8 / playMp4 / playQualityMp4 / destroyArt / mediaEl / toggleFullscreen.
 
 let loadGen = 0;
 
 // Hosts whose playable source must be resolved through a worker/API call first:
 // show "Chargement…", fetch, then play whatever pickSource pulls out of the JSON
-// payload ({ mp4 } or { m3u8 }; empty/null = dead link). The gen check drops
-// responses that land after another episode was selected.
+// payload ({ mp4 }, { m3u8 } or { sources } multi-quality; empty/null = dead link).
+// The gen check drops responses that land after another episode was selected.
 function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
   placeholder.style.display = 'flex';
   placeholder.innerHTML = `<div class="pl-hint">Chargement…</div>`;
@@ -664,9 +600,11 @@ function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
     .then(json => {
       if (gen !== loadGen) return;
       const src = pickSource(json) || {};
-      if (!src.mp4 && !src.m3u8) { showNoVideo(ep, seasonIdx); return; }
+      const hasSources = Array.isArray(src.sources) && src.sources.length > 0;
+      if (!src.mp4 && !src.m3u8 && !hasSources) { showNoVideo(ep, seasonIdx); return; }
       placeholder.style.display = 'none';
-      if (src.mp4) playMp4(src.mp4);
+      if (hasSources) playQualityMp4(src.sources);
+      else if (src.mp4) playMp4(src.mp4);
       else playM3u8(src.m3u8);
     })
     .catch(() => { if (gen === loadGen) showNoVideo(ep, seasonIdx); });
@@ -674,10 +612,8 @@ function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
 
 function loadEpisode(ep, seasonIdx) {
   const gen = ++loadGen;
-  if (activeHls) { activeHls.destroy(); activeHls = null; }
+  destroyArt(); // also hides + clears the legacy <video>
   iframe.style.display = 'none'; iframe.src = 'about:blank';
-  video.style.display  = 'none'; video.src  = '';
-  hideAudioMenu();
   placeholder.style.display = 'none';
   placeholder.className = 'player-placeholder';
   fsBtn.style.display = 'none';
@@ -737,9 +673,10 @@ function loadEpisode(ep, seasonIdx) {
     if (!v) { showNoVideo(ep, seasonIdx); return; }
     playMp4(`${ABYSSCDN_WORKER_URL}/abysscdn?v=${encodeURIComponent(v)}`);
   } else if (type === 'dessinanime') {
+    // floralstar returns sources[] (all qualities, highest first) → quality gear.
     resolveAndPlay(gen, ep, seasonIdx,
       `${DESSINANIME_WORKER_URL}/dessinanime?url=${encodeURIComponent(ep.url)}`,
-      ({ source }) => ({ mp4: source }));
+      ({ source, sources }) => ({ sources, mp4: source }));
   } else if (type === 'seekplayer') {
     const id = epUrl.hash.slice(1);
     playM3u8(`${LOUDAPE_PROXY_URL}/?id=${encodeURIComponent(id)}`);
@@ -781,46 +718,35 @@ function showNoVideo(ep, seasonIdx) {
     <div class="pl-unavail">Vidéo non disponible pour l'instant</div>`;
 }
 
-// ── KEYBOARD SHORTCUTS (native <video> only) ───────────
+// ── KEYBOARD SHORTCUTS (direct <video> only) ───────────
 // Inactive while an iframe embed is playing (cross-origin, not scriptable).
-function videoActive() {
-  return video.style.display === 'block';
-}
-
-function toggleFullscreen() {
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-  } else if (video.requestFullscreen) {
-    video.requestFullscreen();
-  } else if (video.webkitEnterFullscreen) {
-    video.webkitEnterFullscreen(); // iOS Safari
-  }
-}
-
+// ArtPlayer's own hotkeys are disabled (see playArt in player.js) because they only
+// fire once the player has been clicked — this global handler owns every key instead.
 document.addEventListener('keydown', (e) => {
   // Don't hijack typing in search fields, and ignore modified shortcuts.
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   const tag = document.activeElement && document.activeElement.tagName;
   if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-  if (!videoActive()) return;
+  const v = mediaEl();
+  if (!v) return;
 
   switch (e.key) {
     case ' ':
     case 'k':
       e.preventDefault();
-      if (video.paused) video.play(); else video.pause();
+      if (v.paused) v.play(); else v.pause();
       break;
     case 'ArrowRight':
       e.preventDefault();
-      video.currentTime = Math.min(video.duration || Infinity, video.currentTime + 10);
+      v.currentTime = Math.min(v.duration || Infinity, v.currentTime + 10);
       break;
     case 'ArrowLeft':
       e.preventDefault();
-      video.currentTime = Math.max(0, video.currentTime - 10);
+      v.currentTime = Math.max(0, v.currentTime - 10);
       break;
     case 'm':
       e.preventDefault();
-      video.muted = !video.muted;
+      v.muted = !v.muted;
       break;
     case 'f':
       e.preventDefault();

@@ -1,7 +1,10 @@
+// Deployed on the ritaclifford99 ("cliff99") Cloudflare account (floral-star-ca2f).
 // dessinanime-worker — fetches a dessinanime.cc episode page (Next.js RSC)
-// and extracts the direct video source URL.
+// and extracts the direct video source URLs (all qualities).
 // Route: GET /dessinanime?url=<full_dessinanime_episode_url>
-// Returns: { source: "https://..." }
+// Returns: { source: "https://...", sources: [{ label: "1080p", source: "https://..." }, ...] }
+// `source` points at the highest quality (kept for check_da.py and older clients);
+// `sources` is sorted highest quality first, deduped by label.
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -80,16 +83,33 @@ export default {
       });
     }
 
-    const sourceMatch = text.match(/"source":"([^"]+)"/);
-    const source = sourceMatch ? sourceMatch[1] : null;
+    // The player payload lists one entry per quality:
+    //   {"label":"360p","source":"https://extractor...mp4?token=..."}
+    // Collect them all; ascending order and duplicate labels (1080p mirror)
+    // come from upstream, so dedupe by label and sort highest first.
+    const seen = new Set();
+    const sources = [];
+    for (const m of text.matchAll(/\{"label":"([^"]*)","source":"(https?:[^"]+)"\}/g)) {
+      const [, label, src] = m;
+      if (seen.has(label)) continue;
+      seen.add(label);
+      sources.push({ label, source: src });
+    }
+    sources.sort((a, b) => (parseInt(b.label, 10) || 0) - (parseInt(a.label, 10) || 0));
 
-    if (!source) {
+    if (!sources.length) {
+      // label+source pair shape changed? fall back to the old single-source match
+      const sourceMatch = text.match(/"source":"([^"]+)"/);
+      if (sourceMatch) sources.push({ label: 'auto', source: sourceMatch[1] });
+    }
+
+    if (!sources.length) {
       return new Response(JSON.stringify({ error: 'no source found' }), {
         status: 404, headers: { 'Content-Type': 'application/json', ...CORS },
       });
     }
 
-    return new Response(JSON.stringify({ source }), {
+    return new Response(JSON.stringify({ source: sources[0].source, sources }), {
       status: 200, headers: { 'Content-Type': 'application/json', ...CORS },
     });
   },

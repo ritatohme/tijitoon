@@ -88,33 +88,45 @@ h1.show-title {
 #player-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: none; }
 #player-iframe.mega-scaled { transform-origin: top left; }
 #player-video  { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: none; }
-#fs-btn { display: none; }
-#audio-track-btn {
-  display: none;
-  align-items: center; justify-content: center; gap: .65em;
-  font-family: 'Bungee', sans-serif; font-size: clamp(.6rem, 1vw, 1rem);
-  padding: clamp(.3rem, .5vw, .7rem) clamp(.6rem, .9vw, 1.2rem);
-  background: transparent; color: rgba(255,246,227,.9);
-  border: 2px solid rgba(255,246,227,.4);
-  cursor: pointer; white-space: nowrap; flex-shrink: 0;
-  transition: all .1s;
-}
+/* ArtPlayer mount: built for direct video (mp4/m3u8). Hidden until a source loads;
+   player.js flips display to block. ArtPlayer ships its own controls + gear menu. */
+#art-player { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
+#art-player .art-video-player { font-family: 'Bungee', sans-serif; }
 
-#audio-track-btn:hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
-#audio-track-menu {
-  display: none;
-  position: absolute; bottom: calc(100% + .4rem); left: 50%; transform: translateX(-50%); z-index: 100;
-  background: var(--ink); border: 2px solid rgba(255,255,255,.15);
-  border-radius: 4px; overflow: hidden; min-width: 90px;
+/* Control-bar icons + text (play/volume/fullscreen/PiP, timecode, gear rows) use the
+   DEMANDE button's text color instead of ArtPlayer's default white: --paper in light,
+   --dm-text in dark. --art-fg mirrors #req-tab's color exactly.
+   The white comes from ArtPlayer's own rules `.art-video-player { color: #fff }` and
+   `.art-video-player svg { fill: var(--art-font-color) }` — so we override `color` on
+   the regions we restyle, and re-fill their <svg> icons (see below). */
+#art-player { --art-fg: var(--paper); }
+:root[data-theme="dark"] #art-player { --art-fg: var(--dm-text); }
+
+/* Progress bar / played-portion color. ArtPlayer sets --art-theme from the `theme`
+   option as an INLINE style once at init, so it wouldn't update on a light/dark toggle
+   mid-video — and a plain stylesheet rule loses to that inline value. !important beats
+   inline, so the slider tracks the live --lime with no JS resync needed. */
+#art-player .art-video-player { --art-theme: var(--lime) !important; }
+#art-player .art-controls,
+#art-player .art-settings,
+#art-player .art-contextmenus { color: var(--art-fg); }
+/* Lift the gear panel above the progress bar so the slider stays visible below it
+   (YouTube-style). ArtPlayer bottoms the panel at --art-control-height, which overlaps
+   the slider sitting on top of the control row — add the progress height + a small gap. */
+#art-player .art-settings {
+  bottom: calc(var(--art-control-height) + var(--art-progress-height) + 6px);
 }
-#audio-track-menu button {
-  display: block; width: 100%; padding: .4rem .8rem;
-  background: none; border: none; color: rgba(255,246,227,.5);
-  font-size: .78rem; text-align: left; cursor: pointer;
-  font-family: 'Bungee', sans-serif;
-}
-#audio-track-menu button:hover { background: rgba(255,255,255,.1); }
-#audio-track-menu button.active { color: var(--lime); }
+/* Only the control-bar and settings icons — NOT .art-state (the center play/loading
+   overlay). Control-bar icons sit in .art-icon; gear-menu icons sit in
+   .art-setting-item-left-icon instead, so target every settings <svg> (back arrow,
+   check mark, default row icons). currentColor makes each icon match its row's text:
+   --art-fg normally, lime on the selected (.art-current) row. FA <i> icons need no
+   rule — font glyphs follow `color` by themselves. Fill the <svg> itself, not every
+   child: a blanket `svg *` also paints the icon's transparent background rect, which
+   showed up as a solid cream square. */
+#art-player .art-controls .art-icon svg,
+#art-player .art-settings svg { fill: currentColor; }
+#fs-btn { display: none; }
 #fs-exit {
   display: none;
   position: fixed; top: .75rem; left: .75rem; z-index: 10000;
@@ -429,6 +441,5 @@ h1.show-title {
   .ep-nav-bar { padding: .4rem 3vw; }
   .ep-nav-inner { gap: .4rem; }
   #btn-next { margin-left: .5rem; }
-  .nav-label, .report-label, #audio-track-label, .np-title { display: none; }
-  #audio-track-btn i { font-size: 1.3em; }
+  .nav-label, .report-label, .np-title { display: none; }
 }
