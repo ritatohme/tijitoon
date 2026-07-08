@@ -49,7 +49,7 @@ function epCode(num) {
 }
 
 // "S02E05" — or "S5.1E05" when the season carries an explicit id (split seasons).
-// Single source of truth so the continue-watching strip and the show page agree.
+// Single source of truth so the index EN COURS badges and the show page agree.
 function epLabel(season, seasonIdx, epNum) {
   return `S${season.id ?? pad2(seasonIdx + 1)}${epCode(epNum)}`;
 }
@@ -61,8 +61,4 @@ const CHANNEL_LABELS = {
 };
 function chLabel(channel) {
   return CHANNEL_LABELS[channel] || 'Télétoon';
-}
-
-function tagCls(tag) {
-  return { ANIME: 'anime', FR: 'fr', KIDS: 'kids', TOON: 'toon' }[tag] || 'toon';
 }

@@ -343,6 +343,9 @@ function selectEp(seasonIdx, epIdx, ep, doSave) {
   reportCtx = { show: show.title, label: sLabel, num: ep.num, title: ep.title, url: ep.url || '(aucune)' };
   resetReportBtn();
 
+  // Lock screen / Control Center: episode as title, show as artist (player.js).
+  setMediaSessionInfo(`${sLabel} - ${ep.title}`, show.title);
+
   loadEpisode(ep, seasonIdx);
 
   if (doSave) { saveProgress(seasonIdx, epIdx); refreshSavedMark(); }

@@ -38,9 +38,11 @@ html, body {
   color: var(--ink);
   font-family: 'Space Mono', monospace;
   min-height: 100vh;
-  overflow-x: hidden;
   user-select: none; -webkit-user-select: none;
 }
+/* Horizontal clipping lives on <html> only: overflow-x on <body> would make it a
+   scroll container and break position:sticky (the sticky topbar) on every page. */
+html { overflow-x: hidden; }
 
 body {
   background-image:
@@ -80,32 +82,22 @@ body::before {
   min-width: 0;
 }
 
+/* The theme toggle is a moon/sun icon button on every page and at every width.
+   The old DARK/LIGHT text + slider switch are gone. Index adds its own topbar
+   tweaks (margin, search-driven hiding) in index.css. */
 .theme-toggle {
   margin-left: auto;
-  display: flex; align-items: center; gap: .5rem;
-  font-family: 'VT323', monospace; font-size: 1rem;
-  color: var(--paper); opacity: .7;
+  display: flex; align-items: center;
+  color: var(--lime); opacity: .7;
   cursor: pointer; user-select: none;
-  background: none; border: none; padding: 0;
+  background: none; border: none; padding: .25rem .4rem;
+  font-size: 1.15rem; line-height: 1;
 }
 .theme-toggle:hover { opacity: 1; }
-.theme-switch {
-  position: relative; width: 36px; height: 18px;
-  background: rgba(255,246,227,.2);
-  border: 2px solid var(--lime);
-  display: inline-block; flex-shrink: 0;
-}
-.theme-switch::after {
-  content: '';
-  position: absolute; top: 50%; left: 3px;
-  transform: translateY(-50%);
-  width: 10px; height: 10px;
-  background: var(--lime);
-  transition: transform .15s;
-}
-[data-theme="dark"] .theme-switch::after {
-  transform: translateY(-50%) translateX(16px);
-}
+.theme-icon { display: inline-flex; }
+.theme-icon .fa-sun { display: none; }                      /* light mode → moon */
+[data-theme="dark"] .theme-icon .fa-moon { display: none; } /* dark mode → sun */
+[data-theme="dark"] .theme-icon .fa-sun { display: inline; }
 [data-theme="dark"] .theme-toggle { color: var(--dm-text); }
 
 /* ── GLOBAL DARK OVERRIDES ── */
@@ -118,46 +110,48 @@ body::before {
 /* Hero / index */
 [data-theme="dark"] h1                { color: var(--dm-text); }
 [data-theme="dark"] .eyebrow          { color: var(--ink); border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
-[data-theme="dark"] .ch-pill          { border-color: var(--dm-muted); }
-[data-theme="dark"] .teletoon-pill,
-[data-theme="dark"] .tiji-pill,
-[data-theme="dark"] .cartoon-network-pill { color: var(--dm-text); }
-[data-theme="dark"] .ch-pill-sep      { color: var(--dm-text); }
 [data-theme="dark"] .sub              { color: var(--dm-text); }
 [data-theme="dark"] .meta span        { color: var(--dm-text); }
-[data-theme="dark"] .sticker          { color: var(--dm-text); }
-[data-theme="dark"] .sticker.two      { color: var(--dm-text); }
 
-/* Search */
-[data-theme="dark"] .search-wrap                      { background: var(--dm-surface); border-color: var(--dm-muted); box-shadow: 6px 6px 0 var(--ink); }
-[data-theme="dark"] .search-input,
+/* Topbar brand + search */
+[data-theme="dark"] .topbar-brand                     { color: var(--dm-text); }
+[data-theme="dark"] .search-toggle                    { color: var(--dm-text); }
+[data-theme="dark"] .search-wrap                      { background: var(--dm-surface); border-color: var(--dm-muted); }
+[data-theme="dark"] .search-input                     { color: var(--dm-text); }
 [data-theme="dark"] .search-input::placeholder        { color: var(--dm-muted); }
+[data-theme="dark"] .search-clear                     { color: var(--dm-text); border-left-color: var(--dm-muted); }
 
-/* Continue watching */
-[data-theme="dark"] #continue-watching  { background: var(--dm-surface); }
-[data-theme="dark"] .cw-card            { background: var(--dm-surface-lo); border-color: var(--dm-muted); color: var(--dm-text); box-shadow: none; }
-[data-theme="dark"] .cw-card:hover      { box-shadow: 5px 5px 0 var(--ink); }
-[data-theme="dark"] .ep-badge           { color: var(--dm-text); border-color: var(--dm-muted); }
-[data-theme="dark"] .ch-mini.teletoon   { color: var(--dm-text); border-color: var(--dm-muted); }
-[data-theme="dark"] .ch-mini.tiji       { border-color: var(--dm-muted); }
-[data-theme="dark"] .ch-mini.cartoon-network { color: var(--dm-text); border-color: var(--dm-muted); }
-[data-theme="dark"] .cw-remove-btn      { color: var(--dm-text); border-color: var(--dm-muted); }
+/* Random pick */
+[data-theme="dark"] .rp-box       { background: var(--dm-surface); border-color: var(--dm-muted); }
+[data-theme="dark"] .rp-poster    { background: var(--dm-surface-lo); }
+[data-theme="dark"] .rp-title     { color: var(--dm-text); }
+[data-theme="dark"] .rp-btn       { color: var(--dm-text); }
+[data-theme="dark"] #rp-watch     { color: var(--dm-text); } /* id selector outranks .rp-btn rule */
+
+/* Ma playlist (continue-watching carousel) */
+[data-theme="dark"] .pl-title           { color: var(--dm-text); }
+[data-theme="dark"] .pl-title i         { color: var(--hot); }
+[data-theme="dark"] .pl-seeall          { color: var(--dm-muted); }
+[data-theme="dark"] .pl-poster          { border-color: var(--dm-muted); }
+[data-theme="dark"] .pl-poster.no-poster .card-letter { color: rgba(255,255,255,.25); }
+[data-theme="dark"] .pl-progress        { background: rgba(255,255,255,.12); }
+[data-theme="dark"] .pl-title-txt       { color: var(--dm-text); }
+[data-theme="dark"] .pl-remove          { color: var(--dm-text); border-color: var(--dm-muted); }
 
 /* Cards */
-[data-theme="dark"] .card              { background: var(--dm-surface); border-color: var(--dm-muted); color: var(--dm-text); }
-[data-theme="dark"] .card-tag,
+[data-theme="dark"] .card              { color: var(--dm-text); }
+[data-theme="dark"] .card-poster       { background: var(--dm-surface-lo); }
+[data-theme="dark"] .card-letter       { color: rgba(255,255,255,.25); }
 [data-theme="dark"] .card-ch,
-[data-theme="dark"] .card-tag.anime,
 [data-theme="dark"] .card-ch.teletoon,
 [data-theme="dark"] .card-ch.cartoon-network { border-color: var(--dm-muted); color: var(--dm-text); }
 [data-theme="dark"] .card.disabled::after { background: var(--lime); color: var(--dm-text); border-color: var(--dm-muted); }
 
 /* Filter */
-[data-theme="dark"] .filter-btn         { color: var(--dm-text); border-color: var(--dm-muted); }
-[data-theme="dark"] .filter-clear       { color: var(--dm-muted); }
+[data-theme="dark"] .filter-btn        { color: var(--dm-text); border-color: var(--dm-muted); }
+[data-theme="dark"] .filter-clear      { color: var(--dm-muted); }
 [data-theme="dark"] .filter-dropdown   { border-color: var(--dm-muted); }
-[data-theme="dark"] .filter-divider    { border-top-color: var(--dm-muted); }
-[data-theme="dark"] .fb-chip            { color: var(--dm-muted); }
+[data-theme="dark"] .fb-chip           { color: var(--dm-muted); }
 [data-theme="dark"] .fb-chip:hover     { background: var(--dm-hover); color: var(--dm-text); }
 [data-theme="dark"] .fb-chip.active    { color: var(--dm-text); }
 [data-theme="dark"] .fb-count          { color: var(--dm-muted); }
@@ -176,9 +170,7 @@ body::before {
 [data-theme="dark"] .trow-num          { color: var(--dm-muted); }
 [data-theme="dark"] .trow:hover        { background: var(--dm-hover); color: var(--dm-text); }
 [data-theme="dark"] .trow:hover .trow-num { color: var(--dm-muted); }
-[data-theme="dark"] .trow-tag,
 [data-theme="dark"] .trow-ch,
-[data-theme="dark"] .trow-tag.anime,
 [data-theme="dark"] .trow-ch.teletoon,
 [data-theme="dark"] .trow-ch.cartoon-network { border-color: var(--dm-muted); color: var(--dm-text); }
 

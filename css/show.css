@@ -1,4 +1,4 @@
-body { background-image: none; overflow-x: hidden; }
+body { background-image: none; } /* no overflow-x here: it would break the sticky topbar (see styles.css) */
 
 /* ── TOPBAR ── */
 .topbar { position: sticky; top: 0; z-index: 100; }

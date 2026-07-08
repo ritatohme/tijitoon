@@ -1,8 +1,3 @@
-function syncThemeLabel() {
-  const lbl = document.getElementById('theme-label');
-  if (lbl) lbl.textContent = document.documentElement.dataset.theme === 'dark' ? 'LIGHT' : 'DARK';
-}
-
 // Reads the live --paper value from CSS so the status-bar color always tracks
 // styles.css (no hardcoded hex). Safe here because this file runs after CSS has
 // loaded, unlike theme-init.js. Replaces the meta node rather than mutating its
@@ -17,12 +12,11 @@ function syncThemeColor() {
   document.head.appendChild(meta);
 }
 
-syncThemeLabel();
-
+// The moon/sun icon swap is pure CSS off [data-theme]; only the status-bar
+// meta needs a JS nudge on toggle.
 document.getElementById('theme-toggle').addEventListener('click', () => {
   const html = document.documentElement;
   html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
   localStorage.setItem('tijitoon_theme', html.dataset.theme); // key duplicated in theme-init.js on purpose
-  syncThemeLabel();
   syncThemeColor();
 });

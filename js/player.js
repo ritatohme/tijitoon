@@ -159,6 +159,7 @@ function setupQualityMenu(art, quality) {
 function playNative(url, type) {
   artContainer.style.display = 'none';
   video.style.display = 'block';
+  bindMediaSessionPosition(video);
   if (type === 'm3u8') {
     if (Hls.isSupported()) {
       const hls = new Hls();
@@ -271,6 +272,7 @@ function playArt({ url, type, quality, hlsControl }) {
   try {
     const art = new Artplayer(opts);
     activeArt = art;
+    bindMediaSessionPosition(art.video);
     // When the gear panel closes, reset it to the top-level menu so reopening
     // never lands inside whatever submenu was last drilled into.
     art.on('setting', (open) => {
@@ -316,6 +318,60 @@ function playQualityMp4(sources) {
 // shows — keyboard shortcuts are inactive then.
 function mediaEl() {
   return activeArt ? activeArt.video : (video.style.display === 'block' ? video : null);
+}
+
+// ── MEDIA SESSION (lock screen / Control Center) ────────────────────────────
+// show.js announces the episode context via setMediaSessionInfo() on every
+// selection; iOS/Android then show the episode + artwork with working
+// play/pause/±10s/scrubber on the lock screen and in Control Center instead of
+// a generic Safari entry. Metadata only — the OS never renders video there.
+const MS_ARTWORK = [
+  { src: 'icons/tijitoon-icon-512.png', sizes: '512x512', type: 'image/png' },
+  { src: 'icons/tijitoon-icon-192.png', sizes: '192x192', type: 'image/png' },
+];
+
+function setMediaSessionInfo(title, artist) {
+  if (!('mediaSession' in navigator)) return;
+  navigator.mediaSession.metadata = new MediaMetadata({ title, artist, artwork: MS_ARTWORK });
+}
+
+// Register the transport actions once; each handler acts on whichever media
+// element is live at press time (ArtPlayer's or the native fallback's).
+if ('mediaSession' in navigator) {
+  const ms = navigator.mediaSession;
+  ms.setActionHandler('play',  () => mediaEl()?.play());
+  ms.setActionHandler('pause', () => mediaEl()?.pause());
+  ms.setActionHandler('seekbackward', (d) => {
+    const m = mediaEl();
+    if (m) m.currentTime = Math.max(0, m.currentTime - (d.seekOffset || 10));
+  });
+  ms.setActionHandler('seekforward', (d) => {
+    const m = mediaEl();
+    if (m) m.currentTime = Math.min(m.duration || Infinity, m.currentTime + (d.seekOffset || 10));
+  });
+  ms.setActionHandler('seekto', (d) => {
+    const m = mediaEl();
+    if (!m || d.seekTime == null) return;
+    if (d.fastSeek && m.fastSeek) m.fastSeek(d.seekTime); else m.currentTime = d.seekTime;
+  });
+}
+
+// Keep the lock-screen scrubber honest. The OS interpolates position while
+// playing, so only discontinuities need reporting — not every timeupdate.
+// WeakSet-guarded because the native-fallback <video> is reused across episodes.
+const msBound = new WeakSet();
+function bindMediaSessionPosition(m) {
+  if (!('mediaSession' in navigator) || !navigator.mediaSession.setPositionState || msBound.has(m)) return;
+  msBound.add(m);
+  const update = () => {
+    if (!isFinite(m.duration) || m.duration <= 0) return;
+    navigator.mediaSession.setPositionState({
+      duration: m.duration,
+      playbackRate: m.playbackRate,
+      position: Math.min(m.currentTime, m.duration),
+    });
+  };
+  ['durationchange', 'seeked', 'ratechange', 'play', 'pause'].forEach(ev => m.addEventListener(ev, update));
 }
 
 function toggleFullscreen() {

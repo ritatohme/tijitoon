@@ -26,23 +26,24 @@
 <div id="filter-backdrop"></div>
 <!-- ══ TOPBAR ════════════════════════════════════════════ -->
 <div class="topbar">
+  <a class="topbar-brand" href="."><img class="topbar-logo" src="favicon.svg" alt=""> TIJITOON</a>
+  <div class="search-wrap">
+    <span class="search-prefix">&gt;&gt;</span>
+    <input id="search-input" class="search-input" type="text"
+      placeholder="Rechercher une série…" autocomplete="off" spellcheck="false"/>
+    <button class="search-clear" id="search-clear" aria-label="Effacer"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <button class="search-toggle" id="search-toggle" aria-label="Rechercher"><i class="fa-solid fa-magnifying-glass"></i></button>
   <button class="theme-toggle" id="theme-toggle" aria-label="Basculer le thème">
-    <span id="theme-label">DARK</span>
-    <span class="theme-switch"></span>
+    <span class="theme-icon"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></span>
   </button>
 </div>
 <!-- ══ HERO ══════════════════════════════════════════════ -->
 <header>
+  <a href="request" id="req-tab">DEMANDE <i class="fa-solid fa-angle-right"></i></a>
   <div class="inner">
     <span class="eyebrow">&gt;&gt; NOSTALGIE MODE ON_</span>
     <h1>TIJITOON</h1>
-    <div class="channel-pills">
-      <span class="ch-pill teletoon-pill">TÉLÉTOON</span>
-      <span class="ch-pill-sep">+</span>
-      <span class="ch-pill tiji-pill">TIJI</span>
-      <span class="ch-pill-sep">+</span>
-      <span class="ch-pill cartoon-network-pill">Cartoon Network</span>
-    </div>
     <div class="sub">
       Le catalogue le plus complet des dessins animés de notre enfance - toutes les séries diffusées sur <strong>Télétoon, Tiji et Cartoon Network en France entre 1984 et 2015</strong>. Animes japonais, cartoons américains, productions françaises.
     </div>
@@ -51,30 +52,35 @@
       <span id="meta-count">&gt; … séries</span>
       <span id="meta-channels">&gt; … chaînes</span>
     </div>
-
-    <div class="search-zone">
-      <div class="search-wrap">
-        <span class="search-prefix">&gt;&gt;</span>
-        <input id="search-input" class="search-input" type="text"
-          placeholder="Rechercher une série…" autocomplete="off" spellcheck="false"/>
-        <button class="search-clear" id="search-clear" aria-label="Effacer"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="sticker two"><i class="fa-solid fa-star"></i> souvenirs garantis <i class="fa-solid fa-star"></i></div>
-    </div>
   </div>
 </header>
 
-<!-- ══ CONTINUE WATCHING ══════════════════════════════════ -->
-<div id="continue-watching">
-  <div class="inner cw-inner">
-    <div class="cw-header">
-      <span class="cw-title"><i class="fa-solid fa-caret-right"></i> CONTINUER À REGARDER</span>
-      <button id="cw-expand"></button>
-      <button id="cw-clear" title="Tout effacer"><span class="cw-clear-label">tout effacer</span><span class="cw-clear-icon"><i class="fa-solid fa-trash"></i></span></button>
-    </div>
-    <div id="cw-strip"></div>
+<!-- ══ AU HASARD (random series pick) ═════════════════════ -->
+<section id="random-pick">
+  <div class="rp-box">
+    <a class="rp-show" id="rp-link" href="#">
+      <span class="rp-poster" id="rp-poster"></span>
+      <span class="rp-info">
+        <span class="rp-label">&gt;&gt; une série au hasard_</span>
+        <span class="rp-title" id="rp-title"></span>
+        <span class="card-ch" id="rp-ch"></span>
+      </span>
+    </a>
+    <span class="rp-actions">
+      <a class="rp-btn" id="rp-watch" href="#"><i class="fa-solid fa-play"></i>REGARDER</a>
+      <button class="rp-btn" id="rp-reroll" type="button"><i class="fa-solid fa-dice"></i>AU HASARD</button>
+    </span>
   </div>
-</div>
+</section>
+
+<!-- ══ MA PLAYLIST (continue watching carousel) ══════════ -->
+<section id="playlist" style="display:none">
+  <div class="pl-head">
+    <span class="pl-title"><i class="fa-solid fa-bookmark"></i>MA WATCHLIST</span>
+    <button class="pl-seeall" id="pl-seeall" type="button">voir tout <i class="fa-solid fa-angle-right"></i></button>
+  </div>
+  <div class="pl-strip" id="pl-strip"></div>
+</section>
 
 <!-- ══ CATALOG ═══════════════════════════════════════════ -->
 <section id="catalog">
@@ -94,11 +100,6 @@
         <button class="fb-chip" data-f="teletoon">Télétoon</button>
         <button class="fb-chip" data-f="tiji">Tiji</button>
         <button class="fb-chip" data-f="cartoon-network">Cartoon Network</button>
-        <hr class="filter-divider">
-        <button class="fb-chip" data-f="ANIME">Anime</button>
-        <button class="fb-chip" data-f="TOON">Cartoon</button>
-        <button class="fb-chip" data-f="FR">Prod. FR</button>
-        <button class="fb-chip" data-f="KIDS">Préscolaire</button>
       </div>
     </div>
 
@@ -113,8 +114,7 @@
         <div class="table-head">
           <span>#</span>
           <span>Série</span>
-          <span>Type</span>
-          <span class="ch-col">Chaîne</span>
+          <span>Chaîne</span>
         </div>
         <div id="list-rows"></div>
       </div>
@@ -135,8 +135,6 @@
 </footer>
 
 <button id="back-top"><i class="fa-solid fa-arrow-up"></i> TOP</button>
-
-<a href="request" id="req-tab">DEMANDE <i class="fa-solid fa-angle-right"></i></a>
 
 <script src="js/theme.js"></script>
 <script src="js/shared.js"></script>
