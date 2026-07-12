@@ -70,7 +70,7 @@ h1 {
 }
 .search-input::placeholder { color: rgba(19,17,26,.3); }
 .search-clear {
-  border: none; border-left: 2px solid var(--ink);
+  border: none;
   background: var(--lime); color: var(--ink);
   font-family: 'VT323', monospace; font-size: 1.15rem;
   padding: 0 .8rem; cursor: pointer; align-self: stretch; display: none;

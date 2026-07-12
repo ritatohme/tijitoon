@@ -119,7 +119,7 @@ body::before {
 [data-theme="dark"] .search-wrap                      { background: var(--dm-surface); border-color: var(--dm-muted); }
 [data-theme="dark"] .search-input                     { color: var(--dm-text); }
 [data-theme="dark"] .search-input::placeholder        { color: var(--dm-muted); }
-[data-theme="dark"] .search-clear                     { color: var(--dm-text); border-left-color: var(--dm-muted); }
+[data-theme="dark"] .search-clear                     { color: var(--dm-text); }
 
 /* Random pick */
 [data-theme="dark"] .rp-box       { background: var(--dm-surface); border-color: var(--dm-muted); }
