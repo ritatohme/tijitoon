@@ -143,6 +143,15 @@ h1 {
   .rp-actions { gap: .8rem; }
   .rp-btn { font-size: .95rem; padding: .7rem 1.4rem; }
 }
+/* Tablet: not wide enough for poster | text | buttons in one row, and letting
+   the actions wrap to their own row balloons the box to double height around
+   the fixed 140px poster. Stack the buttons in a right-hand column and forbid
+   the wrap so the box stays a shallow banner (height ≈ poster height). */
+@media (min-width: 601px) and (max-width: 900px) {
+  .rp-box { flex-wrap: nowrap; }
+  .rp-actions { flex-direction: column; align-items: stretch; }
+  .rp-btn { justify-content: center; } /* equal-width stack: center the labels */
+}
 @media (max-width: 600px) {
   /* Phone layout: compact text, buttons full-width below. Poster stays big
      (~96px, ≈ the height of a watchlist banner) so the hero box outranks the
