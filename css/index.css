@@ -159,7 +159,12 @@ h1 {
 }
 
 /* ── MA PLAYLIST (continue-watching carousel) ── */
-#playlist { padding: 1.6rem 5vw 0; }
+/* Equal air on both sides of the rail: 4rem top (minus the rp-box's 5px drop
+   shadow) vs .6rem strip pad + 2.5rem catalog pad + caption descent below —
+   the margin pads the bottom out to match. On #playlist (not #catalog) so
+   the no-history case (section display:none, margin dies with it) keeps the
+   catalog's own top padding. */
+#playlist { padding: 4rem 5vw 0; margin-bottom: .4rem; }
 .pl-head {
   display: flex; align-items: center; gap: 1rem;
   margin-bottom: .9rem;
@@ -304,7 +309,7 @@ h1 {
 .pl-remove:hover { background: var(--hot); }
 @media (hover: none) { .pl-remove { opacity: 1; } }
 @media (max-width: 600px) {
-  #playlist { padding: 1.2rem 5vw 0; }
+  #playlist { padding: 3rem 5vw 0; margin-bottom: -.5rem; } /* same equal-air match, vs the 3rem top */
   /* Banner ~68% of the row: a big slice of the next card peeks (stronger
      swipe hint) and the rail stays subordinate to the AU HASARD box above. */
   .pl-card { flex: 0 0 68%; }
