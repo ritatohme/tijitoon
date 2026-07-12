@@ -144,14 +144,16 @@ h1 {
   .rp-btn { font-size: .95rem; padding: .7rem 1.4rem; }
 }
 @media (max-width: 600px) {
-  /* Phone layout: small poster, compact text, buttons full-width below */
+  /* Phone layout: compact text, buttons full-width below. Poster stays big
+     (~96px, ≈ the height of a watchlist banner) so the hero box outranks the
+     rail below instead of being dwarfed by it. */
   #random-pick { padding: 1rem 5vw 0; }
   .rp-box { padding: .9rem 1rem; gap: .8rem; }
   .rp-show { gap: .7rem; }
-  .rp-poster { width: 64px; }
-  .rp-poster .card-letter { font-size: 1.2rem; }
+  .rp-poster { width: 96px; }
+  .rp-poster .card-letter { font-size: 1.7rem; }
   .rp-label { font-size: .95rem; }
-  .rp-title { font-size: 1rem; }
+  .rp-title { font-size: 1.1rem; }
   .rp-actions { margin-left: 0; width: 100%; }
   .rp-btn { flex: 1; justify-content: center; font-size: .7rem; padding: .55rem .5rem; white-space: nowrap; }
 }
@@ -175,53 +177,93 @@ h1 {
   display: inline-flex; align-items: center; gap: .35rem;
   transition: color .1s;
 }
-.pl-seeall:hover { color: var(--hot); }
+/* Hover-capable pointers only: on touch a tap leaves :hover stuck, so the
+   button would stay pink after toggling. */
+@media (hover: hover) { .pl-seeall:hover { color: var(--hot); } }
 .pl-seeall i { transition: transform .2s; }
 .pl-seeall.open i { transform: rotate(90deg); } /* points down when expanded */
 
 /* Horizontal strip by default; a wrapping grid when "voir tout" is on.
    Poster edges must line up with the MA WATCHLIST label and the catalog grid,
-   so the strip stays flush with the section's 5vw edge — no horizontal padding
-   or negative margin. Only vertical padding, for the ✕ + hover-lift (top) and
-   the poster shadow (bottom). overflow-x:auto clips the outer few px of the
-   first card's corner ✕; that's an acceptable corner-badge look and far less
-   visible than every poster being offset. */
+   so the strip's LEFT edge stays flush with the section's 5vw edge — no left
+   padding. The last card's ✕ (right:-8px) and hover shadow (5px) overhang the
+   right edge, though, and overflow-x:auto would clip them; padding-right
+   reserves trailing scroll room for that overhang, and an equal negative
+   right-margin keeps the box flush with the catalog's right edge so alignment
+   is unchanged. Vertical padding clears the ✕ + hover-lift (top) and the
+   hover shadow (bottom). */
 .pl-strip {
   display: flex; gap: 1rem;
   overflow-x: auto;
-  padding: 10px 0 .6rem;
-  scroll-snap-type: x proximity; scrollbar-width: thin;
+  padding: 10px 12px .6rem 0; margin-right: -12px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none; /* no scrollbar; wheel/swipe still scroll (+ "voir tout") */
 }
-/* Expanded: a wrapping grid matching .card-grid's columns so cells line up with
-   the catalog above/below. overflow:visible here (not a scroll box), so it needs
-   no horizontal negative-margin trick — only vertical padding to clear the ✕ +
-   hover-lift on each row. Edges stay flush with #catalog (both use 5vw sides). */
+.pl-strip::-webkit-scrollbar { display: none; } /* Chrome/Safari/Edge */
+/* Expanded: a wrapping grid of the same wide banner cards, so the whole history
+   lays out in rows. overflow:visible here (not a scroll box), so it needs no
+   horizontal negative-margin trick — only vertical padding to clear the ✕ +
+   hover-lift on each row. Edges stay flush with #catalog (both use 5vw sides).
+   min 300px column keeps the 16:9 shot from getting too small before wrapping. */
 .pl-strip.expanded {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 2rem .9rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.4rem 1rem;
   overflow: visible;
   padding: 10px 0; margin: 0;
 }
+/* ── Banner card: wide 16:9 backdrop with the progress bar on its bottom edge
+   and the "Title • S1:E4" caption below the image. Deliberately a different
+   shape from the catalog's tall 2:3 posters so the resume rail reads as its
+   own thing. ── */
 .pl-card {
-  position: relative; flex: 0 0 150px; scroll-snap-align: start;
+  position: relative; flex: 0 0 clamp(260px, 24vw, 340px); scroll-snap-align: start;
   display: flex; flex-direction: column;
+  /* kill min-width:auto — a long nowrap caption would otherwise inflate the
+     card past its basis, and with it the 16:9 shot's height */
+  min-width: 0;
   text-decoration: none; color: inherit;
-  transition: transform .15s;
+  transition: transform .12s;
 }
 .pl-strip.expanded .pl-card { flex: initial; }
-.pl-card:hover { transform: translateY(-4px); }
-.pl-poster {
-  position: relative; aspect-ratio: 2 / 3;
+/* Shadow only on hover/press — same lift pattern as the show page's .ep-card:
+   card shifts up-left, hard shadow pops in bottom-right. */
+.pl-card:hover { transform: translate(-2px,-2px); }
+.pl-shot {
+  position: relative; aspect-ratio: 16 / 9;
   background: var(--cream); overflow: hidden;
-  border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
+  border: 3px solid var(--ink);
+  transition: box-shadow .12s;
 }
-.pl-poster img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.pl-poster.no-poster { display: flex; align-items: center; justify-content: center; }
-.pl-poster.no-poster.teletoon        { background: var(--hot); }
-.pl-poster.no-poster.tiji            { background: var(--sky); }
-.pl-poster.no-poster.cartoon-network { background: var(--lime); }
-.pl-poster .card-letter { font-size: clamp(2rem, 5vw, 3rem); }
-/* Progress bar pinned to the bottom edge of the poster */
+.pl-card:hover .pl-shot,
+.pl-card:active .pl-shot { box-shadow: 5px 5px 0 var(--ink); }
+.pl-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* No backdrop: channel-colored letter box, same pattern as the catalog cards. */
+.pl-shot.no-shot { display: flex; align-items: center; justify-content: center; }
+.pl-shot.no-shot.teletoon        { background: var(--hot); }
+.pl-shot.no-shot.tiji            { background: var(--sky); }
+.pl-shot.no-shot.cartoon-network { background: var(--lime); }
+.pl-shot .card-letter { font-size: clamp(2rem, 5vw, 3rem); }
+/* Desktop hover cue: play button over a slight ink dim so it reads on any art.
+   display gated to hover-capable pointers — on touch, tapping already plays.
+   Sits under .pl-progress and the ✕ (both later in paint order / higher z). */
+.pl-hover {
+  position: absolute; inset: 0;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(19,17,26,.25);
+  opacity: 0; transition: opacity .12s;
+}
+@media (hover: hover) { .pl-hover { display: flex; } }
+.pl-hover i {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--hot); color: var(--paper);
+  font-size: .95rem; padding-left: 2px; /* optically center the triangle */
+  transform: scale(.7); transition: transform .12s;
+}
+.pl-card:hover .pl-hover { opacity: 1; }
+.pl-card:hover .pl-hover i { transform: scale(1); }
+/* Progress bar pinned to the bottom edge of the shot. Ink track reads fine on
+   art in light mode; dark mode swaps it for a light track (styles.css). */
 .pl-progress {
   position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
   background: rgba(19,17,26,.55);
@@ -230,14 +272,24 @@ h1 {
 .pl-progress-fill.teletoon        { background: var(--hot); }
 .pl-progress-fill.tiji            { background: var(--sky); }
 .pl-progress-fill.cartoon-network { background: var(--lime); }
-.pl-title-txt {
+/* Letter-fallback cards: the box already IS the channel color, so a same-color
+   fill would be invisible — use ink for the fill there. */
+.pl-shot.no-shot .pl-progress-fill { background: var(--ink); }
+/* Caption under the shot: ellipsized title + an episode tag that never
+   shrinks, so a long title can't push "S1:E4" out of the card. */
+.pl-caption {
+  display: flex; align-items: baseline; gap: .45rem;
+  padding: .55rem .1rem 0;
+}
+.pl-cap-title {
   font-family: 'Space Mono', monospace; font-weight: 700;
   font-size: clamp(.78rem, 1.1vw, .88rem); line-height: 1.3;
-  padding: .55rem .1rem 0; overflow-wrap: break-word; word-break: break-word;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .pl-ep {
-  font-family: 'VT323', monospace; font-size: .95rem;
-  color: var(--hot); padding: .2rem .1rem 0;
+  flex: none;
+  font-family: 'VT323', monospace; font-size: 1rem;
+  color: var(--hot);
 }
 .pl-remove {
   position: absolute; top: -8px; right: -8px; z-index: 2;
@@ -253,9 +305,11 @@ h1 {
 @media (hover: none) { .pl-remove { opacity: 1; } }
 @media (max-width: 600px) {
   #playlist { padding: 1.2rem 5vw 0; }
-  .pl-card { flex-basis: 116px; }
-  /* Match .card-grid's mobile columns + gap so expanded cells align with catalog */
-  .pl-strip.expanded { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1.4rem .55rem; }
+  /* Banner ~68% of the row: a big slice of the next card peeks (stronger
+     swipe hint) and the rail stays subordinate to the AU HASARD box above. */
+  .pl-card { flex: 0 0 68%; }
+  /* Expanded on mobile: one banner per row (they're wide) — full width. */
+  .pl-strip.expanded { grid-template-columns: 1fr; gap: 1.2rem; }
 }
 
 /* ── CATALOG TOOLBAR ── */
@@ -521,7 +575,6 @@ footer .blink { animation: blink 1s steps(2) infinite; }
      min-height keeps the absolutely-positioned DEMANDE tab from being clipped. */
   header { padding: 1.1rem 5vw 1rem; min-height: 2.9rem; }
   h1, .eyebrow, .meta, .sub { display: none; }
-  .topbar.stuck .theme-toggle { display: none; } /* free the row for search while scrolled */
   .search-input { font-size: 16px; } /* <16px inputs make iOS Safari auto-zoom on focus */
 
   /* Mobile topbar: brand left; search icon + moon/sun button right.

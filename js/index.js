@@ -7,8 +7,9 @@ let playlistData = null; // data.json ref, so ✕-removal can re-render the caro
 
 // ── MA PLAYLIST (continue-watching carousel) ───────────
 // Reads per-series keys: tijitoon:progress:<id> → { season, ep } (0-based
-// indices). Renders a horizontal poster strip with a progress bar; the card
-// link resumes on the show page. History is still tracked when hidden.
+// indices). Renders a horizontal strip of wide 16:9 backdrop cards with a
+// progress bar; the card link resumes on the show page. History is still
+// tracked when hidden.
 function playlistEntries(data) {
   const entries = [];
   for (const key of progressKeys()) {
@@ -31,19 +32,24 @@ function buildPlaylistCard({ seriesId, show, season, ep, s }) {
   const total = show.seasons.reduce((n, se) => n + se.episodes.length, 0);
   const before = show.seasons.slice(0, season).reduce((n, se) => n + se.episodes.length, 0);
   const pct = total ? Math.round((before + ep + 1) / total * 100) : 0;
-  const hasPoster = !!show.poster_url;
+  // Wide 16:9 shot uses the TMDB backdrop; shows without one get the catalog's
+  // channel-colored letter fallback.
+  const hasBackdrop = !!show.backdrop_url;
 
   const card = document.createElement('a');
   card.className = 'pl-card';
   card.href = `show?series=${encodeURIComponent(seriesId)}&season=${season + 1}&ep=${ep + 1}`;
   card.innerHTML = `
     <button class="pl-remove" type="button" title="Retirer de l'historique"><i class="fa-solid fa-xmark"></i></button>
-    <span class="pl-poster${hasPoster ? '' : ` no-poster ${esc(show.channel)}`}">
-      ${hasPoster ? `<img src="${esc(show.poster_url)}" alt="">` : posterFallback(show)}
+    <span class="pl-shot${hasBackdrop ? '' : ` no-shot ${esc(show.channel)}`}">
+      ${hasBackdrop ? `<img src="${esc(show.backdrop_url)}" alt="">` : posterFallback(show)}
+      <span class="pl-hover"><i class="fa-solid fa-play"></i></span>
       <span class="pl-progress" title="${pct}%"><span class="pl-progress-fill ${esc(show.channel)}" style="width:${pct}%"></span></span>
     </span>
-    <span class="pl-title-txt">${esc(show.title)}</span>
-    <span class="pl-ep">Saison ${season + 1} · Ep ${pad2(s.episodes[ep].num)}</span>`;
+    <span class="pl-caption">
+      <span class="pl-cap-title">${esc(show.title)}</span>
+      <span class="pl-ep">• S${season + 1}:E${s.episodes[ep].num}</span>
+    </span>`;
 
   card.querySelector('.pl-remove').addEventListener('click', (e) => {
     e.preventDefault(); e.stopPropagation(); // inside the card <a>: don't navigate
@@ -52,8 +58,8 @@ function buildPlaylistCard({ seriesId, show, season, ep, s }) {
   });
   const img = card.querySelector('img');
   if (img) img.addEventListener('error', () => {
-    const poster = card.querySelector('.pl-poster');
-    poster.classList.add('no-poster', show.channel);
+    const shot = card.querySelector('.pl-shot');
+    shot.classList.add('no-shot', show.channel);
     img.replaceWith(posterFallback2(show)); // keep the progress bar; only swap the image
   });
   return card;

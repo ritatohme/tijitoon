@@ -128,14 +128,17 @@ body::before {
 [data-theme="dark"] .rp-btn       { color: var(--dm-text); }
 [data-theme="dark"] #rp-watch     { color: var(--dm-text); } /* id selector outranks .rp-btn rule */
 
-/* Ma playlist (continue-watching carousel) */
+/* Ma playlist (continue-watching carousel). The 16:9 shot's content (backdrop
+   image or bright channel color) is theme-independent — only the frame and the
+   caption below it need overrides (.card-letter's dark rule already covers the
+   fallback letter). */
 [data-theme="dark"] .pl-title           { color: var(--dm-text); }
 [data-theme="dark"] .pl-title i         { color: var(--hot); }
 [data-theme="dark"] .pl-seeall          { color: var(--dm-muted); }
-[data-theme="dark"] .pl-poster          { border-color: var(--dm-muted); }
-[data-theme="dark"] .pl-poster.no-poster .card-letter { color: rgba(255,255,255,.25); }
-[data-theme="dark"] .pl-progress        { background: rgba(255,255,255,.12); }
-[data-theme="dark"] .pl-title-txt       { color: var(--dm-text); }
+[data-theme="dark"] .pl-shot            { border-color: var(--dm-muted); }
+[data-theme="dark"] .pl-progress        { background: rgba(255,255,255,.28); } /* ink track vanishes on dark art in a dark UI */
+[data-theme="dark"] .pl-hover i         { color: var(--dm-text); } /* hot-bg buttons use dm-text, like .rp-btn */
+[data-theme="dark"] .pl-cap-title       { color: var(--dm-text); }
 [data-theme="dark"] .pl-remove          { color: var(--dm-text); border-color: var(--dm-muted); }
 
 /* Cards */
