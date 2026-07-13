@@ -571,7 +571,7 @@ const EPISODE_LOADERS = {
   },
 
   m3u8({ ep }) {
-    const needsProxy = ep.url.includes('senpai-stream.club') || ep.url.includes('nakastream.tv');
+    const needsProxy = ep.url.includes('senpai-stream.club') || ep.url.includes('nakastream.tv') || ep.url.includes('finepulfe.xyz');
     const src = needsProxy
       ? `${LOUDAPE_PROXY_URL}/?url=${encodeURIComponent(ep.url)}`
       : ep.url;
