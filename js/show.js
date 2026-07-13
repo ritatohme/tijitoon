@@ -133,6 +133,7 @@ function odycdnProxyUrl(mp4Url) {
 }
 
 // URL fragment → episode type. First match wins; adding a host is one line here.
+// A fragment is a plain string (substring match) or a RegExp (tested against the url).
 const URL_TYPE_MATCHERS = [
   ['abysscdn.com',                  'abysscdn'],
   ['playhydrax.com',                'abysscdn'],
@@ -141,7 +142,7 @@ const URL_TYPE_MATCHERS = [
   ['mhd.seekplayer.me',             'seekplayer'],
   ['embedseek.com',                 'embedseek'],
   ['player.ojamajo.moe/videos/watch', 'ojamajo'],
-  ['uqload.is/embed-',              'uqload'],
+  [/uqload\.[a-z]+\/embed-/i,       'uqload'],
   ['vidzy.live/embed-',             'vidzy'],
   ['vidmoly.biz/embed-',            'vidmoly'],
   ['sendvid.com/embed/',            'sendvid'],
@@ -153,7 +154,8 @@ const URL_TYPE_MATCHERS = [
 function getEpType(ep) {
   if (ep.type) return ep.type;
   const url = ep.url || '';
-  const matched = URL_TYPE_MATCHERS.find(([fragment]) => url.includes(fragment));
+  const matched = URL_TYPE_MATCHERS.find(([fragment]) =>
+    fragment instanceof RegExp ? fragment.test(url) : url.includes(fragment));
   if (matched) return matched[1];
   if (url.endsWith('.mp4') && !url.includes('archive.org/embed')) return 'mp4';
   if (url.endsWith('.m3u8')) return 'm3u8';
