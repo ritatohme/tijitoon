@@ -240,16 +240,21 @@ h1 {
 }
 .pl-strip.expanded .pl-card { flex: initial; }
 /* Shadow only on hover/press — same lift pattern as the show page's .ep-card:
-   card shifts up-left, hard shadow pops in bottom-right. */
-.pl-card:hover { transform: translate(-2px,-2px); }
+   card shifts up-left, hard shadow pops in bottom-right. Hover rules gated to
+   hover-capable pointers: on touch, deleting a card slides its neighbour under
+   the stuck :hover point and it lit up as if selected. Touch presses get the
+   same look via .pressed, set by index.js while a finger is down. */
+@media (hover: hover) { .pl-card:hover { transform: translate(-2px,-2px); } }
+.pl-card.pressed { transform: translate(-2px,-2px); }
 .pl-shot {
   position: relative; aspect-ratio: 16 / 9;
   background: var(--cream); overflow: hidden;
   border: 3px solid var(--ink);
   transition: box-shadow .12s;
 }
-.pl-card:hover .pl-shot,
-.pl-card:active .pl-shot { box-shadow: 5px 5px 0 var(--ink); }
+@media (hover: hover) { .pl-card:hover .pl-shot { box-shadow: 5px 5px 0 var(--ink); } }
+.pl-card:active .pl-shot,
+.pl-card.pressed .pl-shot { box-shadow: 5px 5px 0 var(--ink); }
 .pl-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* No backdrop: channel-colored letter box, same pattern as the catalog cards. */
 .pl-shot.no-shot { display: flex; align-items: center; justify-content: center; }
@@ -315,7 +320,8 @@ h1 {
   opacity: 0; transition: opacity .15s;
 }
 .pl-card:hover .pl-remove { opacity: 1; }
-.pl-remove:hover { background: var(--hot); }
+@media (hover: hover) { .pl-remove:hover { background: var(--hot); } }
+.pl-remove.pressed { background: var(--hot); }
 @media (hover: none) { .pl-remove { opacity: 1; } }
 @media (max-width: 600px) {
   #playlist { padding: 3rem 5vw 0; margin-bottom: -.5rem; } /* same equal-air match, vs the 3rem top */
@@ -419,10 +425,15 @@ h1 {
   display: flex; flex-direction: column;
   text-decoration: none; color: inherit; /* cards are <a> elements */
 }
-.card:hover { transform: translateY(-4px); z-index: 2; }
+/* Hover-capable pointers only: on touch, scroll-taps left cards stuck lifted.
+   Touch presses lift via .pressed (index.js; never set on .disabled). */
+@media (hover: hover) {
+  .card:hover { transform: translateY(-4px); z-index: 2; }
+  .card.disabled:hover { transform: none; z-index: auto; }
+}
+.card.pressed { transform: translateY(-4px); z-index: 2; }
 .card.hidden { display: none; }
 .card.disabled { opacity: .4; cursor: not-allowed; }
-.card.disabled:hover { transform: none; z-index: auto; }
 .card.disabled::after {
   content: 'BIENTÔT'; position: absolute; top: -4px; right: -8px;
   font-family: 'VT323', monospace; font-size: .85rem; line-height: 1;
@@ -489,10 +500,13 @@ h1 {
   cursor: pointer; transition: background .1s;
   text-decoration: none; color: var(--ink);
 }
-.trow:hover { background: var(--lime); }
+@media (hover: hover) {
+  .trow:hover { background: var(--lime); }
+  .trow.disabled:hover { background: transparent; }
+}
+.trow.pressed { background: var(--lime); }
 .trow.hidden { display: none; }
 .trow.disabled { opacity: .4; cursor: not-allowed; }
-.trow.disabled:hover { background: transparent; }
 .trow.disabled .trow-title::after { content: ' · BIENTÔT'; opacity: .7; }
 .trow-num {
   font-family: 'VT323', monospace; font-size: .9rem;

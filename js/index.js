@@ -368,6 +368,35 @@ window.addEventListener('pageshow', e => {
   }
 });
 
+// ── TOUCH PRESS FEEDBACK ───────────────────────────────
+// The cards' lift/highlight lives on :hover, gated to hover-capable pointers —
+// on touch a tap leaves :hover stuck (after a ✕ delete it even lit up the card
+// that slid under the finger). :active is no substitute on touch: iOS needs
+// event hacks to show it at all, and a quick tap outruns it elsewhere. So touch
+// gets a .pressed class instead: applied once the finger has rested briefly (a
+// scroll flick cancels first), and held long enough after release that even
+// the fastest tap shows a visible flash. Mouse/pen keep plain :hover.
+const PRESSABLE = '.card, .trow, .pl-card, .pl-remove';
+const PRESS_SHOW = 60;   // ms the finger must rest before the effect shows
+const PRESS_FLASH = 180; // ms the effect stays visible after release
+document.addEventListener('pointerdown', (e) => {
+  if (e.pointerType !== 'touch') return;
+  const el = e.target.closest?.(PRESSABLE);
+  if (!el || el.classList.contains('disabled')) return;
+  const show = setTimeout(() => el.classList.add('pressed'), PRESS_SHOW);
+  const done = (ev) => {
+    if (ev.pointerId !== e.pointerId) return; // another finger — not this press
+    clearTimeout(show);
+    document.removeEventListener('pointerup', done);
+    document.removeEventListener('pointercancel', done);
+    if (ev.type === 'pointercancel') { el.classList.remove('pressed'); return; } // scroll, not a tap
+    el.classList.add('pressed'); // tap: show the flash even if released before PRESS_SHOW
+    setTimeout(() => el.classList.remove('pressed'), PRESS_FLASH);
+  };
+  document.addEventListener('pointerup', done);
+  document.addEventListener('pointercancel', done);
+}, { passive: true });
+
 // ── FETCH ──────────────────────────────────────────────
 // Network/HTTP failures show the error message; bugs in the render path are not
 // swallowed here — they surface in the console as uncaught errors.

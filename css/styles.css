@@ -171,8 +171,12 @@ body::before {
 [data-theme="dark"] .table-head        { color: var(--dm-text); }
 [data-theme="dark"] .trow              { color: var(--dm-text); }
 [data-theme="dark"] .trow-num          { color: var(--dm-muted); }
-[data-theme="dark"] .trow:hover        { background: var(--dm-hover); color: var(--dm-text); }
-[data-theme="dark"] .trow:hover .trow-num { color: var(--dm-muted); }
+@media (hover: hover) {
+  [data-theme="dark"] .trow:hover        { background: var(--dm-hover); color: var(--dm-text); }
+  [data-theme="dark"] .trow:hover .trow-num { color: var(--dm-muted); }
+}
+[data-theme="dark"] .trow.pressed        { background: var(--dm-hover); color: var(--dm-text); }
+[data-theme="dark"] .trow.pressed .trow-num { color: var(--dm-muted); }
 [data-theme="dark"] .trow-ch,
 [data-theme="dark"] .trow-ch.teletoon,
 [data-theme="dark"] .trow-ch.cartoon-network { border-color: var(--dm-muted); color: var(--dm-text); }
