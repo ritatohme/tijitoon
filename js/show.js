@@ -496,7 +496,10 @@ const EPISODE_LOADERS = {
   uqload({ ep, seasonIdx, gen }) {
     const id = ep.url.match(/embed-([a-z0-9]+)\.html/)?.[1];
     if (!id) { showNoVideo(ep, seasonIdx); return; }
-    resolveAndPlay(gen, ep, seasonIdx, `${CRIMSON_WORKER_URL}/uqload?id=${id}`,
+    // Resolve through the link's own uqload domain (uqload.is / .cx / …), not a hardcoded one.
+    const host = ep.url.match(/https?:\/\/(uqload\.[a-z]{2,})\//i)?.[1];
+    const hostParam = host ? `&host=${encodeURIComponent(host)}` : '';
+    resolveAndPlay(gen, ep, seasonIdx, `${CRIMSON_WORKER_URL}/uqload?id=${id}${hostParam}`,
       ({ url }) => ({ m3u8: url }));
   },
 
