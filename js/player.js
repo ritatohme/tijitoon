@@ -128,6 +128,29 @@ function setupSubtitleToggle(art, hls) {
   });
 }
 
+// External sidecar subtitle (e.g. uqload's caption .vtt, passed via opts.subtitle): ArtPlayer
+// loads and shows it by default but adds no gear control, so mirror the HLS Sous-titres row
+// with a simple Off/FRA toggle driving art.subtitle.show. `label` is the language shown on the
+// row's right side (defaults to FRA — every uqload track we've seen is French).
+function setupExternalSubtitleToggle(art, label = 'FRA') {
+  const buildSelector = (on) => [
+    { html: OFF_LABEL, value: false, default: !on },
+    { html: label, value: true, default: on },
+  ];
+  art.setting.add({
+    name: 'ext-subtitle',
+    width: 200, // match the plugin's Qualité/Audio rows so the menu aligns
+    html: 'Sous-titres',
+    icon: '<i class="fa-solid fa-closed-captioning"></i>',
+    tooltip: label, // starts shown, like ArtPlayer's default
+    selector: buildSelector(true),
+    onSelect(item) {
+      art.subtitle.show = item.value;
+      return item.html; // updates the row's right-side value text
+    },
+  });
+}
+
 // Multi-quality MP4 (URL-per-quality, e.g. dessinanime): add a gear ▸ Qualité selector
 // that matches the HLS quality row, instead of ArtPlayer's native quality control
 // (which sits in the bottom bar). switchQuality() swaps the source and carries over the
@@ -198,7 +221,7 @@ function refreshBuiltinGearIcons(art) {
 // Single ArtPlayer factory for every direct-video source. `quality` (optional) is
 // an array of { html, url, default } for URL-per-quality sources (dessinanime);
 // `hlsControl` toggles the hls.js quality/audio gear plugin for .m3u8 streams.
-function playArt({ url, type, quality, hlsControl }) {
+function playArt({ url, type, quality, hlsControl, subtitle }) {
   destroyArt();
   if (typeof Artplayer !== 'function') { playNative(url, type); return; }
   artContainer.style.display = 'block';
@@ -223,6 +246,15 @@ function playArt({ url, type, quality, hlsControl }) {
     autoplay: false,
     plugins: [],
   };
+
+  // External caption track (e.g. uqload ships its subtitle as a sidecar .vtt, not muxed
+  // into the HLS manifest — so setupSubtitleToggle/hls.js never see it). ArtPlayer renders
+  // it via its native subtitle option (shown by default); the Off/FRA gear row to toggle
+  // it is added by setupExternalSubtitleToggle after init. escape:false keeps the CDN's
+  // inline cue tags (<c.magenta> …) as styling, not literal text.
+  if (subtitle) {
+    opts.subtitle = { url: subtitle, type: 'vtt', escape: false };
+  }
 
   // Note: we deliberately do NOT use ArtPlayer's native `quality` option — it renders
   // as a separate button in the bottom bar. For a gear ▸ Qualité row that matches the
@@ -279,6 +311,7 @@ function playArt({ url, type, quality, hlsControl }) {
       if (!open) art.setting.render();
     });
     if (quality) setupQualityMenu(art, quality);
+    if (subtitle) setupExternalSubtitleToggle(art);
     // Play Speed exists once ready; the plugin's Qualité/Audio rows are added later
     // (on manifest parse), so re-apply then too — see the m3u8 handler.
     art.on('ready', () => refreshBuiltinGearIcons(art));
@@ -290,8 +323,8 @@ function playArt({ url, type, quality, hlsControl }) {
   }
 }
 
-function playM3u8(src) {
-  playArt({ url: src, type: 'm3u8', hlsControl: true });
+function playM3u8(src, subtitle) {
+  playArt({ url: src, type: 'm3u8', hlsControl: true, subtitle });
 }
 
 function playMp4(src) {

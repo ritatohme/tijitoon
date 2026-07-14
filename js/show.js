@@ -469,7 +469,7 @@ function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
       placeholder.style.display = 'none';
       if (hasSources) playQualityMp4(src.sources);
       else if (src.mp4) playMp4(src.mp4);
-      else playM3u8(src.m3u8);
+      else playM3u8(src.m3u8, src.subtitle); // src.subtitle: uqload's own caption .vtt, if any
     })
     .catch(err => {
       console.error(err);
@@ -500,7 +500,7 @@ const EPISODE_LOADERS = {
     const host = ep.url.match(/https?:\/\/(uqload\.[a-z]{2,})\//i)?.[1];
     const hostParam = host ? `&host=${encodeURIComponent(host)}` : '';
     resolveAndPlay(gen, ep, seasonIdx, `${CRIMSON_WORKER_URL}/uqload?id=${id}${hostParam}`,
-      ({ url }) => ({ m3u8: url }));
+      ({ url, subtitle }) => ({ m3u8: url, subtitle }));
   },
 
   vidzy({ ep, seasonIdx, gen }) {
