@@ -53,6 +53,7 @@ let currentPage = 0;
 let epViewMode  = localStorage.getItem(EP_VIEW_KEY) || 'grid';
 let loadGen     = 0;
 let reportCtx   = null;
+let hiddenQualities = []; // this show's qualities.json entry, normalized lowercase (e.g. ["360p"])
 
 // ── SAVED PROGRESS ─────────────────────────────────────
 const LS_KEY = progressKey(showId);
@@ -456,6 +457,9 @@ function exitFakeFs() {
 // show "Chargement…", fetch, then play whatever pickSource pulls out of the JSON
 // payload ({ mp4 }, { m3u8 } or { sources } multi-quality; empty/null = dead link).
 // The gen check drops responses that land after another episode was selected.
+// Multi-quality sources are filtered through this show's qualities.json entry
+// (hiddenQualities) before reaching the gear — sources[0] stays the default, so
+// hiding the top label also changes the default pick.
 function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
   placeholder.style.display = 'flex';
   placeholder.innerHTML = `<div class="pl-hint">Chargement…</div>`;
@@ -464,6 +468,11 @@ function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
     .then(json => {
       if (gen !== loadGen) return;
       const src = pickSource(json) || {};
+      if (Array.isArray(src.sources) && hiddenQualities.length > 0) {
+        const kept = src.sources.filter(s =>
+          !hiddenQualities.includes(String(s.label ?? '').trim().toLowerCase()));
+        if (kept.length > 0) src.sources = kept; // never filter down to nothing
+      }
       const hasSources = Array.isArray(src.sources) && src.sources.length > 0;
       if (!src.mp4 && !src.m3u8 && !hasSources) { showNoVideo(ep, seasonIdx); return; }
       placeholder.style.display = 'none';
@@ -543,8 +552,7 @@ const EPISODE_LOADERS = {
 
   abysscdn({ ep, epUrl, seasonIdx, gen }) {
     // worker /sources returns { source, sources } with ready-to-play worker stream
-    // URLs (all qualities, highest first, 360p excluded) → quality gear, exactly
-    // like dessinanime.
+    // URLs (all qualities, highest first) → quality gear, exactly like dessinanime.
     const v = epUrl.searchParams.get('v') || epUrl.pathname.split('/').pop();
     if (!v) { showNoVideo(ep, seasonIdx); return; }
     resolveAndPlay(gen, ep, seasonIdx,
@@ -636,11 +644,14 @@ function showNoVideo(ep, seasonIdx) {
 // path are not swallowed — they surface in the console as uncaught errors.
 Promise.all([
   fetchJson('data.json').catch(err => { console.error(err); return null; }),
-  fetchJson('notes.json').catch(() => null)
-]).then(([data, notes]) => {
+  fetchJson('notes.json').catch(() => null),
+  fetchJson('qualities.json').catch(() => null) // sidecar like notes.json: { "<slug>": ["360p", ...] } = qualities to hide
+]).then(([data, notes, qualities]) => {
   if (!data) return window.location.replace('404');
   show = data[showId];
   if (!show) return window.location.replace('404');
+
+  hiddenQualities = (qualities?.[showId] || []).map(l => String(l).trim().toLowerCase());
 
   flatEps = show.seasons.flatMap((s, si) =>
     s.episodes.map((ep, ei) => ({ seasonIdx: si, epIdx: ei, ep }))
