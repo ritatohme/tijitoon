@@ -26367,6 +26367,230 @@
     "poster_url": "https://image.tmdb.org/t/p/w500/zvEit6c2zC2PosXROb85jZwb0gx.jpg",
     "backdrop_url": "https://image.tmdb.org/t/p/w1280/gbmN2y9Dqm6XKEev1kd8GkGLLn.jpg"
   },
+  "timmy-time": {
+    "title": "Voici Timmy",
+    "alt_title": "Timmy Time",
+    "channel": "tiji",
+    "years": null,
+    "tag": "KIDS",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Saison 1",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://abysscdn.com/?v=smKlKLiUq"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://abysscdn.com/?v=Tlk0uUy--"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://abysscdn.com/?v=MYQS5Sr5Y"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://abysscdn.com/?v=2vCanpVRv"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://abysscdn.com/?v=VGB3BgT3m"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://abysscdn.com/?v=-SdNmA8Zq"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://abysscdn.com/?v=kptwhy5Cl"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://abysscdn.com/?v=NOnhgpK_k"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://abysscdn.com/?v=IeQ6MnOFb"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://abysscdn.com/?v=EfYq3mo5q"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://abysscdn.com/?v=LTE82e8fI"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://abysscdn.com/?v=ay84-evNGJ"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://abysscdn.com/?v=uSMSA5c_B"
+          }
+        ]
+      },
+      {
+        "num": 2,
+        "name": "Saison 2",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://abysscdn.com/?v=iS3Sy6dz9G"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://abysscdn.com/?v=EmIwT7hyW"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://abysscdn.com/?v=oJ123h3Uo"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://abysscdn.com/?v=_yqJWALxW"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://abysscdn.com/?v=dNtEWWAyb"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://abysscdn.com/?v=dz2j15lQD"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://abysscdn.com/?v=pwdldNM0j"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://abysscdn.com/?v=v8mBRATvH"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://abysscdn.com/?v=e0o_VseDE"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://abysscdn.com/?v=rE6HFA4f9"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://abysscdn.com/?v=3mdbYbAUQ"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://abysscdn.com/?v=xiIE89qSp"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://abysscdn.com/?v=PbuFmXlTz-"
+          }
+        ]
+      },
+      {
+        "num": 3,
+        "name": "Saison 3",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://abysscdn.com/?v=-lQKPB6BR"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://abysscdn.com/?v=pZ43DVEiT"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://abysscdn.com/?v=22Jv38bOm"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://abysscdn.com/?v=AaW3zMT5x"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://abysscdn.com/?v=TuioI9I_U"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://abysscdn.com/?v=O8SYVzfO6"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://abysscdn.com/?v=jXH5Svd6Z"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://abysscdn.com/?v=zUHQCqhek"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://abysscdn.com/?v=oxW9W7b1Y"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://abysscdn.com/?v=Xu_U4fn6h"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://abysscdn.com/?v=YMXyA7zpV"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://abysscdn.com/?v=uE7QiFHv9"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://abysscdn.com/?v=I7xdwyQqT"
+          }
+        ]
+      }
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w500/bYRhgZXVjOFi4kMjeDTvKfwNqYT.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/akKmteOs4O6PONYUzFYwMIwVRxD.jpg"
+  },
   "winx": {
     "title": "Winx Club",
     "alt_title": "Winx Club",
