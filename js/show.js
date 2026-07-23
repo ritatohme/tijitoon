@@ -144,7 +144,7 @@ const URL_TYPE_MATCHERS = [
   ['embedseek.com',                 'embedseek'],
   ['player.ojamajo.moe/videos/watch', 'ojamajo'],
   [/uqload\.[a-z]+\/embed-/i,       'uqload'],
-  ['vidzy.live/embed-',             'vidzy'],
+  [/vidzy\.[a-z]+\/embed-/i,        'vidzy'],
   ['vidmoly.biz/embed-',            'vidmoly'],
   ['sendvid.com/embed/',            'sendvid'],
   ['video.sibnet.ru/shell.php',     'sibnet'],
@@ -515,7 +515,10 @@ const EPISODE_LOADERS = {
   vidzy({ ep, seasonIdx, gen }) {
     const id = ep.url.match(/embed-([a-z0-9]+)\.html/)?.[1];
     if (!id) { showNoVideo(ep, seasonIdx); return; }
-    resolveAndPlay(gen, ep, seasonIdx, `${CRIMSON_WORKER_URL}/vidzy?id=${id}`,
+    // Resolve through the link's own vidzy domain (vidzy.live / .org / …), not a hardcoded one.
+    const host = ep.url.match(/https?:\/\/(vidzy\.[a-z]{2,})\//i)?.[1];
+    const hostParam = host ? `&host=${encodeURIComponent(host)}` : '';
+    resolveAndPlay(gen, ep, seasonIdx, `${CRIMSON_WORKER_URL}/vidzy?id=${id}${hostParam}`,
       ({ url }) => ({ m3u8: url }));
   },
 
