@@ -7,6 +7,7 @@
   --orange: #ff8a1f;
   --purple: #9b5cff;
   --cream: #ffe4a8;
+  --topbar: #2d2d2d; /* = --ink; topbar + show-hero bg; status bar tracks this (theme.js reads it, so keep a literal hex — not var(--ink)) */
   --no-results-color: rgba(45,45,45,.4);
 }
 
@@ -20,6 +21,7 @@
   --orange: #b2661f;
   --purple: #7433db;
   --cream: #e7c274;
+  --topbar: #0d0d0d; /* = dark --ink; status bar tracks this (keep literal hex, see :root) */
 
   --dm-text:       #b8b5b0;
   --dm-muted:      #837d76;
@@ -60,7 +62,7 @@ body::before {
 }
 
 .topbar {
-  background: var(--ink); color: var(--paper);
+  background: var(--topbar); color: var(--paper);
   padding: .7rem 5vw; border-bottom: 4px solid var(--lime);
   display: flex; align-items: center; gap: clamp(.5rem, 2vw, 1.5rem);
   font-family: 'VT323', monospace; font-size: 1.3rem;

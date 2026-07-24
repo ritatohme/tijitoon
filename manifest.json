@@ -8,7 +8,7 @@
   "display": "standalone",
   "orientation": "any",
   "background_color": "#fff6e3",
-  "theme_color": "#fff6e3",
+  "theme_color": "#2d2d2d",
   "icons": [
     {
       "src": "/tijitoon/icons/tijitoon-icon-192.png",

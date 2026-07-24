@@ -1,9 +1,10 @@
-// Reads the live --paper value from CSS so the status-bar color always tracks
-// styles.css (no hardcoded hex). Safe here because this file runs after CSS has
+// Reads the live --topbar value from CSS so the status-bar color always tracks
+// the topbar (which sits directly under the iOS/Android status bar), in both
+// themes, with no hardcoded hex. Safe here because this file runs after CSS has
 // loaded, unlike theme-init.js. Replaces the meta node rather than mutating its
 // content attribute, which forces Chrome for Android to repaint the bar live.
 function syncThemeColor() {
-  const color = getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();
+  const color = getComputedStyle(document.documentElement).getPropertyValue('--topbar').trim();
   const old = document.querySelector('meta[name="theme-color"]');
   if (old) old.parentNode.removeChild(old);
   const meta = document.createElement('meta');
