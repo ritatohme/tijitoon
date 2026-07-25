@@ -88,7 +88,9 @@ h1 {
 }
 
 /* ── AU HASARD (random series box) ── */
-#random-pick { padding: 1.4rem 5vw 0; }
+/* position+z-index lifts the box over the fixed dot grid (body::before, z-index:0),
+   which otherwise stipples the poster and the buttons. */
+#random-pick { padding: 1.4rem 5vw 0; position: relative; z-index: 1; }
 #random-pick.hidden { display: none; }
 .rp-box {
   display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
