@@ -1,7 +1,6 @@
 .req-page {
   max-width: 720px; margin: 0 auto;
   padding: 1.2rem 5vw 6rem;
-  position: relative; z-index: 1;
 }
 
 .req-card {
@@ -93,7 +92,6 @@
 .req-intro {
   max-width: 720px; margin: 0 auto;
   padding: 4rem 5vw 0;
-  position: relative; z-index: 1;
 }
 .req-headline {
   font-family: 'Bungee', sans-serif; font-size: clamp(1.5rem, 4vw, 3rem);

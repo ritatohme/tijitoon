@@ -67,9 +67,12 @@ h1.show-title {
   padding: 3vw 6vw 4rem;
   gap: 2rem;
 }
+/* Don't add a z-index here: .player-wrap.fake-fs needs z-index:9999 to sit above
+   the topbar, and position:fixed does NOT escape an ancestor stacking context. */
 .show-left { min-width: 0; }
 
 /* ── PLAYER ── */
+/* Same as .show-left: no z-index here, it would trap .player-wrap.fake-fs. */
 .player-section {
   background: #0d0c14;
 }

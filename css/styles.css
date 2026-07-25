@@ -36,15 +36,17 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  background: var(--paper);
   color: var(--ink);
   font-family: 'Space Mono', monospace;
   min-height: 100vh;
   user-select: none; -webkit-user-select: none;
 }
 /* Horizontal clipping lives on <html> only: overflow-x on <body> would make it a
-   scroll container and break position:sticky (the sticky topbar) on every page. */
-html { overflow-x: hidden; }
+   scroll container and break position:sticky (the sticky topbar) on every page.
+   The paper colour lives here too, NOT on <body>: <body> must stay transparent so
+   it doesn't paint over the dot grid below (a negative-z-index child paints under
+   its parent's own background). <html>'s background is the canvas, always underneath. */
+html { overflow-x: hidden; background: var(--paper); }
 
 body {
   background-image:
@@ -53,10 +55,15 @@ body {
   background-attachment: fixed;
 }
 
+/* z-index:-1 keeps the dot grid permanently BEHIND page content. At z-index:0 it
+   painted over every opaque static block, which used to need a per-element
+   `position:relative; z-index:1` patch (hero, ep-nav bar, au-hasard box, request
+   page). One rule here replaces all of them — don't add those patches again.
+   Requires <body> to stay background-less; the paper colour is on <html>. */
 body::before {
   content: "";
   position: fixed; inset: 0;
-  pointer-events: none; z-index: 0;
+  pointer-events: none; z-index: -1;
   background-image: radial-gradient(circle, rgba(19,17,26,.12) 1px, transparent 1px);
   background-size: 18px 18px;
 }
