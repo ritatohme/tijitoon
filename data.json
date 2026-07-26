@@ -15477,6 +15477,306 @@
     "poster_url": "https://image.tmdb.org/t/p/w500/c6jRyx8EMU4xYUGOl1wHI4pRVaV.jpg",
     "backdrop_url": "https://image.tmdb.org/t/p/w1280/cUJ948sNBVyFD6Iyu3otbXOmiwk.jpg"
   },
+  "le-detentionnaire": {
+    "title": "Le Détentionnaire",
+    "alt_title": "La Retenue",
+    "channel": "teletoon",
+    "years": null,
+    "tag": "TOON",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Saison 1",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E01-VF.mp4"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E02-VF.mp4"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E03-VF.mp4"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E04-VF.mp4"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E05-VF.mp4"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E06-VF.mp4"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E07-VF.mp4"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E08-VF.mp4"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E09-VF.mp4"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E10-VF.mp4"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E11-VF.mp4"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E12-VF.mp4"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E13-VF.mp4"
+          },
+          {
+            "num": 14,
+            "title": "Épisode 14",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S01-E14-VF.mp4"
+          }
+        ]
+      },
+      {
+        "num": 2,
+        "name": "Saison 2",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E01-VF.mp4"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E02-VF.mp4"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E03-VF.mp4"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E04-VF.mp4"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E05-VF.mp4"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E06-VF.mp4"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E07-VF.mp4"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E08-VF.mp4"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E09-VF.mp4"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E10-VF.mp4"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E11-VF.mp4"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E12-VF.mp4"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S02-E13-VF.mp4"
+          }
+        ]
+      },
+      {
+        "num": 3,
+        "name": "Saison 3",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E01-VF.mp4"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E02-VF.mp4"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E03-VF.mp4"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E04-VF.mp4"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E05-VF.mp4"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E06-VF.mp4"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E07-VF.mp4"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E08-VF.mp4"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E09-VF.mp4"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E10-VF.mp4"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E11-VF.mp4"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E12-VF.mp4"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S03-E13-VF.mp4"
+          }
+        ]
+      },
+      {
+        "num": 4,
+        "name": "Saison 4",
+        "episodes": [
+          {
+            "num": 1,
+            "title": "Épisode 1",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E01-VF.mp4"
+          },
+          {
+            "num": 2,
+            "title": "Épisode 2",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E02-VF.mp4"
+          },
+          {
+            "num": 3,
+            "title": "Épisode 3",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E03-VF.mp4"
+          },
+          {
+            "num": 4,
+            "title": "Épisode 4",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E04-VF.mp4"
+          },
+          {
+            "num": 5,
+            "title": "Épisode 5",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E05-VF.mp4"
+          },
+          {
+            "num": 6,
+            "title": "Épisode 6",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E06-VF.mp4"
+          },
+          {
+            "num": 7,
+            "title": "Épisode 7",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E07-VF.mp4"
+          },
+          {
+            "num": 8,
+            "title": "Épisode 8",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E08-VF.mp4"
+          },
+          {
+            "num": 9,
+            "title": "Épisode 9",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E09-VF.mp4"
+          },
+          {
+            "num": 10,
+            "title": "Épisode 10",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E10-VF.mp4"
+          },
+          {
+            "num": 11,
+            "title": "Épisode 11",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E11-VF.mp4"
+          },
+          {
+            "num": 12,
+            "title": "Épisode 12",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E12-VF.mp4"
+          },
+          {
+            "num": 13,
+            "title": "Épisode 13",
+            "url": "https://archive.org/download/le-detentionnaire/Le%20d%C3%A9tentionnaire-TV-46357-S04-E13-VF.mp4"
+          }
+        ]
+      }
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w500/d9atw04cjwVeazxXZBKOJvEWbTU.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/eEN5mx16Hp9tLRjM16d5TAvcKuP.jpg"
+  },
   "le-royaume-des-couleurs": {
     "title": "Le Royaume des Couleurs",
     "alt_title": "Yume no Crayon Oukoku",
