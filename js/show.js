@@ -232,6 +232,13 @@ function renderPage(query) {
 }
 
 // ── SEASONS ────────────────────────────────────────────
+// "Saison 3", or the season's own name when it carries one ("Films", "La Forêt des
+// Pommes"). Single source of truth for the pill tooltip, the pill-row label and the
+// share text. The id fallback keeps split seasons reading "Saison 5.1".
+function seasonName(season, i) {
+  return season.name || `Saison ${season.id ?? i + 1}`;
+}
+
 function buildSeasonTabs() {
   if (show.seasons.length <= 1) return;
   seasonTabs.style.display = '';
@@ -242,15 +249,14 @@ function buildSeasonTabs() {
     const btn = document.createElement('button');
     btn.className = 'season-pill' + (i === 0 ? ' active' : '') + (isFilm ? ' film-type' : '');
     btn.textContent = isFilm ? `F${filmCount}` : `S${i + 1}`;
-    btn.title = s.name || `Saison ${i + 1}`;
+    btn.title = seasonName(s, i);
     btn.addEventListener('click', () => { if (i !== currentSeason) switchSeason(i); });
     seasonTabs.appendChild(btn);
   });
   const label = document.createElement('span');
   label.className = 'season-pill-label';
   label.id = 'season-ep-count';
-  const s0 = show.seasons[0];
-  label.textContent = `- ${s0.name || 'Saison 1'}`;
+  label.textContent = `- ${seasonName(show.seasons[0], 0)}`;
   seasonTabs.appendChild(label);
 }
 
@@ -261,7 +267,7 @@ function switchSeason(i) {
   collapseSearch();
   seasonTabs.querySelectorAll('.season-pill').forEach((btn, j) => btn.classList.toggle('active', j === i));
   const countEl = document.getElementById('season-ep-count');
-  if (countEl) countEl.textContent = `- ${show.seasons[i].name || `Saison ${i + 1}`}`;
+  if (countEl) countEl.textContent = `- ${seasonName(show.seasons[i], i)}`;
   buildEpGrid(i);
   if (epViewMode === 'list' && playingHere && epListRows[i]?.[currentEp]) {
     scrollRowIntoView(i, currentEp);
@@ -426,12 +432,18 @@ function shareUrl() {
 }
 
 // Message handed to the OS share sheet; apps that compose (WhatsApp, Mail) pre-fill
-// it, others ignore it. epLabel keeps the code identical to the now-playing bar.
+// it, others ignore it. Show title, then season, then episode title — that order
+// reads as a sentence, where the S01E01 code reads like noise outside the app. The
+// season is left out on one-season shows, where it would only add a "Saison 1" that
+// says nothing.
 function shareText() {
   if (!show) return 'Tijitoon';
   if (currentPos === -1) return `Regarde ${show.title} sur Tijitoon`;
   const { seasonIdx, ep } = flatEps[currentPos];
-  return `Regarde ${epLabel(show.seasons[seasonIdx], seasonIdx, ep.num)} - ${ep.title} (${show.title}) sur Tijitoon`;
+  const season = show.seasons.length > 1
+    ? `${seasonName(show.seasons[seasonIdx], seasonIdx)}, `
+    : '';
+  return `Regarde ${show.title} - ${season}${ep.title} sur Tijitoon`;
 }
 
 // Same in-place feedback idiom as the dead-link report button, but swapping the
