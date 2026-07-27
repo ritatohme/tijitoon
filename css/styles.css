@@ -109,6 +109,60 @@ body::before {
 [data-theme="dark"] .theme-icon .fa-sun { display: inline; }
 [data-theme="dark"] .theme-toggle { color: var(--dm-text); }
 
+/* Right-hand icon cluster (show.html: share + theme toggle). The wrapper owns the
+   auto margin so the pair sits tight together instead of being pushed apart by the
+   topbar's own gap; .theme-toggle's margin-left:auto is inert inside a shrink-to-fit
+   flex box, so index.html's topbar is untouched. */
+.topbar-actions {
+  margin-left: auto; flex-shrink: 0;
+  display: flex; align-items: center; gap: .6rem;
+}
+/* Icon + PARTAGER label, mirroring the CATALOGUE back button on the other end of
+   the row. The label collapses at 600px with the page's other button labels
+   (css/show.css). font-family must be set explicitly: <button> doesn't inherit it. */
+.share-btn {
+  display: flex; align-items: center; gap: .4rem;
+  color: var(--lime); opacity: .7;
+  cursor: pointer; user-select: none;
+  background: none; border: none; padding: .25rem .4rem;
+  font-family: 'VT323', monospace; font-size: 1.15rem; line-height: 1;
+}
+.share-btn:hover, .share-btn.copied { opacity: 1; }
+[data-theme="dark"] .share-btn { color: var(--dm-text); }
+
+/* Both buttons rest dim and brighten on hover, which a touch device can never do —
+   so on phones they'd sit permanently dimmed. Same fix as .show-notes-toggle
+   (css/show.css): make the bright state the default where there's no hover pointer. */
+@media (hover: none) {
+  .theme-toggle, .share-btn { opacity: 1; }
+}
+
+/* ── TOAST ── */
+/* Brief bottom-centre confirmation ("LIEN COPIÉ !"). Built on demand by showToast()
+   in shared.js. Above the announcement popup (900/901) and below .player-wrap.fake-fs
+   (9999). This is the site's one success look — .req-success (the "DEMANDE ENVOYÉE_"
+   banner in css/request.css) is kept in sync with it.
+   No dark override on purpose: --ink and --lime both re-resolve per theme, so the
+   text stays near-black on lime in either mode — the same call .eyebrow makes below.
+   Lightening it to --dm-text instead drops contrast on the dark olive lime to 1.95:1,
+   under the 4.5:1 minimum; leaving it as --ink gives 4.89:1. */
+#toast {
+  position: fixed; left: 50%; bottom: 1.6rem;
+  transform: translate(-50%, .5rem);
+  z-index: 1000; pointer-events: none;
+  font-family: 'Bungee', sans-serif;
+  font-size: .78rem; letter-spacing: .06em;
+  background: var(--lime); color: var(--ink);
+  border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink);
+  padding: .6rem 1.1rem; text-align: center;
+  max-width: calc(100vw - 2rem); /* showToast is generic — don't let a long message clip */
+  /* Hidden with opacity, not visibility: a visibility:hidden live region is dropped
+     from the accessibility tree, so role="status" would never announce the message. */
+  opacity: 0;
+  transition: opacity .18s, transform .18s;
+}
+#toast.visible { opacity: 1; transform: translate(-50%, 0); }
+
 /* ── GLOBAL DARK OVERRIDES ── */
 
 /* Dot grid */

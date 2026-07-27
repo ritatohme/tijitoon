@@ -37,6 +37,7 @@ const epNavCounter = document.getElementById('ep-nav-counter');
 const btnPrev      = document.getElementById('btn-prev');
 const btnNext      = document.getElementById('btn-next');
 const reportBtn    = document.getElementById('btn-report');
+const shareBtn     = document.getElementById('share-btn');
 
 // ── STATE ──────────────────────────────────────────────
 let show          = null;
@@ -406,6 +407,76 @@ function resetReportBtn() {
   reportBtn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> <span class="report-label">LIEN MORT</span>';
 }
 
+// ── SHARE ──────────────────────────────────────────────
+// The resting icon class is read from the markup, so the check-mark flash can put
+// it back without a second copy of the class name to keep in sync.
+const shareIcon      = shareBtn.querySelector('i');
+const shareIconClass = shareIcon.className;
+let flashTimer = null;
+
+// syncEpUrl already keeps the address bar on the canonical deep link, but rebuild
+// it here anyway: that also covers "nothing playing yet" and normalises the legacy
+// ?id= entry form to ?series=. The season comes from the PLAYING episode, not from
+// currentSeason — the season tabs can point elsewhere while an episode keeps playing.
+function shareUrl() {
+  const rel = currentPos === -1
+    ? `${location.pathname}?${new URLSearchParams({ series: showId })}`
+    : buildUrl(flatEps[currentPos].seasonIdx, flatEps[currentPos].epIdx);
+  return new URL(rel, location.href).href;
+}
+
+// Message handed to the OS share sheet; apps that compose (WhatsApp, Mail) pre-fill
+// it, others ignore it. epLabel keeps the code identical to the now-playing bar.
+function shareText() {
+  if (!show) return 'Tijitoon';
+  if (currentPos === -1) return `Regarde ${show.title} sur Tijitoon`;
+  const { seasonIdx, ep } = flatEps[currentPos];
+  return `Regarde ${epLabel(show.seasons[seasonIdx], seasonIdx, ep.num)} - ${ep.title} (${show.title}) sur Tijitoon`;
+}
+
+// Same in-place feedback idiom as the dead-link report button, but swapping the
+// icon's class instead of the button's innerHTML so the PARTAGER label survives.
+// The label text stays put: retitling it would resize the button and shove the
+// theme toggle sideways mid-flash. Runs for TOAST_MS so the check mark and the
+// toast clear together — the two always fire as a pair.
+function flashCopied() {
+  shareBtn.classList.add('copied');
+  shareIcon.className = 'fa-solid fa-check';
+  clearTimeout(flashTimer); // clicked again mid-flash: restart the clock
+  flashTimer = setTimeout(() => {
+    shareBtn.classList.remove('copied');
+    shareIcon.className = shareIconClass;
+  }, TOAST_MS);
+}
+
+// Pre-Clipboard-API fallback (also covers insecure contexts, where navigator.clipboard
+// is undefined). Returns whether the copy took.
+function legacyCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  // user-select:text is required here: the global `user-select: none` on <body>
+  // otherwise leaves the selection empty and execCommand('copy') copies nothing.
+  ta.style.cssText = 'position:fixed;top:-9999px;opacity:0;user-select:text;-webkit-user-select:text;';
+  document.body.appendChild(ta);
+  ta.select();
+  ta.setSelectionRange(0, text.length);
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (_) {}
+  ta.remove();
+  return ok;
+}
+
+function copyLink(url) {
+  const done     = () => { showToast('LIEN COPIÉ !'); flashCopied(); };
+  const fallback = () => { if (legacyCopy(url)) done(); else showToast('COPIE IMPOSSIBLE'); };
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(url).then(done).catch(fallback);
+  } else {
+    fallback();
+  }
+}
+
 // ── EMBED SCALING ──────────────────────────────────────
 // Some embeds break below a minimum width (mega: player collapses; archive.org /embed:
 // controls overflow and clip on the right on narrow phones). Both ship at 640px wide, so
@@ -767,6 +838,19 @@ fsBtn.addEventListener('click', () => {
   document.body.style.overflow = 'hidden';
 });
 fsExit.addEventListener('click', exitFakeFs);
+
+// Native OS share sheet where it exists, clipboard copy everywhere else.
+// A dismissed sheet rejects with AbortError - that's a finished action, not a
+// failure, so it must NOT fall through to copying.
+shareBtn.addEventListener('click', () => {
+  const url = shareUrl();
+  if (navigator.share) {
+    navigator.share({ title: document.title, text: shareText(), url })
+      .catch(err => { if (err?.name !== 'AbortError') copyLink(url); });
+  } else {
+    copyLink(url);
+  }
+});
 
 reportBtn.addEventListener('click', () => {
   if (!reportCtx || reportBtn.disabled) return;

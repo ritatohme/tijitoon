@@ -439,5 +439,5 @@ h1.show-title {
   .ep-nav-bar { padding: .4rem 3vw; }
   .ep-nav-inner { gap: .4rem; }
   #btn-next { margin-left: .5rem; }
-  .nav-label, .report-label, .np-title { display: none; }
+  .nav-label, .report-label, .share-label, .np-title { display: none; }
 }

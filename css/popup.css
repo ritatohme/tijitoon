@@ -97,6 +97,7 @@
   transition: opacity .15s;
 }
 .req-btn-ghost:hover { opacity: 1; }
+@media (hover: none) { .req-btn-ghost { opacity: 1; } }
 [data-theme="dark"] .req-btn-ghost { color: var(--dm-text); }
 
 @keyframes req-pop {

@@ -54,6 +54,28 @@ function epLabel(season, seasonIdx, epNum) {
   return `S${season.id ?? pad2(seasonIdx + 1)}${epCode(epNum)}`;
 }
 
+// ── TOAST ──────────────────────────────────────────────
+// Brief bottom-centre confirmation. The node is built on first use so this file
+// stays independent of where its <script> sits in the page. TOAST_MS is shared so
+// a caller animating its own button alongside the toast can end at the same moment.
+const TOAST_MS = 2200;
+let toastEl = null;
+let toastTimer = null;
+
+function showToast(msg) {
+  if (!toastEl) {
+    toastEl = document.createElement('div');
+    toastEl.id = 'toast';
+    toastEl.setAttribute('role', 'status');
+    document.body.appendChild(toastEl);
+    void toastEl.offsetWidth; // commit the hidden state so the first toast fades in too
+  }
+  toastEl.textContent = msg;
+  toastEl.classList.add('visible');
+  clearTimeout(toastTimer); // tapped again mid-toast: swap the text, restart the clock
+  toastTimer = setTimeout(() => toastEl.classList.remove('visible'), TOAST_MS);
+}
+
 const CHANNEL_LABELS = {
   teletoon: 'Télétoon',
   tiji: 'Tiji',
