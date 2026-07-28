@@ -6,24 +6,30 @@ let viewMode = localStorage.getItem(VIEW_KEY) || 'cards';
 let playlistData = null; // data.json ref, so ✕-removal can re-render the carousel
 
 // ── MA PLAYLIST (continue-watching carousel) ───────────
-// Reads per-series keys: tijitoon:progress:<id> → { season, ep } (0-based
-// indices). Renders a horizontal strip of wide 16:9 backdrop cards with a
-// progress bar; the card link resumes on the show page. History is still
-// tracked when hidden.
+// Reads per-series keys: tijitoon:progress:<id> → { season, ep, t } (0-based
+// indices, t = last watched). Renders a horizontal strip of wide 16:9 backdrop
+// cards with a progress bar; the card link resumes on the show page. History is
+// still tracked when hidden. Most recently watched first — see the sort below.
 function playlistEntries(data) {
   const entries = [];
   for (const key of progressKeys()) {
     const seriesId = key.slice(PROGRESS_PREFIX.length);
     const show = data[seriesId];
     if (!show || show.disabled) continue;
-    try {
-      const { season, ep } = JSON.parse(localStorage.getItem(key));
-      const s = show.seasons[season];
-      if (!s || !s.episodes[ep]) continue;
-      entries.push({ seriesId, show, season, ep, s });
-    } catch (_) {}
+    const saved = readProgress(seriesId);
+    if (!saved) continue;
+    const { season, ep, t } = saved;
+    const s = show.seasons[season];
+    if (!s || !s.episodes[ep]) continue;
+    entries.push({ seriesId, show, season, ep, s, t });
   }
-  return entries;
+  // Most recent first. Without this the strip renders in localStorage key order — which is
+  // insertion order, and re-saving a key does NOT move it, so the series you started FIRST sat at
+  // the front forever.
+  // Entries predating the t field sort to the end rather than being handed an invented date that
+  // would jump them to the front; among themselves they keep their previous order, since Array#sort
+  // has been stable since ES2019.
+  return entries.sort((a, b) => (b.t || 0) - (a.t || 0));
 }
 
 function buildPlaylistCard({ seriesId, show, season, ep, s }) {
@@ -96,6 +102,13 @@ function buildPlaylist(data) {
   const seeAll = document.getElementById('pl-seeall');
   const overflowing = strip.scrollWidth > strip.clientWidth + 4;
   seeAll.style.display = (overflowing || strip.classList.contains('expanded')) ? '' : 'none';
+}
+
+// Re-render after something outside this file rewrote the stored history — today that's the device
+// sync merge in sync.js. Guards the startup window: data.json may not have landed yet, and the
+// fetch's own .then() builds the carousel anyway once it does.
+function refreshPlaylist() {
+  if (playlistData) buildPlaylist(playlistData);
 }
 
 // "voir tout" expands the strip into a wrapping grid (and back to "réduire").

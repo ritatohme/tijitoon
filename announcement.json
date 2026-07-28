@@ -1,10 +1,10 @@
 {
-  "id": "demande-2026-06-17",
+  "id": "sync-2026-07-28",
   "enabled": true,
   "eyebrow": ">> NOUVEAU_",
-  "title": "FAIS TA DEMANDE!",
-  "text": "Tu penses à un dessin animé de ton enfance qu'on n'a pas encore ? Clique sur le bouton et dis-nous lequel !",
-  "btnLabel": "FAIRE UNE DEMANDE",
-  "btnUrl": "request",
-  "dismissLabel": "Plus tard"
+  "title": "SYNCHRO ENTRE APPAREILS!",
+  "text": "Tu peux maintenant emporter ton historique d'un appareil à l'autre. Touche l'icône QR en haut de la page, scanne le code avec ton téléphone, et tu reprends tes épisodes là où tu les as laissés !",
+  "btnLabel": "",
+  "btnUrl": "",
+  "dismissLabel": "J'ai compris"
 }

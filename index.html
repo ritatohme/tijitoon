@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha384-/o6I2CkkWC//PSjvWC/eYN7l3xM3tJm8ZzVkCOfp//W05QcE3mlGskpoHB6XqI+B" crossorigin="anonymous" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" href="css/popup.css">
+<link rel="stylesheet" href="css/sync.css">
 <script src="js/analytics.js" defer></script>
 </head>
 <body>
@@ -34,9 +35,12 @@
     <button class="search-clear" id="search-clear" aria-label="Effacer"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <button class="search-toggle" id="search-toggle" aria-label="Rechercher"><i class="fa-solid fa-magnifying-glass"></i></button>
-  <button class="theme-toggle" id="theme-toggle" aria-label="Basculer le thème">
-    <span class="theme-icon"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></span>
-  </button>
+  <div class="topbar-actions">
+    <button class="sync-btn" id="sync-btn" aria-label="Synchroniser mon historique" title="Synchroniser mon historique"><i class="fa-solid fa-qrcode"></i></button>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Basculer le thème">
+      <span class="theme-icon"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></span>
+    </button>
+  </div>
 </div>
 <!-- ══ HERO ══════════════════════════════════════════════ -->
 <header>
@@ -139,6 +143,9 @@
 <script src="js/theme.js"></script>
 <script src="js/shared.js"></script>
 <script src="js/index.js"></script>
+<!-- Not deferred, and after index.js: it calls refreshPlaylist()/playlistData from there, and it
+     must strip a ?sync= code out of the URL before the deferred analytics snippet reads it. -->
+<script src="js/sync.js"></script>
 
 <!-- ══ ANNOUNCEMENT POPUP ══════════════════════════════════ -->
 <script src="js/announcement.js" defer></script>

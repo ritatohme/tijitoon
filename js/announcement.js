@@ -69,6 +69,12 @@
       document.body.appendChild(popup);
 
       setTimeout(() => {
+        // The sync modal opens synchronously on ?sync= arrival, and both popups sit at 900/901 —
+        // this one is appended later, so at equal z-index it would land on top of the very flow it
+        // is advertising. Skip the visit entirely: KEY is written only by closePopup, so an
+        // announcement that never showed comes back next time.
+        const sync = document.getElementById('sy-popup');
+        if (sync && sync.style.display === 'block') return;
         backdrop.style.display = 'block';
         popup.style.display = 'block';
         requestAnimationFrame(() => {

@@ -1,0 +1,314 @@
+/* Device-sync modal (js/sync.js). Same sticker language as the announcement popup — 4px --ink
+   border, hard offset shadow, no radius anywhere — but its own .sy-* names and its own keyframes:
+   popup.css is linked from index.html only, and this modal should stay droppable onto any page
+   without inheriting that file's load order. Sits at the same 900/901 as the announcement popup,
+   which keeps it under #toast (1000) so a toast fired from inside it is still visible. */
+
+#sy-backdrop {
+  display: none; position: fixed; inset: 0;
+  background: rgba(13,13,13,.65);
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  z-index: 900;
+}
+
+#sy-popup {
+  display: none; position: fixed;
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  z-index: 901; width: min(460px, 92vw);
+  max-height: 90vh; overflow: hidden;
+  background: var(--paper);
+  border: 4px solid var(--ink); box-shadow: 10px 10px 0 var(--ink);
+  transition: background .2s, border-color .2s;
+}
+
+/* --sky rather than the announcement's --hot, so the two modals aren't mistaken for each other.
+   The label goes dark-on-blue here (8:1) and light-on-blue in dark mode, where --sky resolves to a
+   deep navy and --ink would vanish into it. */
+.sy-banner {
+  background: var(--sky);
+  border-bottom: 4px solid var(--ink);
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background .2s, border-color .2s;
+}
+.sy-banner span {
+  font-family: 'Bungee', sans-serif;
+  font-size: .78rem; letter-spacing: .06em;
+  color: var(--ink);
+  padding: .65rem 1.6rem;
+}
+[data-theme="dark"] .sy-banner span { color: var(--dm-text); }
+
+.sy-x {
+  background: var(--ink); color: var(--paper);
+  border: none; border-left: 4px solid var(--ink);
+  font-size: 1rem; width: 44px;
+  cursor: pointer; align-self: stretch;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .12s;
+  flex-shrink: 0;
+}
+.sy-x:hover { background: var(--hot); }
+[data-theme="dark"] .sy-x { color: var(--dm-text); }
+
+/* The banner is ~3.2rem; the body takes the rest of the 90vh cap and scrolls, so a long history
+   list can never push the actions off a short screen. */
+.sy-body { padding: 1.5rem 1.6rem 1.6rem; max-height: calc(90vh - 3.2rem); overflow-y: auto; }
+
+/* ── VIEWS ── */
+.sy-view { display: none; }
+.sy-view.sy-on { display: block; }
+
+/* ── TABS ── */
+.sy-tabs { display: flex; gap: .5rem; margin-bottom: 1.1rem; }
+.sy-tab {
+  font-family: 'VT323', monospace; font-size: 1.05rem;
+  background: transparent; color: var(--ink);
+  border: 3px solid var(--ink); padding: .1rem .85rem;
+  cursor: pointer; opacity: .5;
+  transition: opacity .15s, background .15s, box-shadow .1s;
+}
+.sy-tab:hover { opacity: 1; }
+.sy-tab-on { background: var(--lime); opacity: 1; box-shadow: 3px 3px 0 var(--ink); }
+[data-theme="dark"] .sy-tab { color: var(--dm-text); }
+[data-theme="dark"] .sy-tab-on { color: var(--ink); }
+
+/* ── TEXT ── */
+.sy-eyebrow {
+  font-family: 'VT323', monospace; font-size: 1.05rem;
+  background: var(--lime); color: var(--ink);
+  display: inline-block; padding: .1rem .75rem;
+  border: 3px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(-1.5deg); margin-bottom: 1rem;
+  transition: background .2s, border-color .2s;
+}
+
+.sy-text {
+  font-family: 'Space Mono', monospace;
+  font-size: .78rem; line-height: 1.7;
+  color: var(--ink); opacity: .7;
+  border-left: 4px solid var(--hot);
+  padding-left: 1rem; margin-bottom: 1.1rem;
+  text-wrap: pretty;
+}
+[data-theme="dark"] .sy-text { color: var(--dm-muted); opacity: 1; }
+
+.sy-hint { margin-top: 1.1rem; }
+/* Sits inside the bordered list box, so it drops the accent bar that would double up on it. */
+.sy-empty { border-left: none; padding: .7rem; opacity: .5; margin: 0; }
+
+/* ── SERIES PICKER ── */
+.sy-list {
+  max-height: 190px; overflow-y: auto;
+  border: 3px solid var(--ink);
+  margin-bottom: 1.2rem;
+  background: var(--paper);
+}
+[data-theme="dark"] .sy-list { background: var(--dm-surface-lo); }
+
+.sy-row {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .45rem .7rem;
+  font-family: 'Space Mono', monospace; font-size: .78rem;
+  color: var(--ink); cursor: pointer;
+}
+.sy-row:hover { background: rgba(45,45,45,.06); }
+[data-theme="dark"] .sy-row { color: var(--dm-text); }
+[data-theme="dark"] .sy-row:hover { background: var(--dm-hover); }
+
+/* TOUT sits outside the scroll box so it stays put while the list moves under it. */
+.sy-row-all {
+  border: 3px solid var(--ink); border-bottom: none;
+  background: var(--cream);
+  font-family: 'Bungee', sans-serif; font-size: .7rem; letter-spacing: .06em;
+}
+/* It's a header, not a target — it must not pick up .sy-row's hover tint. */
+.sy-row-all:hover { background: var(--cream); }
+/* Dark mode drops --cream everywhere (see .view-btn, .season-pill, .ep-list-row in styles.css), so
+   this goes to --hot instead — the same pairing .req-banner uses: --hot ground, --dm-text on top.
+   --ink would be #0d0d0d on #832745, under 2:1. The :hover selector has to be spelled out: without
+   it, [data-theme="dark"] .sy-row:hover above is one step more specific and wins the hover. */
+[data-theme="dark"] .sy-row-all,
+[data-theme="dark"] .sy-row-all:hover { background: var(--hot); color: var(--dm-text); }
+
+/* The platform's own checkbox, only tinted. Each OS draws its own shape (Safari rounds it), but
+   that buys the focus ring, the :indeterminate dash and the a11y semantics for one line. */
+.sy-row input {
+  accent-color: var(--hot);
+  width: 1.05rem; height: 1.05rem;
+  flex-shrink: 0; cursor: pointer;
+}
+.sy-row-title { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sy-row-ep {
+  font-family: 'VT323', monospace; font-size: .95rem;
+  opacity: .55; flex-shrink: 0;
+}
+
+/* ── ACTIONS ── */
+.sy-actions { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; }
+
+.sy-btn {
+  font-family: 'Bungee', sans-serif; font-size: .9rem;
+  background: var(--hot); color: var(--paper);
+  border: 4px solid var(--ink); box-shadow: 5px 5px 0 var(--ink);
+  padding: .7rem 1.3rem; cursor: pointer;
+  letter-spacing: .06em;
+  transition: transform .1s, box-shadow .1s, background .2s;
+}
+.sy-btn:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--ink); }
+.sy-btn:active { transform: translate(2px,2px);   box-shadow: 3px 3px 0 var(--ink); }
+.sy-btn:disabled { opacity: .6; cursor: default; transform: none; box-shadow: 5px 5px 0 var(--ink); }
+[data-theme="dark"] .sy-btn { color: var(--dm-text); }
+
+.sy-btn-ghost {
+  font-family: 'Space Mono', monospace; font-size: .78rem;
+  background: transparent; color: var(--ink);
+  border: none; cursor: pointer; opacity: .5;
+  padding: .7rem 0;
+  transition: opacity .15s;
+}
+.sy-btn-ghost:hover { opacity: 1; }
+@media (hover: none) { .sy-btn-ghost { opacity: 1; } }
+[data-theme="dark"] .sy-btn-ghost { color: var(--dm-text); }
+
+/* ── CODE VIEW ── */
+/* The panel is hardcoded light in BOTH themes, never --paper/--ink: those resolve to #242830 and
+   #0d0d0d in dark mode, and a scanner needs dark modules on a light field. Inverting it isn't an
+   option either — iOS Camera won't read a light-on-dark code. The padding is part of the quiet
+   zone, so it has to match whatever the code sits on. */
+.sy-qr {
+  width: min(220px, 58vw); margin: 0 auto 1.1rem;
+  background: #fff; padding: .5rem;
+  border: 4px solid var(--ink); box-shadow: 6px 6px 0 var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  aspect-ratio: 1;
+}
+.sy-qr svg { display: block; width: 100%; height: auto; }
+/* Dark mode softens the white to --dm-text, the same grey the code input types in. Black modules on
+   #b8b5b0 still measure ~10:1, far past what any scanner needs. The rect rule is required as well as
+   the background: the library writes its own <rect fill="white"> across the whole viewBox, and the
+   container's background only ever shows through the padding. CSS fill outranks that attribute. */
+[data-theme="dark"] .sy-qr          { background: var(--dm-text); }
+[data-theme="dark"] .sy-qr svg rect { fill: var(--dm-text); }
+.sy-qr-fail {
+  font-family: 'VT323', monospace; font-size: 1rem;
+  color: #2d2d2d; text-align: center; line-height: 1.3;
+}
+
+.sy-code {
+  font-family: 'Bungee', sans-serif;
+  font-size: clamp(1.6rem, 8vw, 2.3rem);
+  letter-spacing: .16em; text-indent: .16em; /* the tracking would otherwise push it off-centre */
+  text-align: center; color: var(--ink);
+  /* No text-shadow: the --hot drop shadow is the .req-headline idiom, and this isn't a headline —
+     it's a value to read out or type, where the offset copy just blurs the characters. Spacing is
+     symmetric with the QR's 1.1rem above so the bare text still sits as its own block. */
+  margin-bottom: 1.1rem;
+  user-select: text; -webkit-user-select: text; /* <body> is user-select:none — this one is for reading out */
+}
+[data-theme="dark"] .sy-code { color: var(--dm-text); }
+
+.sy-linkrow {
+  display: flex; align-items: stretch; gap: 0;
+  border: 3px solid var(--ink);
+}
+.sy-link {
+  flex: 1 1 auto; min-width: 0;
+  font-family: 'Space Mono', monospace; font-size: .7rem;
+  color: var(--ink); opacity: .65;
+  padding: .5rem .7rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  align-self: center;
+  user-select: text; -webkit-user-select: text; /* <body> is user-select:none; this must stay selectable */
+}
+[data-theme="dark"] .sy-link { color: var(--dm-muted); opacity: 1; }
+.sy-copy {
+  background: var(--ink); color: var(--paper);
+  border: none; border-left: 3px solid var(--ink);
+  width: 44px; flex-shrink: 0; cursor: pointer;
+  font-size: .95rem;
+  transition: background .12s;
+}
+.sy-copy:hover, .sy-copy.copied { background: var(--hot); }
+[data-theme="dark"] .sy-copy { color: var(--dm-text); }
+
+.sy-expiry {
+  font-family: 'VT323', monospace; font-size: 1rem;
+  color: var(--ink); opacity: .55; margin-right: auto;
+}
+.sy-expiry.sy-dead { color: var(--hot); opacity: 1; }
+[data-theme="dark"] .sy-expiry { color: var(--dm-muted); opacity: 1; }
+
+/* ── RECEIVE VIEW ── */
+/* Border and background sit on the wrapper, never on the <input> — the same shape .req-input-wrap,
+   .search-wrap and .ep-search-bar all use. iOS Safari draws text inputs with rounded corners and an
+   inner shadow that no border rule overrides; a transparent, border-less input gives that styling
+   nothing to paint, and the square edge comes from a plain <div> the UA won't touch. */
+.sy-input-wrap {
+  border: 3px solid var(--ink); background: var(--paper);
+  box-shadow: 4px 4px 0 var(--ink); overflow: hidden;
+  margin-bottom: 1.2rem;
+  transition: box-shadow .1s;
+}
+/* The shadow grows on focus, the same gesture the buttons make on hover. .req-input's wrapper has
+   no focus state at all and its outline is suppressed — not worth copying. */
+.sy-input-wrap:focus-within { box-shadow: 6px 6px 0 var(--ink); }
+
+.sy-input {
+  width: 100%; border: none; outline: none; background: transparent;
+  font-family: 'Bungee', sans-serif; font-size: 1.1rem;
+  letter-spacing: .12em; text-align: center; text-transform: uppercase;
+  color: var(--ink);
+  padding: .7rem .8rem;
+  user-select: text; -webkit-user-select: text; /* body-wide user-select:none reaches into inputs */
+}
+.sy-input::placeholder { opacity: .35; letter-spacing: .08em; }
+/* Six Bungee characters is what this box is built for. Anything longer — a pasted link the ?sync=
+   collapse in sync.js didn't recognise — swaps to the body monospace and drops the code tracking, so
+   far more of it is readable before the field starts scrolling. uppercase goes with it: a URL isn't
+   something to shout. Same specificity as .sy-input, so it has to stay below it. */
+.sy-input-long {
+  font-family: 'Space Mono', monospace; font-size: .78rem;
+  letter-spacing: 0; text-transform: none;
+}
+[data-theme="dark"] .sy-input-wrap { background: var(--dm-surface-lo); }
+[data-theme="dark"] .sy-input { color: var(--dm-text); }
+
+/* ── MERGE SUMMARY ── */
+.sy-stats { margin-bottom: 1.4rem; }
+.sy-stat-head {
+  display: block;
+  font-family: 'Bungee', sans-serif; font-size: .95rem; letter-spacing: .06em;
+  color: var(--ink); margin-bottom: .6rem;
+}
+[data-theme="dark"] .sy-stat-head { color: var(--dm-text); }
+.sy-stat {
+  display: block;
+  font-family: 'VT323', monospace; font-size: 1.1rem;
+  color: var(--ink); opacity: .8;
+  padding-left: 1rem; border-left: 4px solid var(--lime);
+  margin-bottom: .2rem;
+}
+.sy-stat-dim { border-left-color: var(--ink); opacity: .45; }
+[data-theme="dark"] .sy-stat { color: var(--dm-text); }
+
+/* ── ENTRY ANIMATION ── */
+@keyframes sy-pop {
+  0%   { opacity:0; transform:translate(-50%,-48%) scale(.88) rotate(-2deg); }
+  65%  { transform:translate(-50%,-50%) scale(1.03) rotate(.6deg); }
+  100% { opacity:1; transform:translate(-50%,-50%) scale(1) rotate(0deg); }
+}
+@keyframes sy-fade { from{opacity:0} to{opacity:1} }
+
+#sy-popup.sy-visible    { animation: sy-pop  .42s cubic-bezier(.34,1.4,.64,1) both; }
+#sy-backdrop.sy-visible { animation: sy-fade .25s ease both; }
+
+@media (max-width: 600px) {
+  .sy-body { padding: 1.2rem 1.1rem 1.3rem; }
+  .sy-btn { font-size: .8rem; padding: .65rem 1rem; }
+
+  /* The tab row sitting directly above already reads ENVOYER / RECEVOIR, so on a phone the eyebrow
+     spends a whole line repeating the word you just tapped. The merge view keeps its own: that view
+     hides the tabs, so its eyebrow is the only thing naming what you're looking at. */
+  .sy-view[data-view="pick"] .sy-eyebrow,
+  .sy-view[data-view="recv"] .sy-eyebrow { display: none; }
+}

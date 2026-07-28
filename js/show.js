@@ -57,19 +57,13 @@ let reportCtx   = null;
 let hiddenQualities = []; // this show's qualities.json entry, normalized lowercase (e.g. ["360p"])
 
 // ── SAVED PROGRESS ─────────────────────────────────────
-const LS_KEY = progressKey(showId);
-
+// Storage shape and the read/write pair live in shared.js — the index carousel and the device-sync
+// merge read the same entries. The timestamp is what lets sync tell two devices' entries apart.
 function saveProgress(si, ei) {
-  try { localStorage.setItem(LS_KEY, JSON.stringify({ season: si, ep: ei })); } catch(_) {}
+  writeProgress(showId, { season: si, ep: ei, t: Date.now() });
 }
 function loadProgress() {
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    if (!raw) return null;
-    const { season, ep } = JSON.parse(raw);
-    if (typeof season === 'number' && typeof ep === 'number') return { season, ep };
-  } catch(_) {}
-  return null;
+  return readProgress(showId);
 }
 
 // ── URL SYNC ───────────────────────────────────────────
@@ -400,7 +394,7 @@ function populateNotes(notes) {
 function populateHero() {
   document.title = `Tijitoon - ${show.title}`;
   document.getElementById('show-title').textContent = show.title.toUpperCase();
-  document.getElementById('pl-bg-title').textContent = show.title;
+  document.getElementById('ph-bg-title').textContent = show.title;
   document.getElementById('topbar-title').textContent = show.title.toUpperCase();
 }
 
@@ -414,11 +408,9 @@ function resetReportBtn() {
 }
 
 // ── SHARE ──────────────────────────────────────────────
-// The resting icon class is read from the markup, so the check-mark flash can put
-// it back without a second copy of the class name to keep in sync.
-const shareIcon      = shareBtn.querySelector('i');
-const shareIconClass = shareIcon.className;
-let flashTimer = null;
+// The clipboard machinery (copyLink / legacyCopy / flashCheck) lives in shared.js: the sync modal
+// on the index copies a link the same way. Only the two URL/text builders below are show-specific.
+const shareIcon = shareBtn.querySelector('i');
 
 // syncEpUrl already keeps the address bar on the canonical deep link, but rebuild
 // it here anyway: that also covers "nothing playing yet" and normalises the legacy
@@ -444,49 +436,6 @@ function shareText() {
     ? `${seasonName(show.seasons[seasonIdx], seasonIdx)}, `
     : '';
   return `Regarde ${show.title} - ${season}${ep.title} sur Tijitoon`;
-}
-
-// Same in-place feedback idiom as the dead-link report button, but swapping the
-// icon's class instead of the button's innerHTML so the PARTAGER label survives.
-// The label text stays put: retitling it would resize the button and shove the
-// theme toggle sideways mid-flash. Runs for TOAST_MS so the check mark and the
-// toast clear together — the two always fire as a pair.
-function flashCopied() {
-  shareBtn.classList.add('copied');
-  shareIcon.className = 'fa-solid fa-check';
-  clearTimeout(flashTimer); // clicked again mid-flash: restart the clock
-  flashTimer = setTimeout(() => {
-    shareBtn.classList.remove('copied');
-    shareIcon.className = shareIconClass;
-  }, TOAST_MS);
-}
-
-// Pre-Clipboard-API fallback (also covers insecure contexts, where navigator.clipboard
-// is undefined). Returns whether the copy took.
-function legacyCopy(text) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.setAttribute('readonly', '');
-  // user-select:text is required here: the global `user-select: none` on <body>
-  // otherwise leaves the selection empty and execCommand('copy') copies nothing.
-  ta.style.cssText = 'position:fixed;top:-9999px;opacity:0;user-select:text;-webkit-user-select:text;';
-  document.body.appendChild(ta);
-  ta.select();
-  ta.setSelectionRange(0, text.length);
-  let ok = false;
-  try { ok = document.execCommand('copy'); } catch (_) {}
-  ta.remove();
-  return ok;
-}
-
-function copyLink(url) {
-  const done     = () => { showToast('LIEN COPIÉ !'); flashCopied(); };
-  const fallback = () => { if (legacyCopy(url)) done(); else showToast('COPIE IMPOSSIBLE'); };
-  if (navigator.clipboard?.writeText) {
-    navigator.clipboard.writeText(url).then(done).catch(fallback);
-  } else {
-    fallback();
-  }
 }
 
 // ── EMBED SCALING ──────────────────────────────────────
@@ -545,7 +494,7 @@ function exitFakeFs() {
 // hiding the top label also changes the default pick.
 function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
   placeholder.style.display = 'flex';
-  placeholder.innerHTML = `<div class="pl-hint">Chargement…</div>`;
+  placeholder.innerHTML = `<div class="ph-hint">Chargement…</div>`;
   fetch(fetchUrl, fetchOpts)
     .then(r => r.json())
     .then(json => {
@@ -632,7 +581,7 @@ const EPISODE_LOADERS = {
   redirect({ ep, epUrl, seasonIdx }) {
     placeholder.style.display = 'flex';
     placeholder.innerHTML = `
-      <div class="pl-ep-label">S${seasonIdx + 1} - Épisode ${esc(ep.num)}</div>
+      <div class="ph-ep-label">S${seasonIdx + 1} - Épisode ${esc(ep.num)}</div>
       <a class="player-external-link" href="${esc(ep.url)}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-play"></i> Regarder sur ${esc(epUrl.hostname)}</a>`;
   },
 
@@ -717,8 +666,8 @@ function loadEpisode(ep, seasonIdx) {
 function showUnavailable(label, msg) {
   placeholder.style.display = 'flex';
   placeholder.innerHTML = `
-    <div class="pl-ep-label">${esc(label)}</div>
-    <div class="pl-unavail">${esc(msg)}</div>`;
+    <div class="ph-ep-label">${esc(label)}</div>
+    <div class="ph-unavail">${esc(msg)}</div>`;
 }
 
 function showNoVideo(ep, seasonIdx) {
@@ -858,9 +807,9 @@ shareBtn.addEventListener('click', () => {
   const url = shareUrl();
   if (navigator.share) {
     navigator.share({ title: document.title, text: shareText(), url })
-      .catch(err => { if (err?.name !== 'AbortError') copyLink(url); });
+      .catch(err => { if (err?.name !== 'AbortError') copyLink(url, shareBtn, shareIcon); });
   } else {
-    copyLink(url);
+    copyLink(url, shareBtn, shareIcon);
   }
 });
 

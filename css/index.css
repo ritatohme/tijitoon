@@ -84,8 +84,18 @@ h1 {
    own collapsed-search layout under max-width:600px.) */
 @media (min-width: 601px) {
   .search-wrap { flex: 0 1 380px; margin-left: auto; }
-  .theme-toggle { margin-left: .6rem; }
+  /* The sync + theme icons live in .topbar-actions (styles.css), whose own gap spaces the pair, so
+     the .6rem the toggle used to carry here is gone with the rule. What's left is a defensive zero:
+     the base margin-left:auto (styles.css) can't resolve to anything inside a shrink-to-fit flex
+     box, so this changes nothing today — it only pins that down if .topbar-actions ever grows. */
+  .topbar-actions .theme-toggle { margin-left: 0; }
 }
+
+/* .topbar-actions ships with margin-left:auto for show.html, where it is the only thing pushing
+   right. Here something else already does that at both widths — .search-wrap above 600px, the
+   .search-toggle icon below it — and flexbox splits free space evenly between every auto margin in
+   the row, which would strand the icon pair mid-topbar. */
+.topbar-actions { margin-left: 0; }
 
 /* ── AU HASARD (random series box) ── */
 #random-pick { padding: 1.4rem 5vw 0; }
@@ -605,9 +615,10 @@ footer .blink { animation: blink 1s steps(2) infinite; }
   h1, .eyebrow, .meta, .sub { display: none; }
   .search-input { font-size: 16px; } /* <16px inputs make iOS Safari auto-zoom on focus */
 
-  /* Mobile topbar: brand left; search icon + moon/sun button right.
-     The moon/sun icon-button styling itself is shared in styles.css; here we
-     only reset the margin (the search-toggle owns margin-left:auto instead). */
+  /* Mobile topbar: brand left; search icon + the .topbar-actions pair right. The icon-button
+     styling itself is shared in styles.css. .search-toggle owns the auto margin that pushes
+     everything after it over; the .theme-toggle zero is the same defensive reset as at 601px —
+     the toggle sits inside .topbar-actions now, where its own auto margin is already inert. */
   .topbar-brand { display: flex; }
   .search-toggle { display: inline-flex; align-items: center; margin-left: auto; }
   .theme-toggle { margin-left: 0; }
@@ -617,7 +628,7 @@ footer .blink { animation: blink 1s steps(2) infinite; }
   .topbar.search-open .search-wrap { display: flex; }
   .topbar.search-open .search-toggle { display: none; } /* the bar replaces the icon */
   .topbar.search-open .topbar-brand { display: none; } /* expanded bar takes the row */
-  .topbar.search-open .theme-toggle { display: none; }
+  .topbar.search-open .topbar-actions { display: none; } /* the whole icon pair goes, not just one */
   .card-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1.4rem .55rem; }
   .table-head, .trow { grid-template-columns: 2rem 1fr 92px; }
   .fb-chip { font-size: .95rem; padding: .15rem .55rem; }

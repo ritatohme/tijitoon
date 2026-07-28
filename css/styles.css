@@ -130,11 +130,23 @@ body::before {
 .share-btn:hover, .share-btn.copied { opacity: 1; }
 [data-theme="dark"] .share-btn { color: var(--dm-text); }
 
-/* Both buttons rest dim and brighten on hover, which a touch device can never do —
+/* Device sync (index.html): icon-only sibling of the theme toggle inside .topbar-actions.
+   No label at any width — the topbar there already carries the brand and the search field. */
+.sync-btn {
+  display: flex; align-items: center;
+  color: var(--lime); opacity: .7;
+  cursor: pointer; user-select: none;
+  background: none; border: none; padding: .25rem .4rem;
+  font-size: 1.15rem; line-height: 1;
+}
+.sync-btn:hover { opacity: 1; }
+[data-theme="dark"] .sync-btn { color: var(--dm-text); }
+
+/* These buttons rest dim and brighten on hover, which a touch device can never do —
    so on phones they'd sit permanently dimmed. Same fix as .show-notes-toggle
    (css/show.css): make the bright state the default where there's no hover pointer. */
 @media (hover: none) {
-  .theme-toggle, .share-btn { opacity: 1; }
+  .theme-toggle, .share-btn, .sync-btn { opacity: 1; }
 }
 
 /* ── TOAST ── */
@@ -191,7 +203,10 @@ body::before {
 [data-theme="dark"] .rp-btn       { color: var(--dm-text); }
 [data-theme="dark"] #rp-watch     { color: var(--dm-text); } /* id selector outranks .rp-btn rule */
 
-/* Ma playlist (continue-watching carousel). The 16:9 shot's content (backdrop
+/* Ma playlist (continue-watching carousel) — index.html only, even though this file is shared: keep
+   the pl- prefix to that page. The show page's player placeholder is ph- (css/show.css) precisely
+   because it once shared this prefix and .pl-title below repainted its ghost title.
+   The 16:9 shot's content (backdrop
    image or bright channel color) is theme-independent — only the frame and the
    caption below it need overrides (.card-letter's dark rule already covers the
    fallback letter). */
