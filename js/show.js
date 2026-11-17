@@ -120,8 +120,9 @@ const ODYCDN_PROXY_URL    = CRIMSON_WORKER_URL + '/';
 const LOUDAPE_PROXY_URL   = 'https://loud-ape-44.roughrecipe.deno.net';
 const OJAMAJO_WORKER_URL  = 'https://rapid-lab-6552.ritaclifford95.workers.dev';
 const EMBED_WORKER_URL    = 'https://flaky-sturgeon-55.roughrecipe.deno.net';
-// abysscdn-worker-v2: streams AbyssCDN as seekable MP4 (?res= picks a resolution;
-// /abysscdn/sources lists them all for the quality gear).
+// abysscdn-worker: streams AbyssCDN as seekable MP4 (?res= picks a resolution;
+// /abysscdn/sources lists them all for the quality gear) and, from v5, as HLS for
+// uploads that carry several languages.
 const ABYSSCDN_WORKER_URL = 'https://noisy-hill-3a3b.ritaclifford99.workers.dev';
 
 function odycdnProxyUrl(mp4Url) {
@@ -588,11 +589,19 @@ const EPISODE_LOADERS = {
   abysscdn({ ep, epUrl, seasonIdx, gen }) {
     // worker /sources returns { source, sources } with ready-to-play worker stream
     // URLs (all qualities, highest first) → quality gear, exactly like dessinanime.
+    // Worker v5 adds { hls, audios } for uploads stored with one sound file per language.
+    // That playlist is played only when it brings a language to choose (or there is no
+    // MP4 at all): it costs the worker a request per 4 s segment, and its bare-ADTS sound
+    // is only verified on hls.js — so single-language videos, and browsers without MSE,
+    // stay on the MP4. The gear's Qualité/Audio rows then come from the playlist.
     const v = epUrl.searchParams.get('v') || epUrl.pathname.split('/').pop();
     if (!v) { showNoVideo(ep, seasonIdx); return; }
     resolveAndPlay(gen, ep, seasonIdx,
       `${ABYSSCDN_WORKER_URL}/abysscdn/sources?v=${encodeURIComponent(v)}`,
-      ({ source, sources }) => ({ sources, mp4: source }));
+      ({ source, sources, hls, audios }) => {
+        const languageChoice = audios?.length > 1 && typeof Hls === 'function' && Hls.isSupported();
+        return hls && (languageChoice || !source) ? { m3u8: hls } : { sources, mp4: source };
+      });
   },
 
   dessinanime({ ep, seasonIdx, gen }) {
