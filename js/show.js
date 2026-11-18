@@ -119,6 +119,9 @@ const DESSINANIME_WORKER_URL = 'https://floral-star-ca2f.ritaclifford99.workers.
 const ODYCDN_PROXY_URL    = CRIMSON_WORKER_URL + '/';
 const LOUDAPE_PROXY_URL   = 'https://loud-ape-44.roughrecipe.deno.net';
 const OJAMAJO_WORKER_URL  = 'https://rapid-lab-6552.ritaclifford95.workers.dev';
+// vidzy-worker.js (standalone, like ojamajo): /vidzy?id=&host= → { url, subtitle }.
+// Replaces crimson's /vidzy route, which broke when vidzy stopped packing its embed.
+const VIDZY_WORKER_URL    = 'https://curly-band-48b7.ritaclifford99.workers.dev';
 const EMBED_WORKER_URL    = 'https://flaky-sturgeon-55.roughrecipe.deno.net';
 // abysscdn-worker: streams AbyssCDN as seekable MP4 (?res= picks a resolution;
 // /abysscdn/sources lists them all for the quality gear) and, from v5, as HLS for
@@ -553,8 +556,8 @@ const EPISODE_LOADERS = {
     // Resolve through the link's own vidzy domain (vidzy.live / .org / …), not a hardcoded one.
     const host = ep.url.match(/https?:\/\/(vidzy\.[a-z]{2,})\//i)?.[1];
     const hostParam = host ? `&host=${encodeURIComponent(host)}` : '';
-    resolveAndPlay(gen, ep, seasonIdx, `${CRIMSON_WORKER_URL}/vidzy?id=${id}${hostParam}`,
-      ({ url }) => ({ m3u8: url }));
+    resolveAndPlay(gen, ep, seasonIdx, `${VIDZY_WORKER_URL}/vidzy?id=${id}${hostParam}`,
+      ({ url, subtitle }) => ({ m3u8: url, subtitle }));
   },
 
   pcloud({ ep, epUrl, seasonIdx, gen }) {
