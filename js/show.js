@@ -514,7 +514,7 @@ function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
       placeholder.style.display = 'none';
       if (hasSources) playQualityMp4(src.sources);
       else if (src.mp4) playMp4(src.mp4);
-      else playM3u8(src.m3u8, src.subtitle); // src.subtitle: the host's sidecar caption .vtt (uqload, vidmoly), if any
+      else playM3u8(src.m3u8, src.subtitle, { noReferrer: src.noReferrer }); // src.subtitle: the host's sidecar caption .vtt (uqload, vidmoly, vidzy), if any
     })
     .catch(err => {
       console.error(err);
@@ -556,8 +556,11 @@ const EPISODE_LOADERS = {
     // Resolve through the link's own vidzy domain (vidzy.live / .org / …), not a hardcoded one.
     const host = ep.url.match(/https?:\/\/(vidzy\.[a-z]{2,})\//i)?.[1];
     const hostParam = host ? `&host=${encodeURIComponent(host)}` : '';
+    // The m3u8 is vidzy's own CDN url, played straight from the browser (that CDN server
+    // blocked Cloudflare Workers when it was u14.vidzy.cc, so the worker doesn't relay it).
+    // It 403s a Chromium request carrying our site as Referer, hence noReferrer.
     resolveAndPlay(gen, ep, seasonIdx, `${VIDZY_WORKER_URL}/vidzy?id=${id}${hostParam}`,
-      ({ url, subtitle }) => ({ m3u8: url, subtitle }));
+      ({ url, subtitle }) => ({ m3u8: url, subtitle, noReferrer: true }));
   },
 
   pcloud({ ep, epUrl, seasonIdx, gen }) {

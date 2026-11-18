@@ -176,16 +176,37 @@ function setupQualityMenu(art, quality) {
   });
 }
 
+// Streams whose CDN refuses our site as Referer (vidzy: a Chromium request carrying
+// sec-ch-ua plus a foreign Referer gets 403; with no Referer every playlist and segment
+// is 200 — checked 2026-11-18) load through hls.js's fetch loader with referrerPolicy
+// 'no-referrer'. XHR can't drop the Referer per request, and hls.js only exposes its
+// fetch loader through progressive mode, so the class is read off a throwaway instance
+// once. The real instance keeps progressive off, so segments still load whole, exactly
+// as with the default XHR loader. Safari's native HLS sends no sec-ch-ua, so it passes.
+let hlsFetchLoader;
+function hlsOptions(noReferrer) {
+  if (!noReferrer) return {};
+  if (hlsFetchLoader === undefined) {
+    const probe = new Hls({ progressive: true });
+    hlsFetchLoader = probe.config.loader; // stays the XHR loader where fetch streaming is unsupported
+    probe.destroy();
+  }
+  return {
+    loader: hlsFetchLoader,
+    fetchSetup: (context, init) => new Request(context.url, { ...init, referrerPolicy: 'no-referrer' }),
+  };
+}
+
 // If the ArtPlayer CDN script didn't load, fall back to the legacy native <video>
 // (no gear/quality menu, but the episode still plays). hls.js drives m3u8 there,
 // keeping the auto-French audio preference.
-function playNative(url, type) {
+function playNative(url, type, noReferrer) {
   artContainer.style.display = 'none';
   video.style.display = 'block';
   bindMediaSessionPosition(video);
   if (type === 'm3u8') {
     if (Hls.isSupported()) {
-      const hls = new Hls();
+      const hls = new Hls(hlsOptions(noReferrer));
       activeHls = hls;
       hls.loadSource(url);
       hls.attachMedia(video);
@@ -220,10 +241,11 @@ function refreshBuiltinGearIcons(art) {
 
 // Single ArtPlayer factory for every direct-video source. `quality` (optional) is
 // an array of { html, url, default } for URL-per-quality sources (dessinanime);
-// `hlsControl` toggles the hls.js quality/audio gear plugin for .m3u8 streams.
-function playArt({ url, type, quality, hlsControl, subtitle }) {
+// `hlsControl` toggles the hls.js quality/audio gear plugin for .m3u8 streams;
+// `noReferrer` loads the stream without a Referer (see hlsOptions).
+function playArt({ url, type, quality, hlsControl, subtitle, noReferrer }) {
   destroyArt();
-  if (typeof Artplayer !== 'function') { playNative(url, type); return; }
+  if (typeof Artplayer !== 'function') { playNative(url, type, noReferrer); return; }
   artContainer.style.display = 'block';
 
   const opts = {
@@ -282,7 +304,7 @@ function playArt({ url, type, quality, hlsControl, subtitle }) {
   opts.customType = {
     m3u8: (videoEl, src, art) => {
       if (Hls.isSupported()) {
-        const hls = new Hls();
+        const hls = new Hls(hlsOptions(noReferrer));
         hls.loadSource(src);
         hls.attachMedia(videoEl);
         art.hls = hls;
@@ -319,12 +341,12 @@ function playArt({ url, type, quality, hlsControl, subtitle }) {
     console.error('ArtPlayer init failed, falling back to native player', err);
     activeArt = null;
     destroyArt(); // tear down any hls the customType handler already attached
-    playNative(url, type);
+    playNative(url, type, noReferrer);
   }
 }
 
-function playM3u8(src, subtitle) {
-  playArt({ url: src, type: 'm3u8', hlsControl: true, subtitle });
+function playM3u8(src, subtitle, { noReferrer } = {}) {
+  playArt({ url: src, type: 'm3u8', hlsControl: true, subtitle, noReferrer });
 }
 
 function playMp4(src) {
