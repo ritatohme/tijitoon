@@ -511,7 +511,7 @@ function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
       placeholder.style.display = 'none';
       if (hasSources) playQualityMp4(src.sources);
       else if (src.mp4) playMp4(src.mp4);
-      else playM3u8(src.m3u8, src.subtitle); // src.subtitle: uqload's own caption .vtt, if any
+      else playM3u8(src.m3u8, src.subtitle); // src.subtitle: the host's sidecar caption .vtt (uqload, vidmoly), if any
     })
     .catch(err => {
       console.error(err);
@@ -523,10 +523,12 @@ function resolveAndPlay(gen, ep, seasonIdx, fetchUrl, pickSource, fetchOpts) {
 // parsed URL, the season index (for the "no video" placeholder) and the load
 // generation (passed through to resolveAndPlay's stale-response guard).
 const EPISODE_LOADERS = {
-  vidmoly({ ep, seasonIdx }) {
+  vidmoly({ ep, seasonIdx, gen }) {
     const id = ep.url.match(/embed-([a-z0-9]+)\.html/i)?.[1];
     if (!id) { showNoVideo(ep, seasonIdx); return; }
-    playM3u8(`${EMBED_WORKER_URL}/vidmoly?id=${encodeURIComponent(id)}`);
+    // /vidmoly/info (vidmolysend v3) answers the playlist plus vidmoly's sidecar caption .vtt, if any.
+    resolveAndPlay(gen, ep, seasonIdx, `${EMBED_WORKER_URL}/vidmoly/info?id=${encodeURIComponent(id)}`,
+      ({ url, subtitle }) => ({ m3u8: url, subtitle }));
   },
 
   sendvid({ ep, seasonIdx }) {
